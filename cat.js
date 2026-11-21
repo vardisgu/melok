@@ -14,6 +14,9 @@
   const RB = 0.38;         // радиус бутылки
   const LW = 3.5;          // толщина мела
   const CHALK = '#f6f1e7';
+  // холст рисуется «мелом по чёрному», а страница его инвертирует — поэтому цвета здесь заданы негативом
+  const WINE = '#5cebd4';   // на странице: рубиновый #a3142b
+  const HEART = '#1fe7d0';  // на странице: красный #e0182f
   const TAU = Math.PI * 2;
   const FPS = 12, T = 13, A0 = 0.72, TW0 = 2.75, TW1 = 9.6, STRIDE = 0.5;
 
@@ -120,7 +123,8 @@
       tilt: 0.12 * smooth(1.4, 1.6, t) * (1 - smooth(1.9, 2.1, t)) - 0.1 * smooth(10.6, 10.9, t) * (1 - smooth(11.8, 12.2, t)),
       twitch: (t > 0.45 && t < 0.62) || (t > 12.55 && t < 12.72) ? 1 : 0,
       flick: Math.max(0, Math.sin(t * 3.1)) * (1 - wk),
-      wobble: (0.03 * Math.sin(t * 4.3) + 0.012 * Math.sin(t * 9.1)) * rub
+      wobble: (0.04 * Math.sin(t * 4.3) + 0.014 * Math.sin(t * 9.1)) * rub,
+      slosh: (0.11 * Math.sin(t * 4.3 - 1.1) + 0.04 * Math.sin(t * 9.1 - 0.9)) * rub
     };
   }
 
@@ -139,7 +143,7 @@
     const nz = Math.sin(t * 5.2) * rub;
     const headU = chestU + lerp(0.22, 0.5, s1) + 0.07 * nz;
     const headH = lerp(1.6, 1.4, st) - 0.05 * rub + 0.035 * Math.cos(t * 5.2) * rub + br;
-    const HR = 0.55, CK = 0.21;
+    const HR = 0.5, CK = 0.19, HS = 0.91;
 
     const hips = LL(hipsU, hipsH, tw), belly = LL(bellyU, bellyH, tw * 1.1), chest = LL(chestU, chestH, tw);
     const neck = LL(neckU, neckH, tw * 1.3);
@@ -255,9 +259,9 @@
     const dir = (x, y, z) => norm(comb(r, x, u, y, f, z || 0));
     const cL = add(C, mul(r, CK)), cR = add(C, mul(r, -CK));
     gh.shapes.push(circ(cL, HR), circ(cR, HR), cap(cL, HR, cR, HR));
-    gh.shapes.push(circ(comb(C, 1, f, 0.3, u, -0.2), 0.34));
+    gh.shapes.push(circ(comb(C, 1, f, 0.27, u, -0.18), 0.31));
     // точка в плоскости головы: x — вбок, y — вверх (в единицах сцены от центра головы)
-    const hp = (x, y, z) => comb(C, 1, r, x, u, y, f, z || 0);
+    const hp = (x, y, z) => comb(C, 1, r, x * HS, u, y * HS, f, (z || 0) * HS);
     const tw1 = P.twitch * 0.07;
     // макушка: линия от кончика уха до кончика уха с прогибом и зубчиками шерсти
     {
@@ -315,7 +319,8 @@
   }
 
   // ---------- бутылка ----------
-  function buildBottle(w, groups) {
+  function buildBottle(P, t, groups) {
+    const w = P.wobble;
     const g = G(0), c = Math.cos(w), s = Math.sin(w);
     const rot = q => { const x = q[0] - OX, y = q[1] - OY; return [OX + x * c - y * s, OY + x * s + y * c]; };
     const prof = [[RB, 0.02], [RB, 1.85], [0.355, 2.02], [0.29, 2.2], [0.2, 2.36], [0.14, 2.5], [0.125, 2.65], [0.125, 3.16], [0.155, 3.18], [0.155, 3.3]];
@@ -330,13 +335,28 @@
     const z = x => Math.sqrt(RB * RB - x * x);
     g.strokes.push({ pts: arc(0.155, 3.3, -1, 1), w: 0.8 });
     g.strokes.push({ pts: arc(0.125, 2.72, -1, 1), w: 0.8 });
+    // вино: налито до горлышка; поверхность остаётся горизонтальной и плещется, когда бутылку качает
+    {
+      const L = 2.66, th = Math.tan((w + P.slosh) * 2.6), wine = [];
+      const inner = prof.map(([x, h]) => [Math.max(0.05, x - 0.05), h]);
+      const rAt = h => { for (let i = 1; i < inner.length; i++) if (h <= inner[i][1]) { const k = (h - inner[i - 1][1]) / (inner[i][1] - inner[i - 1][1]); return lerp(inner[i - 1][0], inner[i][0], k); } return 0.075; };
+      const rs = rAt(L), surf = x => L + x * th + 0.01 * Math.sin(x * 30 + t * 7) * P.rub;
+      const side = inner.filter(q => q[1] > 0.1 && q[1] < L - 0.05);
+      wine.push(proj([inner[0][0], 0.1, 0]));
+      for (const [x, h] of side) wine.push(proj([x, h, 0]));
+      for (let i = 0; i <= 6; i++) { const x = lerp(rs, -rs, i / 6); wine.push(proj([x, surf(x), 0])); }
+      for (let i = side.length - 1; i >= 0; i--) wine.push(proj([-side[i][0], side[i][1], 0]));
+      for (let i = 0; i <= 10; i++) { const an = Math.PI + Math.PI * i / 10; wine.push(proj([inner[0][0] * Math.cos(an), 0.1, -inner[0][0] * Math.sin(an)])); }
+      g.fills.push({ pts: densify(wine, true).map(rot), color: WINE });
+      g.fills.push({ pts: arc(RB, 1.42, -0.86, 0.86).concat(arc(RB, 0.6, -0.86, 0.86).reverse()), color: '#000' });
+    }
     // этикетка
     g.strokes.push({ pts: arc(RB, 1.42, -0.86, 0.86) }, { pts: arc(RB, 0.6, -0.86, 0.86) });
     const lx = RB * 0.86;
     g.strokes.push({ pts: line([-lx, 1.42, z(lx)], [-lx, 0.6, z(lx)]) }, { pts: line([lx, 1.42, z(lx)], [lx, 0.6, z(lx)]) });
     const hc = proj([0, 1.1, RB]), heart = [];
     for (let i = 0; i <= 18; i++) { const th = i / 18 * TAU, sx = Math.pow(Math.sin(th), 3), sy = (13 * Math.cos(th) - 5 * Math.cos(2 * th) - 2 * Math.cos(3 * th) - Math.cos(4 * th)) / 16; heart.push(rot([hc[0] + sx * 9, hc[1] - sy * 9])); }
-    g.strokes.push({ pts: heart, w: 0.8 });
+    g.fills.push({ pts: heart, color: HEART });
     const wave = h => { const o = []; for (let i = 0; i <= 12; i++) { const x = lerp(-0.2, 0.2, i / 12); o.push(proj([x, h + 0.018 * Math.sin(i * 1.7), z(x)])); } return o.map(rot); };
     g.strokes.push({ pts: wave(0.84), w: 0.75 }, { pts: wave(0.74), w: 0.75 });
     // блик
@@ -353,23 +373,14 @@
       const hp = heartCache[i] || (heartCache[i] = buildCat(h0, []).head);
       const sc = 10 * Math.min(1, age * 5) * (1 + 0.25 * i % 2), cx = hp[0] + 16 * Math.sin(age * 4 + i * 2), cy = hp[1] - 100 - 62 * age, pts = [];
       for (let k = 0; k <= 20; k++) { const th = k / 20 * TAU; pts.push([cx + Math.pow(Math.sin(th), 3) * sc, cy - (13 * Math.cos(th) - 5 * Math.cos(2 * th) - 2 * Math.cos(3 * th) - Math.cos(4 * th)) / 16 * sc]); }
-      g.strokes.push({ pts, w: age > 1.0 ? 0.6 : 0.9 });
+      g.fills.push({ pts, color: HEART });
     });
-    if (g.strokes.length) groups.push(g);
+    if (g.fills.length) groups.push(g);
   }
 
   // ---------- отрисовка мелом ----------
-  let dpr = 1, grain = null;
-  function makeGrain() {
-    const c = document.createElement('canvas'); c.width = c.height = 220;
-    const x = c.getContext('2d'), im = x.createImageData(220, 220);
-    for (let i = 0; i < im.data.length; i += 4) {
-      const q = Math.random(); const v = q < 0.05 ? 70 + Math.random() * 90 : q < 0.22 ? 170 + Math.random() * 50 : 235 + Math.random() * 20;
-      im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255;
-    }
-    x.putImageData(im, 0, 0); grain = ctx.createPattern(c, 'repeat');
-  }
-  function resize() { dpr = Math.min(2, window.devicePixelRatio || 1); cv.width = W * dpr; cv.height = H * dpr; makeGrain(); last = -1; }
+  let dpr = 1;
+  function resize() { dpr = Math.min(2, window.devicePixelRatio || 1); cv.width = W * dpr; cv.height = H * dpr; last = -1; }
   function path(pts, extra, closed) {
     ctx.beginPath();
     pts.forEach((p, i) => { const q = wob(p, extra); if (i) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]); });
@@ -379,7 +390,7 @@
     t = ((t % T) + T) % T; SEED = seed * 13 + 5;
     const groups = [];
     const info = buildCat(t, groups);
-    buildBottle(info.P.wobble, groups);
+    buildBottle(info.P, t, groups);
     buildHearts(t, groups);
     groups.sort((p, q) => p.z - q.z);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -392,15 +403,11 @@
       ctx.fillStyle = '#000';
       for (const s of g.shapes) { path(s, 0.75, true); ctx.fill(); }
       for (const s of g.erasers) { path(s, 0, true); ctx.fill(); }
-      for (const s of g.strokes) { ctx.lineWidth = LW * (s.w || 1); path(s.pts, 0, s.closed); ctx.stroke(); }
+      for (const s of g.fills) { ctx.fillStyle = s.color || CHALK; path(s.pts || s, 0, true); ctx.fill(); }
+      for (const s of g.strokes) { ctx.strokeStyle = s.color || CHALK; ctx.lineWidth = LW * (s.w || 1); path(s.pts, 0, s.closed); ctx.stroke(); }
       ctx.fillStyle = CHALK;
-      for (const s of g.fills) { path(s, 0, true); ctx.fill(); }
       for (const d of g.dots) { const q = wob(d.c); ctx.beginPath(); ctx.arc(q[0], q[1], d.r, 0, TAU); ctx.fill(); }
     }
-    // меловая крошка
-    ctx.setTransform(1, 0, 0, 1, -hash(seed, 1, 7) * 200, -hash(seed, 2, 7) * 200);
-    ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = grain;
-    ctx.fillRect(0, 0, cv.width + 220, cv.height + 220);
   }
 
   // ---------- цикл ----------

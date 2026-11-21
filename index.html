@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f4eee3;
+    --bg: #fff;
     --chalk: #1b1716;   /* теперь это «тушь»: линии и заголовки */
     --text: #3a322e;
     --muted: #7d7167;
@@ -44,12 +44,7 @@
   .hero {
     position: relative; min-height: 100svh; overflow: hidden; isolation: isolate;
     display: grid; place-items: center; padding: 96px 20px 56px; text-align: center;
-    background:
-      radial-gradient(38vmax 30vmax at 10% 14%, rgba(233, 168, 76, .26), transparent 62%),
-      radial-gradient(30vmax 26vmax at 90% 22%, rgba(138, 42, 63, .13), transparent 64%),
-      radial-gradient(44vmax 30vmax at 72% 100%, rgba(233, 168, 76, .16), transparent 60%),
-      radial-gradient(34vmax 28vmax at 16% 96%, rgba(138, 42, 63, .09), transparent 62%),
-      var(--bg);
+    background: var(--bg);
   }
   .stage { width: min(720px, 100%, 66svh); }
   #cat { display: block; width: 100%; aspect-ratio: 720 / 520; filter: invert(1); mix-blend-mode: multiply; cursor: pointer; }
