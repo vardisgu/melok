@@ -3,94 +3,177 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Мелок — винный бар</title>
-<meta name="description" content="Мелок — винный бар. Вино по бокалам, закуски и кот на стекле.">
+<title>Мелок — винный бар во дворе на Кави Наджми, Казань</title>
+<meta name="description" content="Мелок — винный бар во дворе на улице Кави Наджми в центре Казани, в двух шагах от Баумана.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #fff;
-    --chalk: #1b1716;   /* теперь это «тушь»: линии и заголовки */
-    --text: #3a322e;
-    --muted: #7d7167;
-    --amber: #c9862c;
-    --wine: #8a2a3f;
-    --line: rgba(27, 23, 22, .16);
+    --ink: #1b1716;
+    --text: #2c2827;
+    --muted: #7a7674;
+    --line: rgba(27, 23, 22, .22);
   }
-
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    margin: 0; background: var(--bg); color: var(--text);
-    font: 400 17px/1.6 "Golos Text", system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 400 16px/1.55 "Golos Text", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
   a { color: inherit; }
-  .hand { font-family: "Caveat", "Segoe Print", cursive; font-weight: 700; color: var(--chalk); line-height: 1; }
+  .hand { font-family: "Caveat", "Segoe Print", cursive; font-weight: 700; color: var(--ink); line-height: 1; }
 
-  /* шапка */
-  header {
-    position: absolute; inset: 0 0 auto 0; z-index: 5;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 20px clamp(20px, 4vw, 48px);
-  }
-  header .hand { font-size: 34px; text-decoration: none; }
-  nav { display: flex; gap: clamp(16px, 3vw, 34px); }
-  nav a { text-decoration: none; font-size: 15px; color: var(--text); padding: 6px 0; border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
-  nav a:hover, nav a:focus-visible { color: var(--chalk); border-color: var(--amber); }
-
-  /* первый экран: ночное окно с огнями */
+  /* первый экран: афиша — кот — карта */
   .hero {
-    position: relative; min-height: 100svh; overflow: hidden; isolation: isolate;
-    display: grid; place-items: center; padding: 96px 20px 56px; text-align: center;
-    background: var(--bg);
+    position: relative; min-height: 100svh; padding: 40px clamp(20px, 3.5vw, 48px) 54px;
+    display: grid; grid-template-columns: minmax(290px, 390px) minmax(0, 1fr) minmax(250px, 310px);
+    gap: clamp(20px, 3vw, 48px); align-items: center; justify-content: center;
+    max-width: 1500px; margin-inline: auto;
   }
-  .stage { width: min(720px, 100%, 66svh); }
+  .center { text-align: center; display: grid; justify-items: center; }
+  .stage { width: min(600px, 100%, 56svh); }
   #cat { display: block; width: 100%; aspect-ratio: 720 / 520; filter: invert(1); mix-blend-mode: multiply; cursor: pointer; }
-  .hero h1 { margin: -4svh 0 0; font-size: clamp(72px, min(17vw, 17svh), 150px); transform: rotate(-3deg); }
-  .stage p { margin: 14px 0 0; font-size: clamp(16px, 2.2vw, 20px); letter-spacing: .32em; text-transform: uppercase; color: var(--muted); padding-left: .32em; }
-  .btn {
-    display: inline-block; margin-top: 30px; padding: 13px 28px; border-radius: 999px;
-    border: 1.5px solid var(--chalk); color: var(--chalk); text-decoration: none; font-weight: 500;
-    transition: background .2s, color .2s, transform .15s;
-  }
-  .btn:hover, .btn:focus-visible { background: var(--chalk); color: var(--bg); }
+  h1 { margin: -3.5svh 0 0; font-size: clamp(72px, min(11vw, 16svh), 138px); transform: rotate(-3deg); }
+  .kind { margin: 12px 0 0; font-size: clamp(14px, 1.5vw, 17px); letter-spacing: .32em; text-transform: uppercase; color: var(--muted); padding-left: .32em; }
+  .lead { margin: 14px 0 0; max-width: 30ch; font-size: clamp(22px, 2.2vw, 27px); font-weight: 500; line-height: 1.15; color: var(--text); }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 22px; }
+  .btn { display: inline-block; padding: 12px 26px; border-radius: 999px; border: 1.5px solid var(--ink); color: var(--ink); text-decoration: none; font-weight: 500; transition: background .2s, color .2s, border-color .2s, transform .15s; }
+  .btn:hover, .btn:focus-visible { background: var(--ink); color: #fff; }
+  .btn.fill { background: var(--ink); color: #fff; }
+  .btn.fill:hover, .btn.fill:focus-visible { background: #fff; color: var(--ink); }
   .btn:active { transform: scale(.97); }
 
-  .legal { position: absolute; inset: auto 0 14px 0; margin: 0; padding: 0 20px; font-size: 12px; color: var(--muted); opacity: .7; }
+  /* афиша — белый бумажный лист, чёрно-белая */
+  .poster {
+    position: relative; rotate: 2.2deg; background: #fff; text-align: center;
+    padding: 34px 26px 34px; border: 2px solid var(--ink); outline: 1px solid var(--ink); outline-offset: -8px;
+    box-shadow: 0 18px 32px -20px rgba(0, 0, 0, .45), 0 2px 6px rgba(0, 0, 0, .08);
+  }
+  .poster::before { /* кусочек скотча */
+    content: ""; position: absolute; top: -14px; left: 50%; width: 92px; height: 26px; translate: -50% 0; rotate: -2deg;
+    background: rgba(200, 200, 200, .5); box-shadow: 0 1px 2px rgba(0, 0, 0, .12);
+  }
+  .poster .sub { margin: 0; font-size: 12px; letter-spacing: .34em; text-transform: uppercase; color: var(--muted); padding-left: .34em; }
+  .poster .glass { display: block; width: 62px; height: auto; margin: 16px auto 10px; }
+  .poster .when { margin: 0; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--ink); }
+  .poster h2 { margin: 8px 0 0; font-size: clamp(46px, 4.4vw, 60px); line-height: .95; text-wrap: balance; }
+  .poster .note { margin: 14px auto 0; max-width: 24ch; font-size: 15px; line-height: 1.45; color: var(--text); text-wrap: pretty; }
 
-  @media (max-width: 760px) {
-    header { padding: 14px 20px; }
-    header .hand { font-size: 28px; }
-    nav a { font-size: 14px; }
-    .hero { padding-top: 84px; }
+  /* карта — нарисована прямо на странице, без листка */
+  .map h2 { margin: 0; font-size: 44px; text-align: center; }
+  .map svg { display: block; width: 100%; height: auto; margin-top: 10px; }
+  .map svg text { font-family: "Caveat", cursive; font-weight: 700; fill: var(--ink); }
+  .map p { margin: 6px 4px 0; font-size: 14px; line-height: 1.45; text-align: center; }
+  .map p b { color: var(--ink); font-weight: 600; }
+
+  .legal { position: absolute; inset: auto 0 14px 0; margin: 0; padding: 0 20px; text-align: center; font-size: 12px; color: var(--muted); opacity: .8; }
+
+  @media (max-width: 1080px) {
+    .hero { grid-template-columns: repeat(2, minmax(0, 360px)); padding-bottom: 76px; row-gap: 44px; }
+    .center { grid-column: 1 / -1; order: -1; }
+    .stage { width: min(560px, 100%, 50svh); }
+    .poster, .map { align-self: start; }
+    .map { order: 1; }
+    .legal { order: 2; }
+  }
+  @media (max-width: 680px) {
+    .hero { grid-template-columns: minmax(0, 400px); padding-top: 28px; }
+    .legal { position: static; grid-column: 1 / -1; padding: 0; }
   }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
 
-<header>
-  <a class="hand" href="#top">Мелок</a>
-  <nav>
-    <a href="https://www.instagram.com/melok.bar/" target="_blank" rel="noopener">Instagram</a>
-  </nav>
-</header>
 
-<main id="top">
-  <div class="hero">
+<main class="hero" id="top">
+
+  <aside class="map" id="map" aria-labelledby="map-h">
+    <h2 class="hand" id="map-h">Как нас найти</h2>
+    <svg viewBox="270 320 660 660" role="img" aria-label="Схема: бар Мелок, Кави Наджми, 8а, во внутреннем дворике; вход с улицы Кави Наджми между домами, рядом улицы Баумана и Островского">
+      <defs>
+        <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+          <line x1="0" y1="0" x2="0" y2="9" stroke="#1b1716" stroke-width="1.2" opacity=".34"/>
+        </pattern>
+        <radialGradient id="fade-g" cx="50%" cy="50%" r="62%">
+          <stop offset="58%" stop-color="#fff"/><stop offset="100%" stop-color="#000"/>
+        </radialGradient>
+        <mask id="fade" maskUnits="userSpaceOnUse" x="270" y="320" width="660" height="660"><rect x="270" y="320" width="660" height="660" fill="url(#fade-g)"/></mask>
+        <!-- лёгкая «дрожь руки»: линии живые, но формы домов остаются точными -->
+        <filter id="hand" x="-3%" y="-3%" width="106%" height="106%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="5" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="3.6"/>
+        </filter>
+      </defs>
+      <g mask="url(#fade)"><g filter="url(#hand)" fill="none" stroke="#1b1716" stroke-linecap="round" stroke-linejoin="round">
+        <!-- контуры зданий построены по данным OpenStreetMap -->
+        <path d="M-77.2 77 L4.7 140.7 L-7.8 159.5 L20.2 183 L35.1 164.4 L55.1 180 L219.5 -30.2 L274.2 -94.5 L205.2 -156.4 L96 -251.4 L-60.1 -53 L-114.6 16.3 L-129.7 36 Z M848.4 209.1 L867.5 187.1 L905.6 219.8 L881.2 247.8 L843.7 290.9 L798.3 251.8 L841.1 202.8 Z M200.4 899.1 L289.7 792.2 L281.5 778.9 L281.7 765.5 L293.2 757.4 L314 756.7 L323.1 767.2 L325.4 785.4 L484.3 916.5 L535.6 958.8 L479.1 1026.4 L442.8 996.4 L418.3 1025.7 L383.2 996.7 L411.6 962.7 L326 892.1 L298.8 924.7 L359.3 974.5 L331.8 1007.4 Z M349.6 701.2 L492.6 820.2 L528.1 778.1 L424.6 691.9 L464.8 644.3 L425.3 611.4 Z M586.8 909.8 L593.5 915.2 L671.9 978.2 L777.4 848.8 L755.7 831.5 L686.7 916.1 L629.4 870.1 L623.3 865.1 Z M1165.5 676.7 L1087.1 767.2 L1070.7 753.3 L1057.2 741.8 L1098.2 694.5 L1033.3 639.1 L1070.8 595.8 Z M1006.4 540.8 L961.8 502.7 L874.5 603.4 L919.1 641.6 L968.9 584 Z M1033.3 639.1 L968.9 584 L1006.4 540.8 L1070.8 595.8 Z M618.4 359 L684.8 278.2 L760.8 339.8 L694.5 420.6 Z M841.2 402 L930.4 478.7 L822 603 L796 580.6 L808.6 566.1 L857.1 510.5 L829.7 486.9 L795.1 526.5 L759.4 495.9 Z M760.8 339.8 L694.5 420.6 L679.4 436.5 L704.4 457.4 L752.9 400.1 L801 440.2 L834.4 400.8 Z M123.3 476.5 L267.1 591.6 L326.3 590 L434.7 450.7 L451.2 429.4 L413.4 397.6 L395.4 420 L370.8 451 L338.8 491.4 L308.9 529.2 L300.8 539.4 L286 538.1 L274.9 529.3 L227.6 491.4 L180.7 453.9 L157.1 435 L124 475.7 Z M353.9 -24 L274.2 -94.5 L219.5 -30.2 L301.9 38 L267.7 46.2 L233.5 54.6 L194.4 98.6 L161.1 72.2 L66.3 189.3 L122.5 231.9 L130.1 221.2 L145.9 226.4 L237.2 301.7 L285.8 346.4 L314.9 314.7 L345.2 279.2 L318.8 250 L422.3 113.1 L454.5 73.1 L399.6 23 Z M531.2 140 L454.5 73.1 L422.3 113.1 L476.4 156.2 L393.3 259 L416.1 281.2 Z M508.7 355.5 L493.1 375.6 L451.2 429.4 L413.4 397.6 L314.9 314.7 L345.2 279.2 L433.4 353.4 L444.9 339.9 L462.8 318.7 Z M515.9 497 L612.8 367.6 L663.9 405.4 L567 534.8 Z M931.9 778 L1003.4 831.8 L1027 849.6 L980 911.2 L884.8 839.5 Z M967 396.5 L999.6 360.6 L1128.7 218.5 L1173.3 258.5 L1043.3 401.7 L1098.5 451.2 L1066.9 486 Z M688.7 746.4 L704.2 759.1 L753.5 699.9 L788 729.8 L764.9 758.2 L760.4 763.8 L751 756.6 L701.3 816.1 L679.9 798.5 L651.1 833.1 L630.4 816.2 Z M196 1080.3 L276.4 976.3 L200.1 905 L136.1 992.2 L125.4 1005.5 L129.4 1012.2 L139.5 1017.7 Z M1052.6 944.2 L1024.8 979.4 L1099.3 1037.4 L1077 1065.6 L1099.4 1083.1 L1149.6 1019.6 L1112.4 990.6 L1080.3 965.6 Z M1070.7 753.3 L1003.4 831.8 L1027 849.6 L1092.5 771.2 L1087.1 767.2 Z M414.3 1027.3 L362.1 1087.2 L290 1025.1 L262.1 1057.1 L234.7 1033.5 L286.6 974.1 L359.9 1037.3 L388.2 1004.8 Z M658.3 129.4 L465.8 -33.9 L516.9 -93.4 L534.4 -78.5 L517.4 -58.7 L671.2 72.2 L682.6 58.7 L653.7 34.7 L750.9 -80.9 L799.5 -138.6 L805.6 -145.9 L850.3 -108.9 L864.5 -97.1 L709.6 87.1 L743.9 117.2 L841.1 202.8 L798.3 251.8 L705.7 170.9 Z M755.7 831.5 L765.5 819.4 L795.1 782.7 L816.5 800 L777.4 848.8 Z M734.5 794.9 L760.4 763.8 L764.9 758.2 L795.1 782.7 L765.5 819.4 Z M885.1 872.6 L751 1034.8 L835.4 1103.6 L969.5 941.3 Z M531.2 140 L609.6 203 L612.6 222.1 L508.7 355.5 L462.8 318.7 L416.1 281.2 Z M1099.6 116.6 L1062.3 159.4 L1085.2 179.1 L969.2 312.1 L964.5 308 L950.8 323.7 L999.6 360.6 L967 396.5 L843.7 290.9 L881.2 247.8 L917.4 278.9 L1075.8 97.3 Z" stroke-width="1.7" opacity=".55"/>
+        <path d="M445.6 580.7 L528.6 651.2 L568.7 604.6 L536 576.3 L485.6 534.2 Z M536 576.3 L567 534.8 L515.9 497 L485.6 534.2 Z" fill="url(#hatch)" stroke-width="2.3"/>
+        <!-- Кави Наджми, 8а -->
+        <path d="M567 534.8 L536 576.3 L568.7 604.6 L626.6 651.7 L558.7 732.2 L583.7 752.9 L630 698 L656.6 720.2 L709.9 657 L613.4 574.4 Z" fill="#fff" stroke-width="5"/>
+        <!-- дорожка с улицы во дворик -->
+        <path d="M394 590 C420 594 452 612 480 638 C502 658 522 684 546 682 C562 680 574 664 582 650" stroke-width="5.2" stroke-dasharray="13 10"/>
+      </g></g>
+      <!-- ул. Баумана — пешеходная, кусочек в углу -->
+      <path d="M800 312 L935 430" fill="none" stroke="#1b1716" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="4 13" filter="url(#hand)"/>
+      <path transform="translate(596 631) scale(1.45)" d="M0 -6 c-4 -7 -14 -3 -11 5 c2 5 7 8 11 11 c4 -3 9 -6 11 -11 c3 -8 -7 -12 -11 -5 z" fill="#1b1716" stroke="#fff" stroke-width="3" paint-order="stroke"/>
+      <g stroke="#fff" stroke-linejoin="round" paint-order="stroke" text-anchor="middle">
+        <text transform="translate(472 474) rotate(-52.6)" font-size="30" stroke-width="9">ул. Кави Наджми</text>
+        <text transform="translate(806 400) rotate(41)" font-size="30" stroke-width="9">ул. Баумана</text>
+        <text transform="translate(470 850) rotate(40.6)" font-size="30" stroke-width="9">ул. Островского</text>
+        <text transform="translate(604 602) rotate(40.7)" font-size="34" stroke-width="0">Мелок</text>
+        <text x="488" y="606" font-size="21" stroke-width="7">8</text>
+        <text x="668" y="667" font-size="20" stroke-width="0">8а</text>
+        <text transform="translate(500 722) rotate(40.7)" font-size="22" stroke-width="8">вход со двора</text>
+      </g>
+    </svg>
+    <p><b>Кави Наджми, 8а.</b> С улицы сворачивайте во двор у дома 8 — мы внутри.</p>
+  </aside>
+
+  <section class="center">
     <div class="stage">
-      <canvas id="cat" role="img" aria-label="Нарисованный мелом котёнок встаёт и трётся о бутылку вина" title="Нажмите на кота"></canvas>
-      <h1 class="hand">Мелок</h1>
-      <p>винный бар</p>
-      <a class="btn" href="https://www.instagram.com/melok.bar/" target="_blank" rel="noopener">@melok.bar</a>
+      <canvas id="cat" role="img" aria-label="Нарисованный котёнок встаёт и трётся о бутылку красного вина" title="Нажмите на кота"></canvas>
     </div>
-    <p class="legal">18+ · Чрезмерное употребление алкоголя вредит вашему здоровью</p>
-  </div>
+    <h1 class="hand">Мелок</h1>
+    <p class="kind">винный бар</p>
+    <p class="lead hand">Во дворе на Кави Наджми, 8а — в двух шагах от Баумана</p>
+    <div class="actions" id="menu">
+      <a class="btn fill" href="#" data-todo="ссылка на меню">Меню</a>
+    </div>
+  </section>
 
+  <!-- афиша: одно ближайшее событие; позже его будет отдавать админка, см. MELOK_EVENT внизу -->
+  <aside class="poster" id="afisha" aria-labelledby="afisha-h">
+    <p class="sub">афиша</p>
+    <svg class="glass" viewBox="0 0 60 84" aria-hidden="true">
+      <g fill="none" stroke="#1b1716" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 26 C15 42 22 50 30 50 C38 50 45 42 46 26 Z" fill="#a3142b" stroke="none"/>
+        <path d="M12 6 C10 34 18 50 30 50 C42 50 50 34 48 6 Z"/>
+        <path d="M30 50 V74 M17 77 H43"/>
+      </g>
+    </svg>
+    <p class="when" id="ev-when"></p>
+    <h2 class="hand" id="afisha-h"></h2>
+    <p class="note" id="ev-note"></p>
+  </aside>
+
+  <p class="legal">18+ · Чрезмерное употребление алкоголя вредит вашему здоровью</p>
 </main>
 
-<script src="cat.js?v=5"></script>
+<script>
+  // Афиша — одно ближайшее событие. Сейчас оно задано здесь; когда появится админка, она будет отдавать такой же объект.
+  // Пустой объект или null — плакат покажет «скоро новые анонсы».
+  window.MELOK_EVENT = {
+    when: 'пятница · 19:00',
+    what: 'Слепая дегустация',
+    note: 'Шесть вин без этикеток. Пробуем, спорим, угадываем сорт и страну.'
+  };
+  (function () {
+    const e = window.MELOK_EVENT || {}, set = (id, v) => { const el = document.getElementById(id); if (v) el.textContent = v; else el.remove(); };
+    set('ev-when', e.what ? e.when : '');
+    set('afisha-h', e.what || 'Скоро новые анонсы');
+    set('ev-note', e.what ? e.note : 'А пока — заходите на бокал.');
+  })();
+</script>
+<script src="cat.js?v=6"></script>
 </body>
 </html>
