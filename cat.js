@@ -243,12 +243,17 @@
     // --- голова ---
     const C = LL(headU, headH, -0.1 * rub);
     const hd = headingAt(a, headU), inw = mul(outwardAt(a, headU), -1);
-    let f = norm(comb(hd, 1 - P.look, [0, 0, 1], P.look, inw, 0.08 * rub));
+    // Голова поворачивается к зрителю, но шея не выворачивается: не больше ~60° от направления тела,
+    // а когда зритель оказывается за спиной — поворот плавно сходит на нет, голова смотрит по ходу.
+    const thH = Math.atan2(hd[0], hd[2]);                       // куда смотрит тело (0 — на зрителя)
+    const toCam = Math.atan2(Math.sin(-thH), Math.cos(-thH));   // угол от тела до зрителя, −π…π
+    const MAXYAW = 1.05;
+    let yaw = clamp(toCam * P.look, -MAXYAW, MAXYAW) * (1 - smooth(2.25, 3.0, Math.abs(toCam)));
+    let f = norm(comb([Math.sin(thH + yaw), 0, Math.cos(thH + yaw)], 1, inw, 0.08 * rub));
     let r = norm(cross(UP, f)), u = cross(f, r);
     const roll = rub * (0.3 * dot(r, inw) + 0.1 * nz) + P.tilt;
     { const c = Math.cos(roll), s = Math.sin(roll); const u2 = comb(u, c, r, s), r2 = comb(r, c, u, -s); u = u2; r = r2; }
     const pt = 0.2 * P.look, fF = comb(f, Math.cos(pt), u, -Math.sin(pt)), uF = comb(u, Math.cos(pt), f, Math.sin(pt)); // морда чуть опущена
-    const away = dot(hd, CAM) < -0.35 && P.look < 0.5;
     // голова и тело — один сплошной контур, как на логотипе
     const gh = g0;
     const gf = G(gh.z + 0.006); groups.push(gf);

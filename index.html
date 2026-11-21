@@ -7,7 +7,7 @@
 <meta name="description" content="Мелок — винный бар во дворе на улице Кави Наджми в центре Казани, в двух шагах от Баумана.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Golos+Text:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #fff;
@@ -20,7 +20,11 @@
   html { scroll-behavior: smooth; }
   body { margin: 0; background: var(--bg); color: var(--text); font: 400 16px/1.55 "Golos Text", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
   a { color: inherit; }
+  /* Шрифты — две роли.
+     1) .hand — всё «написанное от руки»: название, заголовки, фразы, кнопки, подписи на карте. Одно начертание.
+     2) .cap  — мелкие служебные подписи: капсом вразрядку, один размер и вес на всю страницу. */
   .hand { font-family: "Caveat", "Segoe Print", cursive; font-weight: 700; color: var(--ink); line-height: 1; }
+  .cap { margin: 0; font: 500 13px/1.3 "Golos Text", system-ui, sans-serif; letter-spacing: .28em; text-transform: uppercase; color: var(--muted); padding-left: .28em; }
 
   /* первый экран: афиша — кот — карта */
   .hero {
@@ -33,14 +37,26 @@
   .stage { width: min(600px, 100%, 56svh); }
   #cat { display: block; width: 100%; aspect-ratio: 720 / 520; filter: invert(1); mix-blend-mode: multiply; cursor: pointer; }
   h1 { margin: -3.5svh 0 0; font-size: clamp(72px, min(11vw, 16svh), 138px); transform: translateX(-.06em) rotate(-3deg); /* сдвиг: у рукописного шрифта буквы смещены вправо от своей рамки */ }
-  .kind { margin: 12px 0 0; font-size: clamp(14px, 1.5vw, 17px); letter-spacing: .32em; text-transform: uppercase; color: var(--muted); padding-left: .32em; }
-  .lead { margin: 14px 0 0; max-width: 30ch; font-size: clamp(22px, 2.2vw, 27px); font-weight: 500; line-height: 1.15; color: var(--text); }
+  .kind { margin-top: 12px; }
+  .lead { margin: 14px 0 0; max-width: 30ch; font-size: clamp(23px, 2.2vw, 28px); line-height: 1.12; }
   .actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 22px; }
-  .btn { display: inline-block; padding: 12px 26px; border-radius: 999px; border: 1.5px solid var(--ink); color: var(--ink); text-decoration: none; font-weight: 500; transition: background .2s, color .2s, border-color .2s, transform .15s; }
-  .btn:hover, .btn:focus-visible { background: var(--ink); color: #fff; }
-  .btn.fill { background: var(--ink); color: #fff; }
-  .btn.fill:hover, .btn.fill:focus-visible { background: #fff; color: var(--ink); }
-  .btn:active { transform: scale(.97); }
+  /* кнопки нарисованы той же линией: неровный овал от руки, подпись рукописным шрифтом */
+  .btn {
+    position: relative; isolation: isolate; display: inline-block; padding: 7px 28px 10px; text-decoration: none;
+    font: 700 28px/1 "Caveat", "Segoe Print", cursive; color: var(--ink); transition: color .2s, transform .15s;
+  }
+  .btn::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; background: #fff;
+    border: 2.6px solid var(--ink); border-radius: 255px 22px 225px 20px / 20px 225px 24px 255px;
+    filter: url(#hand); transition: background .2s, rotate .2s;
+  }
+  .btn.fill { color: #fff; }
+  .btn.fill::before { background: var(--ink); }
+  .btn:hover::before, .btn:focus-visible::before { rotate: -1.2deg; background: var(--ink); }
+  .btn:hover, .btn:focus-visible { color: #fff; outline: none; }
+  .btn.fill:hover::before, .btn.fill:focus-visible::before { background: #fff; }
+  .btn.fill:hover, .btn.fill:focus-visible { color: var(--ink); }
+  .btn:active { transform: scale(.96); }
   .only-m { display: none; }
 
   /* плавающее меню-«облако» */
@@ -52,32 +68,27 @@
     transition: translate .3s cubic-bezier(.2, .8, .2, 1), opacity .2s;
   }
   .float.on { translate: -50% 0; opacity: 1; pointer-events: auto; }
-  .float a { padding: 9px 14px; border-radius: 999px; font-size: 14.5px; font-weight: 500; text-decoration: none; color: var(--ink); }
+  .float a { padding: 6px 14px 8px; border-radius: 999px; font: 700 22px/1 "Caveat", "Segoe Print", cursive; text-decoration: none; color: var(--ink); }
   .float a:active { background: var(--ink); color: #fff; }
   #afisha, #map { scroll-margin-top: 76px; }
 
-  /* афиша — белый бумажный лист, чёрно-белая */
+  /* афиша — лист бумаги, нарисованный той же линией, что кот и карта: волнистые края, закрученный уголок, скотч */
   .poster {
-    position: relative; rotate: 2.2deg; background: #fff; text-align: center; width: 100%; max-width: 310px; justify-self: center;
-    padding: 34px 26px 34px; border: 2px solid var(--ink); outline: 1px solid var(--ink); outline-offset: -8px;
-    box-shadow: 0 18px 32px -20px rgba(0, 0, 0, .45), 0 2px 6px rgba(0, 0, 0, .08);
+    position: relative; rotate: 2.2deg; width: 100%; max-width: 310px; justify-self: center;
+    filter: drop-shadow(0 9px 9px rgba(0, 0, 0, .09));
   }
-  .poster::before { /* кусочек скотча */
-    content: ""; position: absolute; top: -14px; left: 50%; width: 92px; height: 26px; translate: -50% 0; rotate: -2deg;
-    background: rgba(200, 200, 200, .5); box-shadow: 0 1px 2px rgba(0, 0, 0, .12);
-  }
-  .poster .sub { margin: 0; font-size: 12px; letter-spacing: .34em; text-transform: uppercase; color: var(--muted); padding-left: .34em; }
+  .poster .paper { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .poster .sheet { position: relative; text-align: center; padding: 52px 30px 50px; }
   .poster .glass { display: block; width: 62px; height: auto; margin: 16px auto 10px; }
-  .poster .when { margin: 0; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--ink); }
+  .poster .when { color: var(--ink); }
   .poster h2 { margin: 8px 0 0; font-size: clamp(46px, 4.4vw, 60px); line-height: .95; text-wrap: balance; }
-  .poster .note { margin: 14px auto 0; max-width: 24ch; font-size: 15px; line-height: 1.45; color: var(--text); text-wrap: pretty; }
+  .poster .note { margin: 12px auto 0; max-width: 22ch; font-size: 23px; line-height: 1.12; text-wrap: pretty; }
 
   /* карта — нарисована прямо на странице, без листка */
   .map h2 { margin: 0; font-size: 44px; text-align: center; }
   .map svg { display: block; width: 100%; height: auto; margin-top: 10px; }
   .map svg text { font-family: "Caveat", cursive; font-weight: 700; fill: var(--ink); }
-  .map p { margin: 6px 4px 0; font-size: 14px; line-height: 1.45; text-align: center; }
-  .map p b { color: var(--ink); font-weight: 600; }
+  .map p { margin: 8px 4px 0; font-size: 22px; line-height: 1.12; text-align: center; text-wrap: balance; }
 
   .legal { position: absolute; inset: auto 0 14px 0; margin: 0; padding: 0 20px; text-align: center; font-size: 12px; color: var(--muted); opacity: .8; }
 
@@ -95,7 +106,7 @@
     .hero { grid-template-columns: minmax(0, 400px); }
     .legal { position: static; grid-column: 1 / -1; padding: 0; }
     .actions { flex-wrap: nowrap; gap: 8px; }
-    .btn { padding: 11px 15px; font-size: 15px; white-space: nowrap; }
+    .btn { padding: 6px 16px 9px; font-size: 24px; white-space: nowrap; }
   }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .float { transition: none; } }
 </style>
@@ -151,7 +162,7 @@
         <text transform="translate(500 722) rotate(40.7)" font-size="22" stroke-width="8">вход со двора</text>
       </g>
     </svg>
-    <p><b>Кави Наджми, 8а.</b> С улицы сворачивайте во двор у дома 8 — мы внутри.</p>
+    <p class="hand">Кави Наджми, 8а. С улицы сворачивайте во двор у дома 8 — мы внутри.</p>
   </aside>
 
   <section class="center">
@@ -159,7 +170,7 @@
       <canvas id="cat" role="img" aria-label="Нарисованный котёнок встаёт и трётся о бутылку красного вина" title="Нажмите на кота"></canvas>
     </div>
     <h1 class="hand">Мелок</h1>
-    <p class="kind">винный бар</p>
+    <p class="cap kind">винный бар</p>
     <p class="lead hand">Во дворе на Кави Наджми, 8а — в двух шагах от Баумана</p>
     <div class="actions" id="menu">
       <a class="btn only-m" href="#afisha">Афиша</a>
@@ -170,7 +181,27 @@
 
   <!-- афиша: одно ближайшее событие; позже его будет отдавать админка, см. MELOK_EVENT внизу -->
   <aside class="poster" id="afisha" aria-labelledby="afisha-h">
-    <p class="sub">афиша</p>
+   <svg class="paper" viewBox="0 0 300 400" preserveAspectRatio="none" aria-hidden="true">
+     <defs>
+       <pattern id="ph" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)">
+         <line x1="0" y1="0" x2="0" y2="5" stroke="#1b1716" stroke-width="1.1" opacity=".55"/>
+       </pattern>
+     </defs>
+     <g filter="url(#hand)" fill="none" stroke="#1b1716" stroke-linecap="round" stroke-linejoin="round">
+       <!-- лист: края чуть волнистые, правый нижний угол загнут -->
+       <path d="M7 9 C70 4 150 11 222 6 C250 4 276 8 294 7 C298 90 290 190 295 290 C296 310 295 328 294 342 C284 362 270 380 254 395 C190 399 120 391 60 396 C40 397 20 395 6 396 C9 300 2 200 6 110 C7 70 5 36 7 9 Z" fill="#fff" stroke-width="2.6" vector-effect="non-scaling-stroke"/>
+       <!-- загнутый уголок: треугольник, отогнутый на лист, со штриховкой-тенью -->
+       <path d="M294 342 C284 362 270 380 254 395 C254 380 256 366 260 352 C272 350 284 347 294 342 Z" fill="#fff" stroke-width="2.4" vector-effect="non-scaling-stroke"/>
+       <path d="M262 358 L286 349 M260 368 L280 356 M258 379 L272 366" stroke-width="1.2" opacity=".5" vector-effect="non-scaling-stroke"/>
+       <!-- пара морщинок -->
+       <path d="M14 366 C22 372 30 380 34 390" stroke-width="1.3" opacity=".45" vector-effect="non-scaling-stroke"/>
+       <!-- скотч: полоска с рваными концами, лежит вдоль верхнего края -->
+       <path d="M101 -9 L107 -3 L102 3 L108 9 L103 15 L108 21 L196 24 L191 18 L197 12 L192 6 L198 0 L193 -6 Z" fill="#fff" fill-opacity=".82" stroke-width="2" vector-effect="non-scaling-stroke"/>
+       <path d="M118 2 L128 14 M140 -2 L154 16 M166 0 L178 16" stroke-width="1.2" opacity=".45" vector-effect="non-scaling-stroke"/>
+     </g>
+   </svg>
+   <div class="sheet">
+    <p class="cap">афиша</p>
     <svg class="glass" viewBox="0 0 60 84" aria-hidden="true">
       <g fill="none" stroke="#1b1716" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
         <path d="M14 26 C15 42 22 50 30 50 C38 50 45 42 46 26 Z" fill="#a3142b" stroke="none"/>
@@ -178,9 +209,10 @@
         <path d="M30 50 V74 M17 77 H43"/>
       </g>
     </svg>
-    <p class="when" id="ev-when"></p>
+    <p class="cap when" id="ev-when"></p>
     <h2 class="hand" id="afisha-h"></h2>
-    <p class="note" id="ev-note"></p>
+    <p class="hand note" id="ev-note"></p>
+   </div>
   </aside>
 
   <p class="legal">18+ · Чрезмерное употребление алкоголя вредит вашему здоровью</p>
@@ -209,6 +241,6 @@
     new IntersectionObserver(([e]) => nav.classList.toggle('on', !e.isIntersecting)).observe(hero);
   })();
 </script>
-<script src="cat.js?v=6"></script>
+<script src="cat.js?v=8"></script>
 </body>
 </html>
