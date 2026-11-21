@@ -1,0 +1,5 @@
+Шрифты в этой папке распространяются по лицензии SIL Open Font License 1.1
+(https://openfontlicense.org), которая разрешает размещать их на своём сайте.
+
+Caveat      — Copyright 2014 The Caveat Project Authors (https://github.com/googlefonts/caveat)
+Golos Text  — Copyright 2019 The Golos Text Project Authors (https://github.com/googlefonts/golos-text)
