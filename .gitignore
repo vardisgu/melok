@@ -1,0 +1,6 @@
+.DS_Store
+.claude/
+*.png
+*.jpeg
+*.jpg
+cat-demo.html

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Мелок — винный бар</title>
+<meta name="description" content="Мелок — винный бар. Вино по бокалам, закуски и кот на стекле.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4eee3;
+    --chalk: #1b1716;   /* теперь это «тушь»: линии и заголовки */
+    --text: #3a322e;
+    --muted: #7d7167;
+    --amber: #c9862c;
+    --wine: #8a2a3f;
+    --line: rgba(27, 23, 22, .16);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 400 17px/1.6 "Golos Text", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .hand { font-family: "Caveat", "Segoe Print", cursive; font-weight: 700; color: var(--chalk); line-height: 1; }
+
+  /* шапка */
+  header {
+    position: absolute; inset: 0 0 auto 0; z-index: 5;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px clamp(20px, 4vw, 48px);
+  }
+  header .hand { font-size: 34px; text-decoration: none; }
+  nav { display: flex; gap: clamp(16px, 3vw, 34px); }
+  nav a { text-decoration: none; font-size: 15px; color: var(--text); padding: 6px 0; border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
+  nav a:hover, nav a:focus-visible { color: var(--chalk); border-color: var(--amber); }
+
+  /* первый экран: ночное окно с огнями */
+  .hero {
+    position: relative; min-height: 100svh; overflow: hidden; isolation: isolate;
+    display: grid; place-items: center; padding: 96px 20px 56px; text-align: center;
+    background:
+      radial-gradient(38vmax 30vmax at 10% 14%, rgba(233, 168, 76, .26), transparent 62%),
+      radial-gradient(30vmax 26vmax at 90% 22%, rgba(138, 42, 63, .13), transparent 64%),
+      radial-gradient(44vmax 30vmax at 72% 100%, rgba(233, 168, 76, .16), transparent 60%),
+      radial-gradient(34vmax 28vmax at 16% 96%, rgba(138, 42, 63, .09), transparent 62%),
+      var(--bg);
+  }
+  .stage { width: min(720px, 100%, 66svh); }
+  #cat { display: block; width: 100%; aspect-ratio: 720 / 520; filter: invert(1); mix-blend-mode: multiply; cursor: pointer; }
+  .hero h1 { margin: -4svh 0 0; font-size: clamp(72px, min(17vw, 17svh), 150px); transform: rotate(-3deg); }
+  .stage p { margin: 14px 0 0; font-size: clamp(16px, 2.2vw, 20px); letter-spacing: .32em; text-transform: uppercase; color: var(--muted); padding-left: .32em; }
+  .btn {
+    display: inline-block; margin-top: 30px; padding: 13px 28px; border-radius: 999px;
+    border: 1.5px solid var(--chalk); color: var(--chalk); text-decoration: none; font-weight: 500;
+    transition: background .2s, color .2s, transform .15s;
+  }
+  .btn:hover, .btn:focus-visible { background: var(--chalk); color: var(--bg); }
+  .btn:active { transform: scale(.97); }
+
+  .legal { position: absolute; inset: auto 0 14px 0; margin: 0; padding: 0 20px; font-size: 12px; color: var(--muted); opacity: .7; }
+
+  @media (max-width: 760px) {
+    header { padding: 14px 20px; }
+    header .hand { font-size: 28px; }
+    nav a { font-size: 14px; }
+    .hero { padding-top: 84px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="hand" href="#top">Мелок</a>
+  <nav>
+    <a href="https://www.instagram.com/melok.bar/" target="_blank" rel="noopener">Instagram</a>
+  </nav>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="stage">
+      <canvas id="cat" role="img" aria-label="Нарисованный мелом котёнок встаёт и трётся о бутылку вина" title="Нажмите на кота"></canvas>
+      <h1 class="hand">Мелок</h1>
+      <p>винный бар</p>
+      <a class="btn" href="https://www.instagram.com/melok.bar/" target="_blank" rel="noopener">@melok.bar</a>
+    </div>
+    <p class="legal">18+ · Чрезмерное употребление алкоголя вредит вашему здоровью</p>
+  </div>
+
+</main>
+
+<script src="cat.js"></script>
+</body>
+</html>
