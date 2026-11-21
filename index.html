@@ -25,14 +25,14 @@
   /* первый экран: афиша — кот — карта */
   .hero {
     position: relative; min-height: 100svh; padding: 40px clamp(20px, 3.5vw, 48px) 54px;
-    display: grid; grid-template-columns: minmax(290px, 390px) minmax(0, 1fr) minmax(250px, 310px);
+    display: grid; grid-template-columns: minmax(270px, 380px) minmax(0, 1fr) minmax(270px, 380px); /* боковые колонки равной ширины — иначе центр уезжает */
     gap: clamp(20px, 3vw, 48px); align-items: center; justify-content: center;
     max-width: 1500px; margin-inline: auto;
   }
   .center { text-align: center; display: grid; justify-items: center; }
   .stage { width: min(600px, 100%, 56svh); }
   #cat { display: block; width: 100%; aspect-ratio: 720 / 520; filter: invert(1); mix-blend-mode: multiply; cursor: pointer; }
-  h1 { margin: -3.5svh 0 0; font-size: clamp(72px, min(11vw, 16svh), 138px); transform: rotate(-3deg); }
+  h1 { margin: -3.5svh 0 0; font-size: clamp(72px, min(11vw, 16svh), 138px); transform: translateX(-.06em) rotate(-3deg); /* сдвиг: у рукописного шрифта буквы смещены вправо от своей рамки */ }
   .kind { margin: 12px 0 0; font-size: clamp(14px, 1.5vw, 17px); letter-spacing: .32em; text-transform: uppercase; color: var(--muted); padding-left: .32em; }
   .lead { margin: 14px 0 0; max-width: 30ch; font-size: clamp(22px, 2.2vw, 27px); font-weight: 500; line-height: 1.15; color: var(--text); }
   .actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 22px; }
@@ -41,10 +41,24 @@
   .btn.fill { background: var(--ink); color: #fff; }
   .btn.fill:hover, .btn.fill:focus-visible { background: #fff; color: var(--ink); }
   .btn:active { transform: scale(.97); }
+  .only-m { display: none; }
+
+  /* плавающее меню-«облако» */
+  .float {
+    position: fixed; z-index: 20; top: 12px; left: 50%; translate: -50% -160%; opacity: 0; pointer-events: none;
+    display: none; gap: 2px; padding: 5px; white-space: nowrap; border-radius: 999px;
+    background: rgba(255, 255, 255, .88); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    border: 1px solid var(--line); box-shadow: 0 14px 30px -14px rgba(0, 0, 0, .4), 0 2px 6px rgba(0, 0, 0, .06);
+    transition: translate .3s cubic-bezier(.2, .8, .2, 1), opacity .2s;
+  }
+  .float.on { translate: -50% 0; opacity: 1; pointer-events: auto; }
+  .float a { padding: 9px 14px; border-radius: 999px; font-size: 14.5px; font-weight: 500; text-decoration: none; color: var(--ink); }
+  .float a:active { background: var(--ink); color: #fff; }
+  #afisha, #map { scroll-margin-top: 76px; }
 
   /* афиша — белый бумажный лист, чёрно-белая */
   .poster {
-    position: relative; rotate: 2.2deg; background: #fff; text-align: center;
+    position: relative; rotate: 2.2deg; background: #fff; text-align: center; width: 100%; max-width: 310px; justify-self: center;
     padding: 34px 26px 34px; border: 2px solid var(--ink); outline: 1px solid var(--ink); outline-offset: -8px;
     box-shadow: 0 18px 32px -20px rgba(0, 0, 0, .45), 0 2px 6px rgba(0, 0, 0, .08);
   }
@@ -68,22 +82,33 @@
   .legal { position: absolute; inset: auto 0 14px 0; margin: 0; padding: 0 20px; text-align: center; font-size: 12px; color: var(--muted); opacity: .8; }
 
   @media (max-width: 1080px) {
-    .hero { grid-template-columns: repeat(2, minmax(0, 360px)); padding-bottom: 76px; row-gap: 44px; }
-    .center { grid-column: 1 / -1; order: -1; }
+    .hero { grid-template-columns: repeat(2, minmax(0, 360px)); padding-top: 0; padding-bottom: 76px; row-gap: 44px; }
+    .center { grid-column: 1 / -1; order: -1; min-height: 100svh; align-content: center; padding-block: 24px; } /* блок с котом — ровно на весь первый экран */
     .stage { width: min(560px, 100%, 50svh); }
     .poster, .map { align-self: start; }
     .map { order: 1; }
     .legal { order: 2; }
+    .only-m { display: inline-block; }
+    .float { display: flex; }
   }
   @media (max-width: 680px) {
-    .hero { grid-template-columns: minmax(0, 400px); padding-top: 28px; }
+    .hero { grid-template-columns: minmax(0, 400px); }
     .legal { position: static; grid-column: 1 / -1; padding: 0; }
+    .actions { flex-wrap: nowrap; gap: 8px; }
+    .btn { padding: 11px 15px; font-size: 15px; white-space: nowrap; }
   }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .float { transition: none; } }
 </style>
 </head>
 <body>
 
+
+<!-- плавающее меню: появляется на узких экранах, когда блок с котом ушёл из вида -->
+<nav class="float" id="float" aria-label="Быстрая навигация">
+  <a href="#afisha">Афиша</a>
+  <a href="#" data-todo="ссылка на меню">Меню</a>
+  <a href="#map">Где нас найти</a>
+</nav>
 
 <main class="hero" id="top">
 
@@ -137,7 +162,9 @@
     <p class="kind">винный бар</p>
     <p class="lead hand">Во дворе на Кави Наджми, 8а — в двух шагах от Баумана</p>
     <div class="actions" id="menu">
+      <a class="btn only-m" href="#afisha">Афиша</a>
       <a class="btn fill" href="#" data-todo="ссылка на меню">Меню</a>
+      <a class="btn only-m" href="#map">Где нас найти</a>
     </div>
   </section>
 
@@ -172,6 +199,14 @@
     set('ev-when', e.what ? e.when : '');
     set('afisha-h', e.what || 'Скоро новые анонсы');
     set('ev-note', e.what ? e.note : 'А пока — заходите на бокал.');
+  })();
+</script>
+<script>
+  // плавающее меню показывается, когда блок с котом и кнопками полностью ушёл за край экрана
+  (function () {
+    const nav = document.getElementById('float'), hero = document.querySelector('.center');
+    if (!nav || !hero || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(([e]) => nav.classList.toggle('on', !e.isIntersecting)).observe(hero);
   })();
 </script>
 <script src="cat.js?v=6"></script>
