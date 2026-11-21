@@ -122,7 +122,6 @@
       ph: travel * R * 0.65 / STRIDE,
       tilt: 0.12 * smooth(1.4, 1.6, t) * (1 - smooth(1.9, 2.1, t)) - 0.1 * smooth(10.6, 10.9, t) * (1 - smooth(11.8, 12.2, t)),
       twitch: (t > 0.45 && t < 0.62) || (t > 12.55 && t < 12.72) ? 1 : 0,
-      flick: Math.max(0, Math.sin(t * 3.1)) * (1 - wk),
       wobble: (0.04 * Math.sin(t * 4.3) + 0.014 * Math.sin(t * 9.1)) * rub,
       slosh: (0.11 * Math.sin(t * 4.3 - 1.1) + 0.04 * Math.sin(t * 9.1 - 0.9)) * rub
     };
@@ -154,20 +153,16 @@
     ];
     // туловище — всегда один силуэт
     const C0 = LL(headU, headH, -0.1 * rub);
-    const g0 = G((C0[2] + neck[2]) / 2 || 0.001), torsoEr = [];
+    const g0 = G((C0[2] + neck[2]) / 2 || 0.001);
     groups.push(g0);
-    const shr = LW + 1.2;
     sph.forEach((s, i) => {
       s.g = g0;
       g0.shapes.push(circ(s.p, s.r));
-      torsoEr.push(circPts(proj(s.p), s.r * U - shr, 22));
       if (i > 0) {
         const q = sph[i - 1];
         g0.shapes.push(cap(q.p, q.r, s.p, s.r));
-        torsoEr.push(hull(circPts(proj(q.p), q.r * U - shr, 16).concat(circPts(proj(s.p), s.r * U - shr, 16))));
       }
     });
-    const relZ = (p, s, bias) => g0.z + bias;
 
     // пушок на груди
     {
@@ -197,16 +192,18 @@
         [K, F] = ik(J, F, 0.28, 0.28, bend);
         r0 = 0.17; r1 = 0.15; r2 = 0.14; att = sph[4];
       } else {
-        J = LL(hipsU, hipsH - lerp(0.2, 0.18, s1), tw + L.sgn * lerp(0.36, 0.27, s1));
-        fu = lerp(hipsU + 0.62, hipsU - 0.08 + x, s1);
-        F = LL(fu, 0.15 + lift, tw * 0.5 * s1 + L.sgn * lerp(0.55, 0.27, s1));
+        J = LL(hipsU, hipsH - lerp(0.2, 0.18, s1), tw + L.sgn * lerp(L.sgn > 0 ? 0.38 : 0.08, 0.27, s1));
+        fu = lerp(hipsU + (L.sgn > 0 ? 0.3 : 0.25), hipsU - 0.08 + x, s1); // сидя дальняя задняя лапа поджата под тело
+        F = LL(fu, 0.15 + lift, tw * 0.5 * s1 + L.sgn * lerp(L.sgn > 0 ? 0.74 : 0.12, 0.27, s1));
         const hd = headingAt(a, hipsU);
         bend = norm(comb(UP, 1 - s1, hd, 0.3 * (1 - s1) - s1));
         [K, F] = ik(J, F, 0.3, 0.3, bend);
-        r0 = lerp(0.42, 0.33, s1); r1 = 0.16; r2 = 0.14; att = sph[0];
+        r0 = lerp(0.37, 0.33, s1); r1 = 0.16; r2 = 0.14; att = sph[0];
       }
       const hdF = headingAt(a, fu), lat = outwardAt(a, fu);
-      const g = G(relZ(J, att, J[2] >= att.p[2] ? 0.002 : -0.002));
+      // стоя: ближние лапы сливаются с телом в один силуэт, дальние рисуются до тела и им перекрываются
+      const near = J[2] >= att.p[2], own = s1 <= 0.5 || !near;
+      const g = own ? G(g0.z + (near ? 0.002 : -0.002)) : g0;
       g.shapes.push(circ(J, r0), cap(J, r0, K, r1), cap(K, r1, F, r2));
       // лапка с тремя пальчиками-фестонами
       const toe = k => comb(F, 1, lat, k * 0.115, hdF, 0.06 - Math.abs(k) * 0.03, UP, -0.05);
@@ -216,10 +213,8 @@
         const b = comb(toe(k), 1, hdF, 0.07);
         g.strokes.push({ pts: [proj(comb(b, 1, UP, -0.06)), proj(comb(b, 1, UP, 0.03))], w: 0.9 });
       }
-      if (s1 > 0.5) g.erasers.push(...torsoEr);
-      else if (L.front) g.erasers.push(circPts(proj(J), r0 * U + LW + 0.5, 22));
-      else g.erasers.push(circPts(proj(add(J, [0, 0.13, 0])), r0 * 0.86 * U, 22));
-      groups.push(g);
+      if (s1 <= 0.5) g.erasers.push(L.front ? circPts(proj(J), r0 * U + LW + 0.5, 22) : circPts(proj(add(J, [0, 0.13, 0])), r0 * 0.86 * U, 22));
+      if (own) groups.push(g);
     }
 
     // --- хвост ---
@@ -232,16 +227,17 @@
         const ang = aBase - tt * 2.0, rad = lerp(R + tw, RB + 0.15, smooth(0, 0.62, tt)), hh = lerp(baseH, 1.35, smooth(0, 1, tt));
         const wrap = [rad * Math.cos(ang), hh, rad * Math.sin(ang)];
         const f = tt * 2.5;
-        const sit = LL(hipsU - 0.72 * Math.cos(f), 0.14 + P.flick * 0.9 * Math.max(0, tt - 0.75), -0.78 * Math.sin(f));
+        const sit = LL(hipsU - 0.3 * Math.cos(f), 0.16, -0.3 * Math.sin(f)); // сидя хвост целиком спрятан за телом
         pts.push({ p: comb(sit, wSit, up, wUp, wrap, wWrap), r: lerp(0.105, 0.085, tt) });
       }
-      let g = null, n = 0;
+      // хвост по ту же сторону бутылки, что и тело, — часть общего силуэта; по другую — отдельный слой
+      const bodyBack = g0.z < 0, gT = G(0); let n = 0;
       pts.forEach((s, i) => {
-        if (!g || (pts[i - 1].p[2] < 0) !== (s.p[2] < 0)) { if (g) { g.z /= n; groups.push(g); } g = G(0); n = 0; if (i === 0) g.erasers.push(circPts(proj(s.p), s.r * U + LW + 0.5, 16)); }
-        g.z += s.p[2]; n++;
+        const g = (s.p[2] < 0) === bodyBack ? g0 : gT;
+        if (g === gT) { gT.z += s.p[2]; n++; }
         if (i < N - 1) g.shapes.push(cap(s.p, s.r, pts[i + 1].p, pts[i + 1].r)); else g.shapes.push(circ(s.p, s.r));
       });
-      g.z /= n; groups.push(g);
+      if (n) { gT.z /= n; groups.push(gT); }
     }
 
     // --- голова ---
@@ -294,10 +290,10 @@
 
     // мордочка
     const fp = (lx, ly) => { const n = norm(comb(fF, 1, r, lx, uF, ly)); return { n, p: comb(C, 1, r, CK * 0.8 * lx, uF, CK * 0.8 * ly, n, HR) }; };
-    const facePts = list => { const pts = []; let hid = 0; for (const q of list) { const v = fp(q[0], q[1]); if (dot(v.n, CAM) > 0.1) pts.push(proj(v.p)); else hid++; } return { pts, hid }; };
+    const facePts = list => { const pts = []; let hid = 0; for (const q of list) { const v = fp(q[0], q[1]); if (dot(v.n, CAM) > 0.3) pts.push(proj(v.p)); else hid++; } return { pts, hid }; };
     const faceStroke = (list, closed, w) => {
       const { pts, hid } = facePts(list);
-      if (pts.length > 1 && hid < list.length * 0.45) gf.strokes.push({ pts, closed: closed && !hid, w: w || 1 });
+      if (pts.length > 1 && hid < list.length * 0.25) gf.strokes.push({ pts, closed: closed && !hid, w: w || 1 });
     };
     for (const sg of [1, -1]) {
       const ex = sg * 0.335, ey = -0.04, sl = sg * 0.5, cs = Math.cos(sl), sn = Math.sin(sl), n = 9;
