@@ -1,250 +1,889 @@
 <!doctype html>
-<html lang="ru">
-<head>
+<html lang="ru"><head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Мелок — винный бар во дворе на Кави Наджми, Казань</title>
-<meta name="description" content="Мелок — винный бар во дворе на улице Кави Наджми в центре Казани, в двух шагах от Баумана.">
-<link rel="preload" href="fonts/caveat-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Мелок — винный бар и бистро в Казани · Кави Наджми, 8а</title>
+<meta name="description" content="Мелок — винный бар и бистро во дворе на Кави Наджми, 8а, в двух шагах от Баумана. С 12:00 — бистро, с 18:00 — вино. Мероприятия и корпоративы, слепые дегустации, музыка каждую пятницу.">
+<meta name="theme-color" content="#0f161b">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Мелок — винный бар и бистро в Казани">
+<meta property="og:description" content="Уютное место в центре Казани. Кави Наджми, 8а — вход со двора.">
+<link rel="icon" href="img/favicon.ico" sizes="32x32">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preload" href="fonts/shantell-italic.woff2" as="font" type="font/woff2" crossorigin="">
+<link rel="preload" href="fonts/ptmono-regular.woff2" as="font" type="font/woff2" crossorigin="">
 <style>
-  /* шрифты лежат рядом с сайтом, из сети ничего не подгружается */
-  @font-face { font-family: "Caveat"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/caveat-cyrillic.woff2") format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
-  @font-face { font-family: "Caveat"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/caveat-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-  @font-face { font-family: "Golos Text"; font-style: normal; font-weight: 400 500; font-display: swap; src: url("fonts/golos-text-cyrillic.woff2") format("woff2"); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
-  @font-face { font-family: "Golos Text"; font-style: normal; font-weight: 400 500; font-display: swap; src: url("fonts/golos-text-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  /* Шрифты лежат рядом с сайтом, из сети ничего не подгружается.
+     Те же шрифты, что в бумажном меню бара: PT Mono — машинописный текст,
+     Shantell Sans — надписи от руки (курсив — заголовки, жирный — подписи разделов). */
+  @font-face { font-family: "PT Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/ptmono-regular.woff2") format("woff2"); }
+  @font-face { font-family: "PT Mono"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/ptmono-bold.woff2") format("woff2"); }
+  @font-face { font-family: "Shantell Sans"; font-style: italic; font-weight: 300 600; font-display: swap; src: url("fonts/shantell-italic.woff2") format("woff2"); }
+  @font-face { font-family: "Shantell Sans"; font-style: normal; font-weight: 700 900; font-display: swap; src: url("fonts/shantell-bold.woff2") format("woff2"); }
 
   :root {
-    --bg: #fff;
-    --ink: #1b1716;
-    --text: #2c2827;
-    --muted: #7a7674;
-    --line: rgba(27, 23, 22, .22);
+    --blue: #2f6987;        /* фирменный синий из логотипа */
+    --blue-deep: #214e66;
+    --ink: #1c2226;
+    --paper: #fffefc;
+    --night: #0f161b;
+    --red: #f0503f;
+    --mono: "PT Mono", ui-monospace, "SF Mono", Menlo, "Courier New", monospace;
+    --hand: "Shantell Sans", "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+    --pad: clamp(20px, 4.6vw, 76px);
+    --ease: cubic-bezier(.2, .7, .2, 1);
   }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--bg); color: var(--text); font: 400 16px/1.55 "Golos Text", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--night); color: var(--ink); font: 400 15px/1.62 var(--mono); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden; }
+  img, svg { display: block; max-width: 100%; }
   a { color: inherit; }
-  /* Шрифты — две роли.
-     1) .hand — всё «написанное от руки»: название, заголовки, фразы, кнопки, подписи на карте. Одно начертание.
-     2) .cap  — мелкие служебные подписи: капсом вразрядку, один размер и вес на всю страницу. */
-  .hand { font-family: "Caveat", "Segoe Print", cursive; font-weight: 700; color: var(--ink); line-height: 1; }
-  .cap { margin: 0; font: 500 13px/1.3 "Golos Text", system-ui, sans-serif; letter-spacing: .28em; text-transform: uppercase; color: var(--muted); padding-left: .28em; }
+  h1, h2, h3, p, ul, figure, dl, dd, address { margin: 0; padding: 0; font-style: normal; }
+  ul { list-style: none; }
+  :focus-visible { outline: 2px solid currentColor; outline-offset: 4px; border-radius: 4px; }
 
-  /* первый экран: афиша — кот — карта */
-  .hero {
-    position: relative; min-height: 100svh; padding: 40px clamp(20px, 3.5vw, 48px) 54px;
-    display: grid; grid-template-columns: minmax(270px, 380px) minmax(0, 1fr) minmax(270px, 380px); /* боковые колонки равной ширины — иначе центр уезжает */
-    gap: clamp(20px, 3vw, 48px); align-items: center; justify-content: center;
-    max-width: 1500px; margin-inline: auto;
-  }
-  .center { text-align: center; display: grid; justify-items: center; }
-  .stage { width: min(600px, 100%, 56svh); }
-  #cat { display: block; width: 100%; aspect-ratio: 720 / 520; filter: invert(1); mix-blend-mode: multiply; cursor: pointer; }
-  h1 { margin: -3.5svh 0 0; font-size: clamp(72px, min(11vw, 16svh), 138px); transform: translateX(-.06em) rotate(-3deg); /* сдвиг: у рукописного шрифта буквы смещены вправо от своей рамки */ }
-  .kind { margin-top: 12px; }
-  .lead { margin: 14px 0 0; max-width: 30ch; font-size: clamp(23px, 2.2vw, 28px); line-height: 1.12; }
-  .actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 22px; }
-  /* кнопки нарисованы той же линией: неровный овал от руки, подпись рукописным шрифтом */
-  .btn {
-    position: relative; isolation: isolate; display: inline-block; padding: 7px 28px 10px; text-decoration: none;
-    font: 700 28px/1 "Caveat", "Segoe Print", cursive; color: var(--ink); transition: color .2s, transform .15s;
-  }
-  .btn::before {
-    content: ""; position: absolute; inset: 0; z-index: -1; background: #fff;
-    border: 2.6px solid var(--ink); border-radius: 255px 22px 225px 20px / 20px 225px 24px 255px;
-    filter: url(#hand); transition: background .2s, rotate .2s;
-  }
-  .btn.fill { color: #fff; }
-  .btn.fill::before { background: var(--ink); }
-  .btn:hover::before, .btn:focus-visible::before { rotate: -1.2deg; background: var(--ink); }
-  .btn:hover, .btn:focus-visible { color: #fff; outline: none; }
-  .btn.fill:hover::before, .btn.fill:focus-visible::before { background: #fff; }
-  .btn.fill:hover, .btn.fill:focus-visible { color: var(--ink); }
-  .btn:active { transform: scale(.96); }
-  .only-m { display: none; }
+  /* роли шрифтов: .hand — надписи от руки тонким маркером (заголовки, фразы); подписи толстым маркером (названия разделов меню, «язычок»)
+     задают жирное начертание сами; всё остальное — машинописный PT Mono */
+  .hand { font-family: var(--hand); font-style: italic; font-weight: 400; font-synthesis: none; text-transform: uppercase; letter-spacing: .01em; line-height: 1.04; }
+  .kicker { font: 400 12px/1.4 var(--mono); letter-spacing: .24em; text-transform: uppercase; }
+  .h2 { font-size: clamp(31px, 3.9vw, 62px); color: var(--blue); rotate: -2.5deg; transform-origin: 0 100%; text-wrap: balance; margin: 18px 0 0; }
+  .lead { margin-top: 30px; max-width: 47ch; font-size: 16px; text-wrap: pretty; }
+  .btn { display: inline-flex; align-items: center; gap: .9em; padding: 16px 26px 15px; border: 1.5px solid currentColor; border-radius: 999px; font: 400 12.5px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; text-decoration: none; white-space: nowrap; transition: background .2s, color .2s, border-color .2s, transform .15s; }
+  .btn svg { width: 26px; height: 12px; transition: translate .25s var(--ease); }
+  .btn:hover svg { translate: 5px 0; }
+  .btn:active { transform: scale(.97); }
+  .btn.solid { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .btn.solid:hover { background: var(--blue-deep); border-color: var(--blue-deep); }
+  .btn.light { color: #fff; }
+  .btn.light:hover { background: #fff; color: var(--ink); border-color: #fff; }
+  .btn.white { background: #fff; border-color: #fff; color: var(--blue); }
+  .btn.white:hover { background: transparent; color: #fff; }
+  .btn.line { color: var(--blue); }
+  .btn.line:hover { background: var(--blue); color: #fff; }
+  .btn .dl { width: 15px; height: 17px; }
+  .btn:hover .dl { translate: 0 3px; }
+  .ico { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .sec { position: relative; padding: clamp(76px, 10vw, 150px) var(--pad); }
+  /* секции можно менять местами в админке; если рядом оказались две одного цвета, между ними появляется тонкая линия */
+  main > [data-tone="paper"] + [data-tone="paper"] { border-top: 1.5px dashed rgba(47, 105, 135, .32); }
+  main > [data-tone="night"] + [data-tone="night"] { border-top: 1px solid rgba(255, 255, 255, .14); }
+  .wrap { max-width: 1280px; margin-inline: auto; }
+  .ph { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; background: #1a2228; }
+  .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
-  /* плавающее меню-«облако» */
-  .float {
-    position: fixed; z-index: 20; top: 12px; left: 50%; translate: -50% -160%; opacity: 0; pointer-events: none;
-    display: none; gap: 2px; padding: 5px; white-space: nowrap; border-radius: 999px;
-    background: rgba(255, 255, 255, .88); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-    border: 1px solid var(--line); box-shadow: 0 14px 30px -14px rgba(0, 0, 0, .4), 0 2px 6px rgba(0, 0, 0, .06);
-    transition: translate .3s cubic-bezier(.2, .8, .2, 1), opacity .2s;
-  }
+  /* появление при прокрутке: работает только если есть скрипт; без него всё видно сразу */
+  .js [data-r] { opacity: 0; translate: 0 26px; transition: opacity .8s var(--ease) var(--d, 0s), translate .8s var(--ease) var(--d, 0s); }
+  .js [data-r].in { opacity: 1; translate: 0 0; }
+
+  /* ───────── 1. первый экран ───────── */
+  .hero { position: relative; isolation: isolate; min-height: 100svh; display: grid; grid-template-rows: auto 1fr auto; color: #fff; background: #0b1115; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; z-index: -3; }
+  .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; animation: kb 28s ease-out both; }
+  @keyframes kb { from { transform: scale(1.09); } to { transform: scale(1); } }
+  .hero-blur { position: absolute; inset: 0; z-index: -2; -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); -webkit-mask-image: linear-gradient(90deg, #000 16%, transparent 50%); mask-image: linear-gradient(90deg, #000 16%, transparent 50%); }
+  .hero-shade { position: absolute; inset: 0; z-index: -1; background:
+    linear-gradient(90deg, rgba(8, 12, 16, .86), rgba(8, 12, 16, .64) 30%, rgba(8, 12, 16, .16) 60%, rgba(8, 12, 16, .3)),
+    linear-gradient(0deg, rgba(8, 12, 16, .88), rgba(8, 12, 16, 0) 34%),
+    linear-gradient(180deg, rgba(8, 12, 16, .62), rgba(8, 12, 16, 0) 22%); }
+
+  .nav, .hero-mid, .hero-foot { width: 100%; max-width: 1760px; margin-inline: auto; }
+  .nav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; padding: 26px var(--pad) 0; font: 400 clamp(12.5px, .82vw, 15px)/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; }
+  .nav a { position: relative; padding: 9px 0; text-decoration: none; }
+  .nav-l, .nav-r { display: flex; align-items: center; gap: clamp(18px, 3.4vw, 60px); }
+  .nav-r { justify-content: flex-end; }
+  .nav-logo { font-size: 1.2em; letter-spacing: .28em; padding-left: .28em !important; }
+  .nav a:not(.nav-book)::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 3px; height: 1.5px; background: currentColor; transition: right .3s var(--ease); }
+  .nav a:not(.nav-book):hover::after { right: .2em; }
+  .nav-book { padding: 11px 17px 10px 19px !important; border: 1.5px solid rgba(255, 255, 255, .85); border-radius: 999px; transition: background .2s, color .2s; }
+  .nav-book:hover { background: #fff; color: var(--ink); }
+
+  .hero-mid { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 32px; padding: clamp(18px, 4vh, 44px) var(--pad); }
+  .lockup { width: clamp(230px, min(33vw, 50svh), 620px); }
+  .lockup .cat { width: 37%; margin-left: 24%; margin-bottom: -2.5%; }
+  .lockup .word { width: 100%; }
+  .lockup svg { width: 100%; height: auto; }
+  .lockup h1 { line-height: 0; }
+  .hero-kind { margin-top: .7em; text-align: right; font-size: clamp(14px, 1.55vw, 28px); letter-spacing: .14em; padding-right: .1em; }
+  .hero-tag { margin-top: clamp(20px, 4.4vh, 46px); font-size: clamp(20px, 2.15vw, 40px); letter-spacing: .04em; line-height: 1.18; }
+  .hero-hours { margin-top: 16px; font-size: clamp(12.5px, .82vw, 15px); letter-spacing: .16em; text-transform: uppercase; color: rgba(255, 255, 255, .78); }
+  .hero-addr { display: none; }   /* адрес под режимом работы — только на телефоне; на компьютере он в нижней строке */
+  .hero-cta { margin-top: clamp(22px, 4.4vh, 44px); }
+  .seelink { display: inline-flex; align-items: center; gap: 16px; padding-bottom: 7px; border-bottom: 2px solid #fff; font-size: clamp(15px, 1.3vw, 23px); letter-spacing: .08em; text-decoration: none; }
+  .seelink svg { width: 40px; height: 18px; transition: translate .3s var(--ease); }
+  .seelink:hover svg { translate: 8px 0; }
+
+  /* анонс — «меловая табличка» */
+  .event { position: relative; display: grid; justify-items: start; gap: 4px; width: fit-content; min-width: clamp(230px, 21vw, 360px); max-width: clamp(280px, 30vw, 480px); padding: 24px 28px 22px; text-decoration: none; rotate: 1.6deg; transition: rotate .3s var(--ease), translate .3s var(--ease); }
+  .event:hover { rotate: 0deg; translate: 0 -4px; }
+  .event-frame { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: -1; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); border-radius: 10px; }
+  .event .kicker { font-size: 11px; color: rgba(255, 255, 255, .72); margin-bottom: 8px; }
+  .event-title { font-size: clamp(18px, 1.8vw, 33px); line-height: 1.14; letter-spacing: .03em; text-wrap: balance; }
+  .event-date { margin-top: 8px; font-size: clamp(18px, 1.8vw, 33px); letter-spacing: .03em; color: var(--red); }
+  .event-when { margin-top: 2px; font-size: clamp(16px, 1.5vw, 27px); letter-spacing: .03em; }
+  .event-more { display: inline-flex; align-items: center; gap: 10px; margin-top: 14px; font: 400 11px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; color: rgba(255, 255, 255, .8); }
+  .event-more svg { width: 24px; height: 11px; transition: translate .3s var(--ease); }
+  .event:hover .event-more svg { translate: 6px 0; }
+
+  /* боковые колонки равной ширины — поэтому плашка стоит точно по оси страницы */
+  .hero-foot { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; gap: clamp(20px, 3vw, 52px); padding: 0 var(--pad); font-size: clamp(12.5px, .82vw, 15px); line-height: 1.55; letter-spacing: .14em; text-transform: uppercase; }
+  .foot-left { display: grid; gap: 10px; justify-items: start; padding-bottom: 28px; }
+  .foot-item a { text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s; }
+  .foot-item a:hover { border-bottom-color: currentColor; }
+  .foot-item .dim { display: block; color: rgba(255, 255, 255, .66); }
+  .foot-addr { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; }
+  .foot-addr svg { width: 22px; height: 28px; }
+  .foot-book { padding-left: 36px; }   /* под текстом адреса, а не под значком */
+  .foot-soc { justify-self: end; padding-bottom: 28px; }
+  .foot-soc .links { display: flex; gap: 22px; }
+  /* крупный указатель на вторую секцию: «язычок» бумаги, который заходит из блока мероприятий */
+  /* указатель на секцию под первым экраном: ширина — по тексту; надстрочная подпись идёт во всю ширину,
+     а стрелка стоит сразу за названием, какой бы длины ни была подпись; цвет берётся у секции */
+  .hero-tab { justify-self: center; display: grid; grid-template-columns: auto auto; justify-content: start; align-items: center; gap: 8px clamp(14px, 1.4vw, 22px); width: fit-content; max-width: 100%; padding: 20px 26px 18px 30px; background: var(--paper); color: var(--blue); border-radius: 24px 24px 0 0; text-decoration: none; text-transform: none; letter-spacing: 0; box-shadow: 0 -22px 60px rgba(0, 0, 0, .4); transition: padding .3s var(--ease); }
+  .hero-tab .tab-text { display: contents; }
+  .hero-tab:hover { padding-top: 28px; }
+  .hero-tab .kicker { grid-column: 1 / -1; display: block; font-size: 11px; color: var(--ink); opacity: .72; }
+  .hero-tab b { display: block; font: normal 800 clamp(19px, 2.15vw, 36px)/1.1 var(--hand); font-synthesis: none; letter-spacing: .07em; text-transform: uppercase; white-space: pre-line; }
+  .hero-tab .down { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; background: var(--blue); color: #fff; animation: bob 1.9s ease-in-out infinite; }
+  .hero-tab .down svg { width: 16px; height: 24px; }
+  .hero-tab[data-tone="night"] { background: var(--night); color: #fff; box-shadow: 0 -22px 60px rgba(0, 0, 0, .4), inset 0 1.5px 0 rgba(255, 255, 255, .55), inset 1.5px 0 0 rgba(255, 255, 255, .55), inset -1.5px 0 0 rgba(255, 255, 255, .55); }
+  .hero-tab[data-tone="blue"] { background: var(--blue); color: #fff; }
+  .hero-tab[data-tone="night"] .kicker, .hero-tab[data-tone="blue"] .kicker { color: #fff; }
+  .hero-tab[data-tone="night"] .down { background: #fff; color: var(--night); }
+  .hero-tab[data-tone="blue"] .down { background: #fff; color: var(--blue); }
+  @keyframes bob { 0%, 100% { translate: 0 -3px; } 50% { translate: 0 5px; } }
+
+  /* плавающее меню-«облако»: появляется, когда первый экран ушёл из вида */
+  .float { position: fixed; z-index: 30; top: 12px; left: 50%; translate: -50% -180%; opacity: 0; pointer-events: none; display: flex; align-items: center; gap: 2px; max-width: calc(100vw - 16px); padding: 5px; overflow-x: auto; scrollbar-width: none; white-space: nowrap; border-radius: 999px; background: rgba(255, 254, 252, .9); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid rgba(28, 34, 38, .12); box-shadow: 0 16px 34px -16px rgba(0, 0, 0, .45), 0 2px 6px rgba(0, 0, 0, .06); font: 400 11.5px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; transition: translate .35s var(--ease), opacity .25s; }
+  .float::-webkit-scrollbar { display: none; }
   .float.on { translate: -50% 0; opacity: 1; pointer-events: auto; }
-  .float a { padding: 6px 14px 8px; border-radius: 999px; font: 700 22px/1 "Caveat", "Segoe Print", cursive; text-decoration: none; color: var(--ink); }
-  .float a:active { background: var(--ink); color: #fff; }
-  #afisha, #map { scroll-margin-top: 76px; }
+  .float a { padding: 11px 13px 10px; border-radius: 999px; text-decoration: none; color: var(--ink); transition: background .2s, color .2s; }
+  .float a:hover { background: rgba(47, 105, 135, .12); }
+  .float a.go { background: var(--blue); color: #fff; }
 
-  /* афиша — лист бумаги, нарисованный той же линией, что кот и карта: волнистые края, закрученный уголок, скотч */
-  .poster {
-    position: relative; rotate: 2.2deg; width: 100%; max-width: 310px; justify-self: center;
-    filter: drop-shadow(0 9px 9px rgba(0, 0, 0, .09));
+  /* ───────── 2. мероприятия ───────── */
+  .events { background: var(--paper); }
+  .events .wrap { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: clamp(36px, 7vw, 120px); align-items: center; }
+  .events .kicker, .menu .kicker { color: var(--blue); }
+  .events .h2 { font-size: clamp(29px, 3.8vw, 55px); }
+  .points { margin-top: 30px; display: grid; gap: 12px; max-width: 50ch; }
+  .points li { display: grid; grid-template-columns: 30px 1fr; align-items: start; gap: 6px; }
+  .points svg { width: 22px; height: 18px; margin-top: 3px; color: var(--blue); stroke-width: 2.4; }
+  .cta-row { margin-top: 38px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
+  .cta-row .or { font-size: 13px; }
+  .cta-row .or a { white-space: nowrap; text-underline-offset: 4px; }
+  .collage { position: relative; aspect-ratio: 1 / 1.1; }
+  .collage figure { position: absolute; overflow: hidden; border-radius: 6px; box-shadow: 0 34px 60px -34px rgba(15, 22, 27, .6); }
+  .collage .p1 { right: 0; top: 0; width: 72%; aspect-ratio: 3 / 4; rotate: 2deg; }
+  .collage .p2 { left: 0; bottom: 0; width: 50%; aspect-ratio: 4 / 5; rotate: -3.5deg; border: 8px solid var(--paper); border-radius: 8px; }
+  .collage .spark { position: absolute; left: 8%; top: 12%; width: 14%; color: var(--blue); }
+
+  /* ───────── 3. слепая дегустация ───────── */
+  .tasting { background: var(--night); color: rgba(255, 255, 255, .86); }
+  .tasting .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(24px, 4.5vw, 72px); align-items: center; }
+  .tasting figure { aspect-ratio: 2 / 3; }
+  .tasting .ph-a { translate: 0 7%; }
+  .tasting .ph-b { translate: 0 -7%; }
+  .tasting .mid { display: grid; justify-items: start; }
+  .tasting .h2, .music .h2 { color: #fff; }
+  .tasting .h2 { font-size: clamp(28px, 3.6vw, 56px); }
+  .tasting .kicker { color: rgba(255, 255, 255, .6); }
+  /* «дегустационный лист»: ответы закрашены — в этом и смысл слепой дегустации */
+  .sheet { position: relative; margin-top: 34px; width: min(100%, 390px); padding: 22px 24px 20px; background: var(--paper); color: var(--ink); border-radius: 4px; rotate: -1.6deg; font-size: 13.5px; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .8); }
+  .sheet-h { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--blue); padding-bottom: 10px; border-bottom: 1.5px solid var(--blue); margin-bottom: 10px; }
+  .sheet-row { display: grid; grid-template-columns: auto minmax(12px, 1fr) auto; align-items: baseline; gap: 8px; padding: 5px 0; }
+  .sheet-row .dots { align-self: end; height: 1px; margin-bottom: 5px; background: repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 6px); opacity: .4; }
+  .sheet-row i { display: block; height: 15px; width: var(--w); background: var(--ink); border-radius: 2px; translate: 0 2px; }
+  .sheet .guess { position: absolute; right: -10px; bottom: -32px; font-size: 21px; color: #fff; rotate: -5deg; text-transform: none; letter-spacing: .02em; }
+  .tasting .cta-row { margin-top: 56px; }
+
+  /* ───────── 4. меню — как на бумажном меню бара ───────── */
+  .menu { background: var(--paper); }
+  .menu-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 40px; }
+  .menu-title { font-size: clamp(62px, 8.2vw, 126px); line-height: .9; color: var(--blue); rotate: -5deg; transform-origin: 0 100%; letter-spacing: .02em; margin: 14px 0 0; }
+  .switch { display: inline-flex; padding: 4px; border: 1.5px solid var(--blue); border-radius: 999px; }
+  .switch button { padding: 12px 18px 11px; border: 0; border-radius: 999px; background: none; color: var(--blue); cursor: pointer; font: 400 12px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; transition: background .2s, color .2s; }
+  .switch button[aria-selected="true"] { background: var(--blue); color: #fff; }
+  .zoom { display: none; flex: none; place-items: center; width: 36px; height: 36px; padding: 0; border: 1.5px solid var(--blue); border-radius: 50%; background: none; color: var(--blue); cursor: pointer; font: 400 12px/1 var(--mono); }
+  .zoom[aria-pressed="true"] { background: var(--blue); color: #fff; }
+  .mcols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(40px, 6.5vw, 110px); margin-top: clamp(34px, 5vw, 70px); font-size: 13.5px; }
+  .mgroup { display: grid; grid-template-columns: 150px minmax(0, 1fr); align-items: center; }
+  .mgroup + .mgroup { margin-top: 30px; }
+  .mlabel { font-family: var(--hand); font-style: normal; font-weight: 800; font-synthesis: none; font-size: 14.5px; line-height: 1.1; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); rotate: -3deg; justify-self: start; }
+  .mlist li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; padding: 2px 0; line-height: 1.32; }
+  .mlist b { font-weight: 700; }
+  .msub { display: block; width: max-content; max-width: 100%; margin: 2px 0 2px auto; font-size: .93em; line-height: 1.35; }
+  .mnote { margin-top: 14px; color: var(--blue); }
+  .menu-foot { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px 40px; margin-top: clamp(30px, 4vw, 54px); }
+  .menu-foot p { font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); }
+  .menu-foot .cat { width: clamp(84px, 9vw, 130px); color: var(--blue); }
+  [hidden] { display: none !important; }
+
+  /* ───────── 5. музыка ───────── */
+  .music { background: var(--blue); color: rgba(255, 255, 255, .92); overflow: hidden; }
+  .music .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .95fr) minmax(0, .6fr); gap: clamp(28px, 4.5vw, 70px); align-items: center; }
+  .music .h2 { font-size: clamp(36px, 5.4vw, 82px); line-height: 1; }
+  .music .kicker { color: rgba(255, 255, 255, .7); }
+  .music .lead { max-width: 40ch; }
+  .discs { position: relative; aspect-ratio: 1; }
+  .disc { position: absolute; border-radius: 50%; overflow: hidden; box-shadow: 0 34px 70px -24px rgba(0, 0, 0, .55); }
+  .disc img { width: 100%; height: 100%; object-fit: cover; }
+  .disc.a { left: 5%; top: 5%; width: 70%; aspect-ratio: 1; }
+  .disc.b { right: 0; bottom: 0; width: 46%; aspect-ratio: 1; border: 7px solid var(--blue); }
+  .ring { position: absolute; left: -3.4%; top: -3.4%; width: 86.8%; animation: spin 40s linear infinite; pointer-events: none; }
+  .ring text { font: 400 9.6px var(--mono); fill: #fff; text-transform: uppercase; }
+  @keyframes spin { to { rotate: 360deg; } }
+  .music .side { display: grid; gap: 26px; }
+  .music .side figure { aspect-ratio: 3 / 4; rotate: 2.5deg; box-shadow: 0 34px 60px -30px rgba(0, 0, 0, .6); border-radius: 6px; overflow: hidden; }
+  .facts { font-size: 13px; line-height: 1.5; }
+  .facts div { display: grid; grid-template-columns: 5.6em 1fr; gap: 8px; padding: 9px 0; border-top: 1px solid rgba(255, 255, 255, .28); }
+  .facts div:last-child { border-bottom: 1px solid rgba(255, 255, 255, .28); }
+  .facts dt { color: rgba(255, 255, 255, .66); letter-spacing: .12em; text-transform: uppercase; font-size: 11px; padding-top: 2px; }
+  .facts a { text-decoration: none; white-space: nowrap; }
+
+  /* ───────── 6. как нас найти ───────── */
+  .find-outer { background: var(--night); }
+  .find { position: relative; isolation: isolate; max-width: 1920px; margin-inline: auto; min-height: clamp(620px, 47vw, 920px); display: grid; align-items: center; padding: clamp(76px, 6vw, 96px) var(--pad) clamp(40px, 5vw, 80px); overflow: hidden; color: #fff; }
+  .find-photo { position: absolute; inset: 0 auto 0 0; width: 100%; height: 100%; max-width: none; z-index: -1; }
+  .find-photo text { font-family: var(--hand); font-style: italic; font-weight: 400; letter-spacing: 3px; fill: #fff; }
+  .here path { fill: none; stroke: #fff; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+  .js .here path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.1s var(--ease) var(--d, 0s); }
+  .js .here text { opacity: 0; transition: opacity .6s var(--ease) .2s; }
+  .js .find.in .here path { stroke-dashoffset: 0; }
+  .js .find.in .here text { opacity: 1; }
+  .card { justify-self: end; width: min(100%, 480px); padding: 26px 28px 26px; background: var(--paper); color: var(--ink); border-radius: 12px; box-shadow: 0 44px 90px -30px rgba(0, 0, 0, .7); }
+  .card h2 { font-size: clamp(25px, 2.2vw, 32px); color: var(--blue); rotate: -2deg; transform-origin: 0 100%; }
+  .card .map { margin: 8px -6px 0; color: var(--blue); }
+  .card .map text { font-family: var(--hand); font-style: italic; font-weight: 400; fill: var(--blue); }
+  .card .addr { margin-top: 6px; font-size: 14px; }
+  .card .addr b { font-weight: 700; }
+  .now { margin-top: 12px; display: flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); }
+  .now .dot { flex: none; width: 9px; height: 9px; border-radius: 50%; border: 1.8px solid currentColor; }
+  .now.open .dot { background: currentColor; box-shadow: 0 0 0 4px rgba(47, 105, 135, .18); }
+  .hours { margin-top: 12px; font-size: 13px; }
+  .hours div { display: flex; justify-content: space-between; gap: 16px; padding: 6px 0; border-top: 1px dashed rgba(28, 34, 38, .22); }
+  .hours .off { opacity: .55; }
+  .card .cta-row { margin-top: 18px; gap: 10px; }
+  .card .btn { padding: 13px 18px 12px; font-size: 11.5px; }
+
+  /* ───────── подвал ───────── */
+  .foot { background: var(--night); color: rgba(255, 255, 255, .78); padding: clamp(50px, 6vw, 84px) var(--pad) 34px; font-size: 13px; }
+  .foot .wrap { display: grid; grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(0, 1fr)); gap: 34px clamp(24px, 4vw, 60px); align-items: start; }
+  .foot-logo { width: 150px; color: #fff; }
+  .foot-logo svg { width: 100%; height: auto; }
+  .foot-logo .cat { width: 52%; margin: 0 0 4px 20%; }
+  .foot .kicker { color: rgba(255, 255, 255, .5); font-size: 11px; margin-bottom: 12px; }
+  .foot a { text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, .28); transition: border-color .2s, color .2s; }
+  .foot a:hover { color: #fff; border-bottom-color: #fff; }
+  .foot li + li { margin-top: 6px; }
+  .foot li { white-space: nowrap; }
+  .legal { max-width: 1280px; margin: 44px auto 0; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, .14); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 30px; font-size: 11.5px; letter-spacing: .08em; color: rgba(255, 255, 255, .5); }
+
+  /* ───────── адаптив ───────── */
+  @media (max-width: 1300px) {
+    .find-photo { width: 136%; inset: 0 auto 0 -36%; }   /* фото сдвинуто влево, чтобы дверь не пряталась под карточкой */
   }
-  .poster .paper { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-  .poster .sheet { position: relative; text-align: center; padding: 52px 30px 50px; }
-  .poster .glass { display: block; width: 62px; height: auto; margin: 16px auto 10px; }
-  .poster .when { color: var(--ink); }
-  .poster h2 { margin: 8px 0 0; font-size: clamp(46px, 4.4vw, 60px); line-height: .95; text-wrap: balance; }
-  .poster .note { margin: 12px auto 0; max-width: 22ch; font-size: 23px; line-height: 1.12; text-wrap: pretty; }
-
-  /* карта — нарисована прямо на странице, без листка */
-  .map h2 { margin: 0; font-size: 44px; text-align: center; }
-  .map svg { display: block; width: 100%; height: auto; margin-top: 10px; }
-  .map svg text { font-family: "Caveat", cursive; font-weight: 700; fill: var(--ink); }
-  .map p { margin: 8px 4px 0; font-size: 22px; line-height: 1.12; text-align: center; text-wrap: balance; }
-
-  .legal { position: absolute; inset: auto 0 14px 0; margin: 0; padding: 0 20px; text-align: center; font-size: 12px; color: var(--muted); opacity: .8; }
-
-  @media (max-width: 1080px) {
-    .hero { grid-template-columns: repeat(2, minmax(0, 360px)); padding-top: 0; padding-bottom: 76px; row-gap: 44px; }
-    .center { grid-column: 1 / -1; order: -1; min-height: 100svh; align-content: center; padding-block: 24px; } /* блок с котом — ровно на весь первый экран */
-    .stage { width: min(560px, 100%, 50svh); }
-    .poster, .map { align-self: start; }
-    .map { order: 1; }
-    .legal { order: 2; }
-    .only-m { display: inline-block; }
-    .float { display: flex; }
+  @media (max-width: 1020px) {
+    .foot-soc { display: none; }
+    .music .wrap { grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); }
+    .music .side { grid-column: 1 / -1; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); align-items: center; }
+    .tasting .wrap { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
+    .tasting .ph-b { display: none; }
+    .foot .wrap { grid-template-columns: 1fr 1fr; }
   }
-  @media (max-width: 680px) {
-    .hero { grid-template-columns: minmax(0, 400px); }
-    .legal { position: static; grid-column: 1 / -1; padding: 0; }
-    .actions { flex-wrap: nowrap; gap: 8px; }
-    .btn { padding: 6px 16px 9px; font-size: 24px; white-space: nowrap; }
+  @media (min-width: 901px) and (max-width: 1020px) {
+    /* узкое окно или планшет лёжа: соцсети скрыты, плашка компактнее, но по-прежнему на оси страницы */
+    .hero-tab { gap: 7px 14px; padding: 18px 18px 16px 22px; }
+    .hero-tab .kicker { letter-spacing: .14em; }
+    .hero-tab .down { width: 46px; height: 46px; }
   }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .float { transition: none; } }
+  @media (max-width: 900px) {
+    /* телефон: первый экран — на всю высоту, разделы идут в одну колонку */
+    .nav { grid-template-columns: 1fr auto; padding-top: 16px; }
+    .nav-l, .nav-r a:not(.nav-book) { display: none; }
+    .nav-logo { justify-self: start; }
+    .nav-book { padding: 9px 14px 8px 16px !important; }
+    .hero-bg img { object-position: 64% 50%; }
+    .hero-blur { display: none; }
+    .hero-shade { background: linear-gradient(180deg, rgba(8, 12, 16, .78), rgba(8, 12, 16, .5) 30%, rgba(8, 12, 16, .62) 62%, rgba(8, 12, 16, .93)); }
+    .hero-mid { grid-template-columns: 1fr; align-content: center; gap: 26px; padding-block: 18px 22px; }
+    .lockup { width: min(66vw, 300px, 34svh); }
+    .hero-tag { margin-top: 22px; }
+    .hero-hours { font-size: 11px; letter-spacing: .13em; }
+    .hero-addr { display: block; margin-top: 7px; font-size: 11px; letter-spacing: .13em; text-transform: uppercase; color: rgba(255, 255, 255, .78); }
+    .hero-addr a { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+    .hero-addr svg { flex: none; width: 11px; height: 14px; }
+    .hero-cta { margin-top: 22px; }
+    .event { width: 100%; min-width: 0; max-width: 420px; rotate: -1deg; grid-template-columns: 1fr auto; column-gap: 16px; align-items: end; padding: 16px 20px 15px; }
+    .event .kicker { grid-column: 1 / -1; margin-bottom: 4px; }
+    .event-title { font-size: clamp(14px, 4.2vw, 18px); grid-row: 2 / 4; align-self: center; }
+    .event-date { margin: 0; font-size: clamp(13px, 3.9vw, 17px); text-align: right; white-space: nowrap; }
+    .event-when { margin: 0; font-size: clamp(11px, 3.2vw, 14px); text-align: right; white-space: nowrap; }
+    .event-more { display: none; }
+    .hero-foot { grid-template-columns: 1fr; padding: 0 12px; }
+    .foot-left { display: none; }
+    .hero-tab { gap: 6px 14px; padding: 15px 16px 13px 20px; border-radius: 20px 20px 0 0; }
+    .hero-tab b { font-size: clamp(14px, 4.3vw, 18px); }
+    .hero-tab .down { width: 46px; height: 46px; }
+
+    .events .wrap, .tasting .wrap, .music .wrap { grid-template-columns: 1fr; }
+    .collage { max-width: 480px; margin-top: 10px; }
+    .tasting figure.ph-a { order: 2; translate: 0; aspect-ratio: 4 / 5; max-width: 480px; }
+    .tasting .ph-b { display: none; }
+    .discs { max-width: 440px; margin-top: 18px; }
+    .music .side { grid-template-columns: 1fr; }
+    .music .side figure { display: none; }
+
+    .mcols { font-size: 12.5px; gap: 0 36px; margin-top: 30px; }
+    .mgroup { grid-template-columns: 1fr; }
+    .mgroup + .mgroup { margin-top: 20px; }
+    .mlabel { margin-bottom: 8px; font-size: 14px; }
+    .sheet .guess { right: 2px; }
+
+    /* на телефоне в последнем блоке — только карта */
+    .find { min-height: 0; padding: 72px 12px 26px; }
+    .find-photo { display: none; }
+    .card { justify-self: center; width: min(100%, 520px); padding: 22px 20px; }
+    .foot .wrap { grid-template-columns: 1fr 1fr; }
+    .foot-logo { grid-column: 1 / -1; }
+  }
+  @media (max-width: 640px) {
+    /* меню на телефоне — плотное, как на бумажном листе: подписи разделов слева, всё примерно в один экран.
+       Кнопка «Аа» включает крупный текст. */
+    .menu { padding: 70px 14px 30px; }
+    .menu-head { flex-wrap: nowrap; align-items: center; gap: 8px; }
+    .menu-title { flex: 1; margin: 0; font-size: 36px; white-space: nowrap; }
+    .switch { padding: 3px; }
+    .switch { flex: none; }
+    .switch button { padding: 9px 9px 8px; font-size: 9.5px; letter-spacing: .08em; white-space: nowrap; }
+    .zoom { display: grid; }
+    .mcols { grid-template-columns: 1fr; margin-top: 18px; font-size: clamp(8.4px, 2.3vw, 11.5px); }
+    .mgroup { grid-template-columns: 22% minmax(0, 1fr); }
+    .mgroup + .mgroup, .mcol + .mcol { margin-top: 1em; }
+    .mlabel { font-size: .98em; letter-spacing: .08em; margin-bottom: 0; }
+    .mlist li { gap: 6px; padding: .06em 0; line-height: 1.25; }
+    .mnote { margin: 1em 0 0 22%; }
+    .menu-foot { margin-top: 14px; align-items: center; flex-wrap: nowrap; }
+    .menu-foot p { font-size: 9.5px; letter-spacing: .12em; }
+    .menu-foot .cat { width: 52px; }
+    .menu.big .mcols { font-size: 12.5px; margin-top: 26px; }
+    .menu.big .mgroup { grid-template-columns: 1fr; }
+    .menu.big .mgroup + .mgroup, .menu.big .mcol + .mcol { margin-top: 20px; }
+    .menu.big .mlabel { font-size: 14px; letter-spacing: .14em; margin-bottom: 8px; }
+    .menu.big .mlist li { gap: 14px; padding: 2.5px 0; line-height: 1.3; }
+    .menu.big .mnote { margin-left: 0; }
+  }
+  @media (max-width: 560px) {
+    /* когда в табличке только название и одна строка (без времени), на телефоне они идут друг под другом */
+    .event.solo { grid-template-columns: 1fr; }
+    .event.solo .event-title { grid-row: auto; font-size: clamp(17px, 5vw, 21px); }
+    .event.solo .event-date { margin-top: 3px; text-align: left; font-size: clamp(17px, 5vw, 21px); }
+    .foot .wrap { grid-template-columns: 1fr; gap: 26px; }
+    .float a.go { display: none; }
+  }
+  @media (max-width: 380px) { .menu-title { font-size: 31px; } }
+  @media (max-width: 340px) { .menu-head { flex-wrap: wrap; } .menu-title { flex-basis: 100%; } }
+  @media (max-width: 420px) {
+    body { font-size: 14px; }
+    .lead { font-size: 14.5px; }
+    .float { font-size: 10.5px; letter-spacing: .1em; }
+    .float a { padding: 10px 9px 9px; }
+    .btn { padding: 15px 20px 14px; letter-spacing: .14em; }
+    .sheet { font-size: 12.5px; }
+  }
+  @media (min-width: 600px) and (max-width: 900px) and (min-height: 800px) {
+    .lockup { width: min(58vw, 440px, 36svh); }
+    .hero-kind { font-size: 19px; }
+    .hero-tag { font-size: 27px; }
+    .hero-hours, .hero-addr { font-size: 13px; }
+    .seelink { font-size: 18px; }
+    .event { max-width: 540px; padding: 20px 26px 19px; }
+    .event-title { font-size: 22px; }
+    .event-date { font-size: 21px; }
+    .event-when { font-size: 16px; }
+    .hero-tab { padding: 20px 20px 18px 28px; }
+    .hero-tab b { font-size: 24px; }
+    .hero-foot { padding: 0 24px; }
+  }
+  @media (max-width: 900px) and (max-height: 720px) {
+    .nav { padding-top: 14px; }
+    .hero-mid { gap: 16px; padding-block: 8px 14px; }
+    .hero-tag { margin-top: 14px; font-size: 18px; }
+    .hero-hours { margin-top: 10px; }
+    .hero-addr { margin-top: 5px; }
+    .hero-cta { margin-top: 14px; }
+    .seelink { font-size: 14px; padding-bottom: 5px; }
+    .event { padding: 12px 18px 11px; }
+    .hero-tab { padding-block: 12px 10px; }
+    .hero-tab b { font-size: 14px; }
+  }
+  @media (min-width: 901px) and (max-height: 760px) {
+    .nav { padding-top: 18px; }
+    .hero-mid { padding-block: 10px 16px; }
+    .foot-left, .foot-soc { padding-bottom: 20px; }
+    .foot-left { gap: 6px; }
+    .hero-tab { padding-block: 15px 13px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hero-bg img, .hero-tab .down, .ring { animation: none; }
+    .js [data-r] { opacity: 1; translate: 0 0; transition: none; }
+    .js .here path { stroke-dashoffset: 0; transition: none; }
+    .js .here text { opacity: 1; transition: none; }
+  }
 </style>
 </head>
-<body>
+<body data-hours="{&quot;0&quot;:[720,1380],&quot;1&quot;:null,&quot;2&quot;:[720,1380],&quot;3&quot;:null,&quot;4&quot;:[720,1380],&quot;5&quot;:[720,1440],&quot;6&quot;:[720,1440]}">
 
+<!-- логотип (кот и надпись — из фирменного PDF), значки и «дрожь руки» для меловых линий -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="cat" viewBox="49.59 35.46 64.63 63.09"><path fill="currentColor" d="M 53.48 54.7 C 53.73 54.79 53.93 54.84 54.1 54.95 C 54.46 55.15 54.78 55.29 54.98 54.75 C 55.01 54.69 55.18 54.68 55.28 54.64 C 55.32 54.76 55.38 54.87 55.39 54.99 C 55.39 55.06 55.34 55.17 55.28 55.21 C 54.77 55.61 55.1 55.93 55.35 56.27 C 55.63 56.65 55.9 57.04 56.11 57.45 C 56.18 57.57 56.04 57.8 55.99 57.98 C 55.83 57.91 55.63 57.89 55.52 57.77 C 54.8 57.02 54.09 56.25 53.38 55.49 M 53.15 54.9 C 53.2 54.8 53.38 54.76 53.48 54.7 M 68.95 60.14 C 69.42 59.35 69.83 58.68 70.23 58.02 C 70.68 58.21 70.75 58.17 70.81 57.77 C 70.17 57.77 69.5 57.76 68.84 57.77 C 68.59 57.78 68.34 57.82 68.1 57.85 C 67.76 57.9 67.71 58.07 67.9 58.34 C 68.05 58.56 68.18 58.79 68.32 59.02 C 68.5 59.35 68.69 59.68 68.95 60.14 M 71.75 58.09 C 71.43 58.71 71.19 59.27 70.87 59.77 C 70.7 60.03 70.41 60.2 70.16 60.4 C 70.08 60.47 69.96 60.49 69.86 60.54 C 69.92 60.64 69.96 60.8 70.05 60.85 C 70.3 60.98 70.58 61.15 70.85 61.16 C 71.56 61.21 72.28 61.18 73.07 61.18 C 72.7 60.12 72.72 58.97 71.75 58.09 M 71.78 56.84 C 71.99 57.07 72.23 57.31 72.45 57.58 C 72.74 57.94 73 58.33 73.3 58.7 C 73.54 58.99 73.78 59.3 74.06 59.55 C 74.45 59.91 74.45 60.09 74 60.31 C 73.68 60.47 73.72 60.63 73.93 60.84 C 74.27 61.18 74.24 61.5 73.79 61.63 C 73.25 61.79 72.68 61.82 72.12 61.89 C 71.94 61.91 71.75 61.85 71.57 61.86 C 69.48 62.06 68.19 60.99 67.32 59.21 C 67.12 58.82 66.83 58.46 66.55 58.11 C 66.33 57.82 66.44 57.38 66.81 57.34 C 67.59 57.25 68.37 57.24 69.15 57.16 C 69.57 57.12 69.99 57.02 70.41 56.94 C 70.58 56.91 70.74 56.86 70.9 56.85 C 71.19 56.83 71.47 56.84 71.78 56.84 M 94.02 91.29 C 93.89 91.55 93.79 91.84 93.62 92.08 C 93.34 92.47 93.01 92.84 92.7 93.21 C 92.48 93.49 92.55 93.68 92.89 93.75 C 93.18 93.82 93.48 93.86 93.69 93.89 C 94.24 93.13 94.75 92.42 95.26 91.71 C 95.32 91.75 95.38 91.78 95.44 91.82 C 95.21 92.23 94.99 92.63 94.78 93.05 C 94.69 93.23 94.62 93.42 94.57 93.62 C 94.44 94.2 94.62 94.38 95.21 94.37 C 95.56 94.36 95.97 94.36 96.26 94.53 C 96.81 94.85 97.28 94.73 97.79 94.48 C 98.15 94.31 98.54 94.18 98.88 93.97 C 99.42 93.63 99.99 93.77 100.55 93.8 C 100.67 93.8 100.77 93.95 100.88 94.03 C 100.77 94.13 100.64 94.31 100.54 94.3 C 99.4 94.2 98.5 94.8 97.55 95.25 C 97.08 95.47 96.68 95.43 96.2 95.25 C 95.7 95.05 95.12 95.04 94.59 94.95 C 94.57 94.95 94.55 94.96 94.54 94.96 C 93.78 94.71 93.02 94.47 92.26 94.22 C 92.07 94.16 91.88 94.09 91.68 94.07 C 91.5 94.04 91.31 94.09 91.13 94.07 C 90.19 93.99 89.71 93.64 90.05 92.6 C 90.18 92.23 90.32 91.88 90.44 91.54 C 90.4 91.48 90.39 91.47 90.38 91.46 C 90.23 91.25 89.64 91.31 89.94 90.87 C 90.07 90.68 90.5 90.71 90.76 90.58 C 91.2 90.36 91.62 90.08 92.04 89.69 C 91.78 89.63 91.53 89.57 91.27 89.51 C 91.25 89.46 91.23 89.42 91.21 89.38 C 91.39 89.29 91.58 89.12 91.75 89.13 C 92.23 89.18 92.71 89.3 93.2 89.42 C 93.3 89.44 93.38 89.56 93.53 89.69 C 92.97 90.17 92.46 90.65 91.91 91.07 C 91.23 91.57 90.88 92.27 90.64 93.03 C 90.61 93.14 90.75 93.38 90.87 93.44 C 91.33 93.68 91.67 93.52 91.98 93.1 C 92.43 92.5 92.94 91.94 93.44 91.38 C 93.54 91.27 93.72 91.24 93.87 91.18 C 93.92 91.21 93.96 91.25 94.02 91.29 M 92.73 42.89 C 92.7 42.85 92.67 42.82 92.64 42.78 C 92.57 42.79 92.47 42.76 92.42 42.8 C 91.91 43.18 91.42 43.59 90.9 43.96 C 90.32 44.38 90.38 44.95 90.5 45.59 C 91.44 44.84 91.82 43.65 92.73 42.89 M 93.44 43.2 C 93.4 43.17 93.36 43.14 93.32 43.12 C 93.23 43.19 93.13 43.25 93.06 43.34 C 92.55 44.04 92.04 44.75 91.53 45.45 C 91.1 46.05 91.11 46.05 91.8 46.47 C 92.3 45.35 93.22 44.45 93.44 43.2 M 92.08 42.2 C 92.1 42.23 92.12 42.27 92.14 42.3 M 94.38 41.06 C 94.74 40.87 95.14 40.73 95.54 40.64 C 95.68 40.6 95.88 40.75 96.05 40.81 C 96.06 40.88 96.07 40.95 96.08 41.02 C 95.21 41.46 94.35 41.91 93.5 42.36 C 93.71 42.57 93.99 42.73 94.07 42.95 C 94.14 43.17 94.04 43.47 93.95 43.71 C 93.65 44.41 93.31 45.11 93 45.8 C 92.84 46.17 92.66 46.54 92.56 46.92 C 92.45 47.4 92.1 47.58 91.7 47.28 C 91.44 47.09 91.23 46.82 90.96 46.66 C 90.68 46.5 90.35 46.37 90.02 46.31 C 89.71 46.26 89.59 46.16 89.61 45.83 C 89.63 45.53 89.58 45.22 89.56 44.91 C 89.56 44.83 89.56 44.73 89.6 44.67 C 90.16 43.77 90.65 42.8 91.6 42.2 M 61.76 63.96 C 62.54 63.49 63.18 63.5 63.81 63.82 C 64.57 64.21 65.3 64.64 66.05 65.06 C 66.09 65.09 66.13 65.13 66.15 65.17 C 66.68 66.19 67.77 66.22 68.67 66.6 C 68.71 66.62 68.78 66.62 68.82 66.61 C 69.53 66.27 70.07 66.71 70.65 67 C 71.58 67.47 72.51 67.93 73.46 68.37 C 73.67 68.46 73.94 68.43 74.18 68.45 C 74.32 68.46 74.51 68.4 74.61 68.47 C 75.11 68.79 75.64 68.69 76.17 68.62 C 76.31 68.61 76.46 68.66 76.58 68.68 C 76.7 68.44 76.8 68.2 76.93 67.98 C 77.23 67.46 77.42 67.37 77.88 67.7 C 78.38 68.06 78.87 68.19 79.46 68.15 C 79.83 68.12 80.21 68.27 80.59 68.33 C 80.6 68.39 80.62 68.45 80.63 68.51 C 80.5 68.57 80.38 68.67 80.24 68.69 C 79.34 68.79 78.43 68.87 77.53 68.98 C 77.24 69.01 76.95 69.11 76.66 69.18 C 75.82 69.36 74.98 69.53 74.21 68.91 C 74.16 68.87 74.07 68.83 74 68.84 C 72.76 68.92 71.71 68.36 70.64 67.88 C 70.32 67.74 70.03 67.52 69.7 67.39 C 69.36 67.26 68.98 67.13 68.61 67.1 C 67.71 67 66.86 66.81 66.12 66.25 C 66.07 66.2 66 66.18 65.96 66.13 C 65.04 64.94 63.67 64.6 62.33 64.19 C 62.18 64.14 62.04 64.07 61.76 63.96 M 83.79 60.83 C 83.57 60.1 83.39 59.5 83.19 58.84 C 82.56 59.27 82.14 59.75 81.84 60.52 C 82.52 60.62 83.09 60.72 83.79 60.83 M 83.61 58.45 C 84.52 58.53 84.57 59.28 84.95 59.93 C 85.34 59.4 85.67 58.93 86.02 58.47 C 86.11 58.36 86.25 58.19 86.35 58.2 C 86.57 58.22 86.8 58.32 86.96 58.46 C 87.02 58.51 86.96 58.83 86.86 58.93 C 86.11 59.7 85.36 60.46 84.56 61.16 C 84.32 61.36 83.91 61.46 83.59 61.44 C 83.01 61.41 82.43 61.25 81.86 61.17 C 81.68 61.14 81.5 61.18 81.32 61.19 C 81.09 61.2 80.88 61.21 80.65 61.21 C 80.7 60.96 80.68 60.67 80.81 60.47 C 81.56 59.31 82.41 58.22 83.59 57.46 C 84.2 57.07 84.91 56.86 85.65 57.02 C 85.8 57.05 85.91 57.27 86.04 57.4 C 85.88 57.46 85.71 57.59 85.57 57.57 C 84.79 57.48 84.21 57.84 83.61 58.45 M 96.83 40.1 C 96.96 39.49 97.09 38.88 97.23 38.21 C 96.93 38.31 96.64 38.38 96.37 38.49 C 95.29 38.96 94.23 39.44 93.15 39.9 C 92.58 40.14 91.99 40.33 91.42 40.56 C 90.59 40.91 89.8 41.3 89.39 42.19 C 89.35 42.29 89.27 42.38 89.2 42.48 C 88.93 42.43 88.68 42.38 88.33 42.31 C 88.43 42.07 88.51 41.82 88.64 41.6 C 88.81 41.29 88.78 41.09 88.41 41 C 88 40.91 87.59 40.84 87.18 40.74 C 87.09 40.72 86.92 40.64 86.92 40.58 C 86.91 40.04 86.47 39.98 86.11 39.82 C 85.96 39.76 85.83 39.68 85.69 39.61 C 85.71 39.55 85.73 39.48 85.75 39.42 C 86.06 39.49 86.38 39.55 86.68 39.64 C 87.51 39.89 88.34 40.13 89.15 40.41 C 89.32 40.47 89.42 40.7 89.54 40.84 C 91.14 40.11 92.77 39.36 94.4 38.62 C 94.83 38.43 95.27 38.28 95.72 38.16 C 96.56 37.93 97.41 37.74 98.07 37.09 C 98.18 36.99 98.44 37.05 98.63 37.04 C 98.59 37.24 98.6 37.48 98.49 37.65 C 98.23 38.06 97.89 38.41 97.64 38.82 C 97.43 39.17 97.32 39.57 97.15 39.95 C 97.12 40.03 97.03 40.09 96.96 40.16 C 96.92 40.14 96.87 40.12 96.83 40.1 M 56.98 59.47 C 56.54 60.21 56.98 60.79 57.3 61.32 C 57.75 62.08 58.34 62.76 58.82 63.5 C 58.93 63.66 58.93 63.95 58.86 64.11 C 58.73 64.4 58.54 64.7 58.29 64.88 C 57.86 65.2 57.98 65.45 58.27 65.76 C 59.24 66.8 60.2 67.86 61.18 68.92 C 60.93 69.25 60.68 69.29 60.41 69.02 C 59.55 68.19 58.68 67.38 57.86 66.51 C 57.43 66.07 57.1 65.53 56.73 65.03 C 56.48 64.7 56.55 64.39 56.86 64.15 C 57.2 63.89 57.41 64.11 57.61 64.38 C 57.64 64.42 57.71 64.43 57.79 64.47 C 58.09 64.12 58.12 63.84 57.8 63.45 C 57.02 62.49 56.27 61.5 55.95 60.25 C 55.74 59.41 55.86 59.24 56.71 59.41 C 56.77 59.42 56.84 59.44 56.98 59.47 M 65.75 93.02 C 65.57 93.96 64.64 94.6 63.75 94.52 C 63.1 94.47 62.56 94.14 62.37 93.57 C 62.19 93.05 62.28 92.44 62.25 91.98 C 62 92.24 61.69 92.65 61.29 92.93 C 60.61 93.41 59.66 93.22 59.37 92.46 C 59.19 92 59.29 91.38 59.41 90.86 C 59.5 90.54 59.83 90.25 60.12 90.04 C 60.27 89.93 60.57 90.02 60.8 90.02 C 60.76 90.2 60.73 90.39 60.66 90.56 C 60.5 90.93 60.27 91.27 60.18 91.65 C 60.12 91.86 60.23 92.2 60.39 92.34 C 60.5 92.42 60.84 92.26 61.05 92.16 C 61.22 92.08 61.36 91.92 61.53 91.8 C 61.76 91.64 61.95 91.33 62.32 91.53 C 62.36 91.55 62.48 91.38 62.58 91.34 C 62.73 91.29 62.92 91.21 63.05 91.26 C 63.16 91.3 63.26 91.51 63.27 91.65 C 63.28 91.97 63.24 92.29 63.2 92.61 C 63.15 93.04 63.23 93.48 63.59 93.67 C 63.84 93.8 64.26 93.69 64.58 93.59 C 64.95 93.47 65.29 93.25 65.75 93.02 M 61.21 37.83 C 60.7 38.72 60.33 38.79 59.54 38.42 C 58.42 37.88 57.27 37.42 56.12 36.93 C 55.66 36.74 55.37 36.99 55.16 37.43 C 55.11 37.41 55.06 37.38 55.01 37.36 C 55.05 36.96 55.02 36.52 55.18 36.18 C 55.24 36.06 55.84 36.11 56.12 36.23 C 57.44 36.78 58.74 37.39 60.04 37.98 C 60.1 38 60.17 38 60.32 38.04 C 60.31 37.8 60.25 37.6 60.3 37.43 C 60.41 37.13 60.54 36.82 60.76 36.6 C 60.83 36.52 61.2 36.69 61.4 36.8 C 62.52 37.41 63.62 38.02 64.71 38.64 C 64.94 38.78 65.11 39 65.31 39.18 C 65.29 39.24 65.26 39.3 65.23 39.36 C 65.05 39.36 64.86 39.42 64.7 39.36 C 63.74 38.96 62.79 38.54 61.83 38.13 C 61.63 38.04 61.44 37.94 61.21 37.83 M 110.75 88.18 C 110.73 88.02 110.66 87.84 110.68 87.68 C 110.76 86.96 110.86 86.25 110.96 85.53 C 110.98 85.39 111.03 85.21 111.13 85.11 C 111.89 84.37 111.66 83.27 112.22 82.46 C 112.2 82.43 112.16 82.4 112.14 82.36 C 111.93 82.43 111.72 82.5 111.38 82.62 C 111.5 82.28 111.54 82.01 111.67 81.78 C 112.21 80.77 112.05 79.8 111.55 78.83 C 111.23 78.22 110.94 77.59 110.62 76.98 C 110.47 76.68 110.51 76.42 110.77 76.28 C 111.06 76.12 111.18 76.41 111.27 76.63 C 111.66 77.59 112.11 78.54 112.42 79.54 C 112.57 79.99 112.52 80.54 112.45 81.03 C 112.37 81.53 112.54 81.66 112.99 81.67 C 113.2 81.67 113.41 81.78 113.62 81.84 C 113.48 82.05 113.35 82.27 113.22 82.48 C 112.94 82.95 112.6 83.39 112.39 83.89 C 112.15 84.46 112.02 85.09 111.85 85.7 C 111.84 85.73 111.85 85.77 111.83 85.79 C 111.23 86.42 111.2 87.25 111.02 88.02 C 111 88.11 110.95 88.18 110.92 88.25 C 110.86 88.23 110.81 88.21 110.75 88.18 M 57.17 38.6 C 57.6 38.77 57.99 38.91 58.38 39.08 C 58.85 39.29 59.28 39.49 59.86 39.27 C 60.08 39.18 60.5 39.43 60.77 39.62 C 61.54 40.14 62.26 40.76 63.05 41.25 C 63.95 41.81 64.9 42.27 65.82 42.79 C 65.98 42.88 66.11 43.02 66.23 43.16 C 66.47 43.45 66.3 43.67 66.06 43.83 C 65.84 43.98 65.58 44.06 65.52 43.64 C 65.51 43.58 65.46 43.51 65.41 43.48 C 64.7 43.04 64 42.59 63.29 42.16 C 62.67 41.79 62 41.5 61.42 41.08 C 60.8 40.65 60.16 40.38 59.43 40.18 C 58.59 39.95 57.79 39.59 56.98 39.27 C 56.87 39.23 56.73 38.99 56.75 38.95 C 56.84 38.81 57.01 38.72 57.17 38.6 M 56.69 41.58 C 56.76 41.1 56.82 40.62 56.91 40.14 C 56.97 39.84 57.23 39.8 57.46 39.9 C 57.57 39.95 57.69 40.14 57.68 40.27 C 57.66 40.88 57.6 41.5 57.54 42.12 C 57.52 42.42 57.45 42.72 57.46 43.02 C 57.46 43.39 57.52 43.77 57.57 44.15 C 57.62 44.54 57.75 44.94 57.73 45.32 C 57.69 46.25 57.84 47.14 58.52 47.78 C 58.92 48.15 59.55 48.28 60.07 48.53 C 60.2 48.59 60.31 48.7 60.43 48.78 C 60.3 48.86 60.16 49.01 60.04 49 C 58.22 48.88 57.16 47.89 57 46.03 C 56.95 45.42 57.05 44.81 56.69 44.23 C 56.54 43.98 56.61 43.57 56.63 43.24 C 56.66 42.69 56.72 42.14 56.77 41.59 C 56.74 41.59 56.71 41.58 56.69 41.58 M 93.71 59.28 C 93.52 59.8 93.38 60.33 93.13 60.82 C 92.95 61.18 92.64 61.5 92.36 61.8 C 92.21 61.95 91.98 62.13 91.8 62.11 C 91.2 62.05 90.9 62.47 90.54 62.81 C 89.71 63.61 88.88 64.41 88.05 65.21 C 87.96 65.3 87.86 65.4 87.76 65.41 C 87.51 65.41 87.25 65.37 87 65.34 C 87.09 65.14 87.16 64.92 87.28 64.74 C 88.06 63.64 89.01 62.69 90.24 62.15 C 91.3 61.68 91.96 60.86 92.67 60.04 C 92.94 59.74 93.23 59.46 93.52 59.17 C 93.58 59.21 93.64 59.24 93.71 59.28 M 94.68 55.5 C 94.78 55.09 94.91 54.68 94.96 54.26 C 95 54.02 94.91 53.75 94.86 53.5 C 94.8 53.21 94.69 52.93 94.66 52.64 C 94.59 51.68 94.51 50.73 94.51 49.77 C 94.52 48.5 94.59 47.22 94.68 45.95 C 94.71 45.64 94.89 45.34 95.06 45.07 C 95.13 44.96 95.38 44.96 95.55 44.92 C 95.58 45.05 95.65 45.19 95.63 45.32 C 95.48 46.4 95.18 47.48 95.19 48.55 C 95.21 50.14 95.49 51.72 95.59 53.3 C 95.64 54.12 95.33 54.87 94.86 55.54 C 94.8 55.53 94.74 55.51 94.68 55.5 M 101.79 63.21 C 101.41 62.92 101.17 62.73 100.91 62.54 C 100.27 62.06 99.59 61.61 98.96 61.1 C 97.98 60.29 97.04 59.45 96.08 58.61 C 95.8 58.36 95.55 58.12 95.1 58.17 C 94.69 58.21 94.57 57.95 94.76 57.57 C 94.96 57.19 95.17 56.8 95.36 56.41 C 95.5 56.11 95.7 56.12 95.83 56.36 C 96.02 56.7 96.18 57.07 95.92 57.46 C 95.86 57.55 95.82 57.66 95.74 57.84 C 96.59 57.51 96.8 58.22 97.18 58.61 C 97.65 59.08 98.06 59.63 98.57 60.06 C 99.02 60.44 99.61 60.65 100.07 61.03 C 100.63 61.49 101.12 62.04 101.62 62.57 C 101.73 62.68 101.71 62.89 101.79 63.21 M 77.05 66.76 C 76.16 66.78 75.43 66.33 75.23 65.53 C 75.17 65.24 75.34 64.72 75.56 64.59 C 75.84 64.42 76.3 64.51 76.68 64.54 C 76.79 64.55 76.9 64.73 77 64.84 C 77.23 65.09 77.47 65.22 77.78 64.96 C 77.85 64.9 77.97 64.87 78.07 64.88 C 78.36 64.88 78.79 64.79 78.93 64.95 C 79.22 65.29 79.06 65.72 78.82 66.07 C 78.36 66.7 77.61 66.56 77.05 66.76 M 86.31 88.85 C 86.99 87.11 88.28 85.78 89.35 84.23 C 89.46 84.38 89.52 84.46 89.61 84.56 C 90.62 83.59 91.61 82.63 92.62 81.66 C 92.81 82.19 92.49 82.61 92.2 82.91 C 91.02 84.11 89.78 85.25 88.57 86.41 C 88.43 86.54 88.33 86.69 88.21 86.84 C 87.65 87.55 87.09 88.27 86.54 88.99 C 86.46 88.95 86.39 88.9 86.31 88.85 M 73.53 97.74 C 73.45 97.71 73.25 97.66 73.09 97.54 C 72.5 97.07 71.9 96.62 71.37 96.1 C 70.61 95.34 70.64 94.61 71.37 93.85 C 71.72 93.48 72.07 93.13 72.43 92.77 C 72.49 92.71 72.55 92.63 72.62 92.62 C 72.88 92.57 73.3 92.43 73.38 92.53 C 73.61 92.85 73.25 92.97 73.04 93.16 C 72.59 93.54 72.16 93.95 71.77 94.39 C 71.46 94.75 71.59 95.41 72.07 95.83 C 72.57 96.27 73.11 96.64 73.66 97 C 73.79 97.09 74.08 97.04 74.22 96.95 C 74.52 96.74 74.77 96.46 75.05 96.22 C 75.16 96.13 75.3 96.07 75.44 96 C 75.49 96.16 75.62 96.34 75.59 96.48 C 75.45 97.22 74.84 97.46 74.22 97.66 C 74.05 97.71 73.86 97.7 73.53 97.74 M 70.93 89.21 C 70.39 91.21 69.07 92.39 67.14 93.13 C 67.32 92.64 67.59 92.29 67.95 92.09 C 69.15 91.41 69.84 90.34 70.43 89.15 C 70.58 88.82 70.55 88.56 70.39 88.25 C 70.07 87.61 70.14 87.05 70.62 86.61 C 70.73 86.87 70.86 87.09 70.92 87.32 C 71.17 88.28 71.46 89.19 72.48 89.62 C 72.56 89.65 72.59 89.8 72.65 89.89 C 72.54 89.95 72.42 90.08 72.34 90.05 C 72.04 89.97 71.74 89.86 71.46 89.7 C 71.28 89.6 71.15 89.41 70.93 89.21 M 104.1 65.75 C 104.56 65.66 104.79 65.86 104.97 66.29 C 105.31 67.12 105.93 67.75 106.7 68.22 C 106.73 68.24 106.76 68.27 106.79 68.27 C 107.81 68.29 108.07 69.09 108.4 69.84 C 108.62 70.35 108.88 70.84 109.1 71.35 C 109.25 71.7 109.11 72 108.79 72.31 C 108.36 71.43 107.91 70.6 107.53 69.74 C 107.34 69.31 107.16 69.02 106.65 68.82 C 105.45 68.35 104.66 67.39 104.12 66.23 C 104.06 66.09 104.11 65.9 104.12 65.73Z M 104.1 65.75 M 61.55 73.76 C 61.79 73.98 61.98 74.16 62.28 74.43 C 62.02 74.52 61.78 74.7 61.66 74.64 C 61.39 74.5 61 74.28 60.97 74.05 C 60.94 73.76 61.21 73.43 61.36 73.11 C 61.43 73.11 61.49 73.11 61.56 73.1 C 61.33 72.91 61.11 72.72 60.88 72.54 C 60.43 72.2 59.98 71.88 59.55 71.52 C 59.38 71.38 59.23 71.2 59.16 71 C 59.11 70.86 59.19 70.65 59.28 70.51 C 59.31 70.46 59.55 70.47 59.65 70.54 C 60.04 70.78 60.18 70.58 60.34 70.25 C 60.46 69.98 60.67 69.75 60.85 69.51 C 60.86 69.5 61.05 69.57 61.05 69.6 C 61 69.92 60.99 70.26 60.87 70.56 C 60.79 70.78 60.55 70.94 60.36 71.15 C 60.84 71.54 61.32 71.91 61.79 72.29 C 62.44 72.83 62.44 73 61.82 73.55 C 61.75 73.61 61.66 73.67 61.55 73.76 M 95.72 74.27 C 95.93 74.87 96.18 75.46 96.34 76.08 C 96.48 76.64 96.5 77.21 95.93 77.6 C 95.89 77.62 95.86 77.69 95.86 77.73 C 95.91 78.93 94.89 79.55 94.37 80.44 C 94.23 80.67 93.98 80.86 93.75 81 C 93.64 81.06 93.44 80.97 93.29 80.95 C 93.31 80.8 93.29 80.61 93.36 80.5 C 93.91 79.74 94.5 79 95.04 78.22 C 95.53 77.53 95.72 76.74 95.65 75.89 C 95.61 75.36 95.57 74.84 95.54 74.32 C 95.6 74.3 95.66 74.29 95.72 74.27 M 108.02 93.58 C 107.78 93.64 107.52 93.65 107.3 93.77 C 105.76 94.61 104.17 94.16 102.59 93.95 C 102.18 93.9 101.79 93.82 101.39 93.75 C 101.23 93.71 101.07 93.64 100.83 93.57 C 101.4 93.15 101.91 93.09 102.46 93.18 C 103.04 93.28 103.62 93.36 104.2 93.41 C 104.69 93.46 105.18 93.5 105.66 93.47 C 106.04 93.45 106.43 93.39 106.79 93.26 C 107.23 93.09 107.6 93.18 107.98 93.38 C 107.99 93.45 108 93.52 108.02 93.58 M 60.76 81.45 C 60.77 81.68 60.85 81.93 60.79 82.14 C 60.62 82.71 60.7 82.86 61.28 82.92 C 61.43 82.93 61.56 83.05 61.7 83.12 C 61.58 83.23 61.48 83.38 61.34 83.44 C 60.87 83.61 60.25 83.44 59.94 83.07 C 59.59 82.66 59.89 82.32 60.12 81.92 C 59.64 81.86 59.66 81.63 59.84 81.29 C 60.08 80.84 60.26 80.36 60.47 79.9 C 60.56 79.72 60.66 79.54 60.79 79.39 C 60.99 79.12 61.25 78.85 61.59 79.06 C 61.68 79.12 61.62 79.54 61.52 79.76 C 61.27 80.32 60.96 80.87 60.67 81.42 C 60.7 81.43 60.73 81.44 60.76 81.45 M 65.52 39.1 C 65.59 39.07 65.66 39.02 65.73 39.03 C 66.45 39.11 67.18 39.23 67.91 39.26 C 68.1 39.27 68.33 39.03 68.49 38.85 C 68.84 38.46 69.13 38.03 69.49 37.66 C 69.74 37.4 70.04 37.34 70.39 37.62 C 70.74 37.9 71.16 38.09 71.54 38.34 C 71.64 38.41 71.68 38.58 71.75 38.71 C 71.62 38.76 71.48 38.87 71.36 38.84 C 70.9 38.74 70.45 38.63 70.01 38.46 C 69.61 38.3 69.36 38.3 69.16 38.75 C 69.02 39.09 68.8 39.41 68.54 39.66 C 68.36 39.83 68.02 39.95 67.78 39.92 C 67.38 39.86 66.98 39.66 66.59 39.53 C 66.23 39.42 65.87 39.34 65.51 39.24 C 65.51 39.2 65.51 39.15 65.52 39.1 M 78.95 96.7 C 79.17 96.95 79.21 97.11 78.88 97.34 C 77.98 97.95 76.86 97.64 76.2 96.8 C 76.05 96.61 76 96.26 76.06 96.01 C 76.22 95.24 76.45 94.48 76.68 93.73 C 76.71 93.63 76.88 93.5 76.96 93.52 C 77.09 93.55 77.27 93.68 77.28 93.78 C 77.31 94.05 77.28 94.34 77.23 94.61 C 77.16 95.05 77 95.49 76.96 95.93 C 76.9 96.73 77.59 97.23 78.36 96.97 C 78.55 96.91 78.74 96.79 78.95 96.7 M 80.27 94.7 C 80.27 94.94 80.27 95.18 80.27 95.42 C 80.26 95.73 80.16 96.08 80.27 96.34 C 80.48 96.84 81.12 96.91 81.65 96.5 C 81.98 96.25 82.24 95.91 82.55 95.62 C 82.64 95.54 82.8 95.52 82.93 95.48 C 82.96 95.62 83.06 95.77 83.04 95.89 C 82.87 96.69 82.3 97.12 81.57 97.34 C 80.86 97.55 80.21 97.44 79.7 96.84 C 79.02 96.03 79.14 95.27 80.27 94.7 M 86.02 89.66 C 86.36 90.56 85.81 91.2 85.66 91.98 C 86.94 91.71 88.18 91.45 89.43 91.18 C 88.85 92.11 87.93 92.31 87 92.41 C 86.51 92.46 85.95 92.68 85.51 92.21 C 85.5 92.2 85.48 92.21 85.46 92.2 C 85.23 92.17 85 92.13 84.77 92.1 C 84.84 91.86 84.88 91.61 84.98 91.38 C 85.15 90.98 85.34 90.58 85.55 90.2 C 85.65 90.02 85.82 89.88 86.02 89.66 M 62.33 48.78 C 62.16 48.69 61.96 48.65 61.89 48.54 C 61.85 48.45 61.93 48.22 62.03 48.14 C 62.43 47.82 62.88 47.55 63.27 47.21 C 63.91 46.65 64.51 46.04 65.15 45.47 C 65.27 45.36 65.45 45.33 65.61 45.26 C 65.64 45.47 65.77 45.74 65.68 45.88 C 65.1 46.84 64.34 47.64 63.35 48.21 C 63.02 48.4 62.68 48.59 62.33 48.78 M 78.69 36.93 C 79.39 37.43 80.09 37.94 80.79 38.44 C 80.88 38.5 81 38.51 81.06 38.58 C 81.14 38.68 81.16 38.81 81.21 38.93 C 81.09 38.95 80.95 39.04 80.86 39 C 80.23 38.74 79.59 38.51 79.01 38.18 C 78.16 37.71 77.89 37.73 77.24 38.5 C 77.05 38.72 76.86 38.93 76.63 39.11 C 76.55 39.17 76.38 39.14 76.27 39.09 C 76.23 39.08 76.21 38.84 76.26 38.8 C 76.96 38.15 77.67 37.51 78.39 36.89 C 78.48 36.81 78.64 36.81 78.77 36.78 C 78.75 36.83 78.72 36.88 78.69 36.93 M 79.08 79.59 C 78.83 80.21 78.62 80.77 78.38 81.3 C 78.04 82.04 77.66 82.75 77.29 83.47 C 77.09 83.86 76.88 84.24 76.65 84.61 C 76.61 84.68 76.46 84.7 76.36 84.74 C 76.33 84.64 76.24 84.52 76.27 84.45 C 76.75 83.29 77.23 82.15 77.72 81 C 77.9 80.59 78.09 80.17 78.31 79.77 C 78.4 79.62 78.59 79.49 78.76 79.43 C 78.84 79.4 78.99 79.54 79.08 79.59 M 56.72 90.22 C 56.96 89.85 57.25 89.35 57.6 88.89 C 57.76 88.67 58.01 88.5 58.26 88.38 C 58.37 88.33 58.63 88.39 58.7 88.48 C 58.76 88.57 58.69 88.8 58.61 88.92 C 58.42 89.23 58.18 89.52 57.96 89.82 C 57.5 90.45 57.75 91.29 58.48 91.59 C 58.61 91.64 58.69 91.78 58.79 91.87 C 58.63 91.95 58.48 92.11 58.33 92.1 C 57.46 92.06 56.82 91.19 56.72 90.22 M 55.21 38.06 C 55.09 38.75 54.96 39.35 54.89 39.95 C 54.77 40.84 54.7 41.75 54.6 42.64 C 54.57 42.82 54.5 43 54.4 43.14 C 54.36 43.2 54.11 43.2 54.1 43.18 C 53.99 42.8 53.73 42.35 53.84 42.02 C 54.18 41.01 54.4 39.98 54.41 38.91 C 54.41 38.6 54.48 38.28 54.58 37.98 C 54.62 37.88 54.87 37.8 55 37.82 C 55.1 37.83 55.18 38.02 55.21 38.06 M 72.19 38.84 C 72.14 38.25 71.78 37.78 72.2 37.29 C 72.39 37.06 72.52 36.98 72.78 37.14 C 73.49 37.58 74.22 38 74.92 38.46 C 75.18 38.63 75.38 38.9 75.61 39.12 C 75.57 39.19 75.53 39.25 75.49 39.32 C 74.91 39.13 74.33 38.96 73.76 38.75 C 73.23 38.55 72.73 38 72.19 38.84 M 61.94 75 C 61.68 75.45 61.48 75.8 61.26 76.18 C 61.52 76.38 61.9 76.53 61.5 77.01 C 61.73 76.98 61.83 76.94 61.92 76.96 C 62.02 76.99 62.14 77.06 62.17 77.14 C 62.21 77.23 62.19 77.39 62.13 77.46 C 61.75 77.92 60.65 77.93 60.35 77.44 C 60.23 77.25 60.27 76.92 60.3 76.66 C 60.4 76 60.83 75.16 61.52 75 C 61.62 74.98 61.73 75 61.94 75 M 81.35 68.23 C 81.27 68.22 81.18 68.23 81.1 68.2 C 80.97 68.15 80.85 68.07 80.72 68.01 C 80.81 67.89 80.88 67.72 81 67.66 C 81.46 67.41 81.94 67.2 82.4 66.96 C 82.93 66.67 83.44 66.34 83.98 66.07 C 84.14 65.99 84.37 66.07 84.57 66.07 C 84.53 66.24 84.54 66.46 84.44 66.56 C 83.55 67.38 82.51 67.92 81.35 68.23 M 84.13 93.91 C 84.11 93.51 84.04 93.2 84.09 92.91 C 84.12 92.71 84.34 92.54 84.46 92.36 C 84.64 92.49 84.96 92.61 84.97 92.74 C 84.98 93.57 84.96 94.42 84.87 95.25 C 84.85 95.43 84.56 95.67 84.34 95.75 C 83.96 95.88 83.98 95.55 84 95.32 C 84.03 94.82 84.09 94.32 84.13 93.91 M 75.23 87.42 C 75.81 87.71 75.69 88.02 75.54 88.43 C 75.23 89.26 74.87 90.04 74.33 90.74 C 74.29 90.79 74.27 90.88 74.21 90.9 C 74.06 90.97 73.89 91.01 73.73 91.06 C 73.73 90.91 73.68 90.74 73.73 90.61 C 74 89.99 74.31 89.39 74.59 88.78 C 74.71 88.52 74.79 88.24 74.91 87.98 C 75 87.79 75.12 87.62 75.23 87.42 M 70.52 85.6 C 70.31 85.49 70.1 85.46 70.04 85.34 C 69.53 84.31 69.17 83.23 69.13 82.06 C 69.13 82.01 69.13 81.96 69.14 81.91 C 69.19 81.62 69.32 81.32 69.64 81.41 C 69.79 81.46 69.93 81.8 69.96 82.03 C 70 82.4 69.89 82.8 69.96 83.17 C 70.09 83.93 70.3 84.67 70.52 85.6 M 85.08 39.62 C 84.84 39.59 84.66 39.59 84.5 39.55 C 84.17 39.49 83.84 39.41 83.5 39.34 C 83.38 39.32 83.24 39.34 83.11 39.32 C 82.64 39.28 82.18 39.23 81.71 39.18 C 81.62 39.17 81.53 39.13 81.44 39.11 C 81.47 39.01 81.49 38.9 81.55 38.81 C 81.83 38.38 82.25 38.33 82.71 38.43 C 82.91 38.47 83.12 38.62 83.29 38.58 C 84.11 38.39 84.64 38.73 85.08 39.62 M 59.33 88.22 C 59.2 88.05 59.11 87.94 59.04 87.85 C 59.46 87.01 59.86 86.2 60.29 85.41 C 60.36 85.29 60.59 85.26 60.74 85.19 C 60.82 85.41 61.03 85.66 60.97 85.83 C 60.8 86.28 60.55 86.71 60.28 87.11 C 60.02 87.48 59.68 87.81 59.33 88.22 M 104.16 65.77 C 103.84 65.8 103.64 65.66 103.47 65.38 C 103.12 64.83 102.73 64.29 102.38 63.74 C 102.3 63.62 102.28 63.47 102.23 63.31 C 102.66 63.2 102.96 63.24 103.16 63.64 C 103.43 64.14 103.76 64.62 104.02 65.12 C 104.12 65.31 104.11 65.57 104.15 65.79 C 104.15 65.79 104.16 65.77 104.16 65.77 M 97.25 40.34 C 97.01 41.68 96.55 42.91 95.44 43.82 C 96.06 42.67 96.28 41.33 97.25 40.34 M 110.25 73.12 C 110.49 73.7 110.7 74.16 110.88 74.64 C 110.98 74.89 111.06 75.14 111.1 75.41 C 111.11 75.53 111.05 75.72 110.96 75.77 C 110.87 75.82 110.62 75.79 110.58 75.71 C 110.14 75.04 109.93 74.3 109.98 73.5 C 109.98 73.42 110.09 73.34 110.25 73.12 M 66.22 92.36 C 66.44 92.47 66.66 92.53 66.68 92.62 C 66.75 93.07 67.09 93.17 67.45 93.31 C 67.7 93.41 67.69 93.62 67.44 93.76 C 66.93 94.04 65.81 93.34 65.86 92.75 C 65.87 92.61 66.09 92.49 66.22 92.36 M 109.65 91.49 C 109.79 90.83 109.91 90.16 110.08 89.51 C 110.12 89.36 109.51 91.62 109.65 91.49 C 109.7 91.64 110.62 89.43 110.61 89.58 C 110.56 90.34 110.16 90.95 109.65 91.49 M 109.09 92.34 C 108.75 92.62 108.41 92.91 108.02 93.24 C 107.93 92.64 108.2 92.42 109.09 92.34 M 52.22 49.83 C 52.89 51.22 54.11 52.27 54.7 53.68 C 54.64 53.73 54.58 53.79 54.52 53.84 C 54.34 53.73 54.13 53.65 54 53.5 C 53.25 52.62 52.5 51.74 51.79 50.84 C 51.49 50.46 51.25 50.03 51.01 49.6 C 50.95 49.48 50.98 49.26 51.06 49.14 C 51.11 49.06 51.31 49.04 51.44 49.04 C 51.7 49.02 52.13 49.14 52.2 49.02 C 52.44 48.65 51.98 48.55 51.79 48.35 C 51.55 48.11 51.3 47.87 51.04 47.66 C 50.34 47.15 50.23 46.41 50.2 45.64 C 50.19 45.12 50.39 45.04 50.89 45.14 C 51.26 45.2 51.66 45.14 52.04 45.1 C 52.2 45.09 52.35 45 52.51 44.94 C 52.61 45.42 52.32 45.84 51.96 45.86 C 51.68 45.87 51.4 45.96 51.12 46.01 C 51.23 46.35 51.28 46.73 51.46 47.02 C 51.77 47.5 52.18 47.91 52.51 48.38 C 52.92 48.97 52.87 49.19 52.22 49.83 M 54.95 46.34 C 54.39 45.84 53.88 45.3 53.57 44.61 C 53.49 44.44 53.62 44.18 53.65 43.93 C 54.62 44.35 55.42 45.83 54.95 46.34"></path></symbol>
+    <symbol id="word" viewBox="55.97 102.74 53.77 12.50"><path fill="currentColor" d="M 70.85 107.79 C 70.14 108.48 69.54 109.11 68.91 109.7 C 68 110.54 67.09 111.37 66.16 112.18 C 65.67 112.61 65.05 112.61 64.52 112.35 C 63.97 112.08 63.79 111.54 63.82 110.92 C 63.92 109.23 64.01 107.53 64.1 105.83 C 64.11 105.64 64.1 105.44 64.1 105.24 C 64.04 105.21 63.98 105.18 63.92 105.15 C 63.46 105.71 62.96 106.24 62.55 106.83 C 61.58 108.2 60.65 109.6 59.73 111 C 59.11 111.93 58.55 112.89 57.96 113.83 C 57.53 114.52 56.98 114.64 56.66 114.1 C 56.57 113.95 56.57 113.65 56.66 113.5 C 57.2 112.65 57.78 111.83 58.35 110.99 C 58.89 110.21 59.43 109.42 59.96 108.64 C 60.71 107.55 61.41 106.43 62.2 105.39 C 62.71 104.73 63.32 104.12 63.98 103.59 C 64.25 103.38 64.78 103.34 65.13 103.44 C 65.3 103.49 65.44 104.02 65.43 104.33 C 65.39 105.64 65.26 106.94 65.21 108.24 C 65.17 109.24 65.2 110.25 65.2 111.41 C 65.64 111.11 66.1 110.9 66.43 110.57 C 67.7 109.27 68.93 107.93 70.19 106.62 C 70.53 106.27 70.81 105.8 71.46 105.86 C 72.03 105.9 72.36 106.13 72.29 106.69 C 72.1 108.1 71.9 109.52 71.61 110.91 C 71.43 111.77 71.1 112.61 70.77 113.43 C 70.67 113.68 70.36 113.86 70.14 114.06 C 70.06 113.78 69.89 113.49 69.92 113.22 C 69.99 112.61 70.16 112 70.28 111.39 C 70.48 110.38 70.69 109.36 70.88 108.34 C 70.91 108.21 70.87 108.06 70.85 107.79 M 101.3 109.62 C 101.71 109.75 101.95 109.86 102.2 109.9 C 104.36 110.3 106.53 110.68 108.68 111.09 C 108.86 111.12 108.99 111.36 109.14 111.5 C 108.92 111.63 108.71 111.87 108.49 111.88 C 107.95 111.88 107.41 111.81 106.88 111.73 C 105.1 111.44 103.32 111.14 101.54 110.81 C 100.98 110.71 100.88 111 100.81 111.44 C 100.68 112.22 100.51 113 100.36 113.77 C 99.32 113.59 99.34 113.53 99.53 112.74 C 99.73 111.88 99.95 110.98 99.7 110.07 C 99.67 109.96 99.68 109.8 99.74 109.71 C 100.32 108.83 100.12 107.79 100.3 106.82 C 100.46 106.01 100.5 105.18 100.63 104.36 C 100.68 104.03 100.78 103.67 101.25 103.79 C 101.66 103.88 101.92 104.04 101.81 104.59 C 101.6 105.69 101.49 106.81 101.34 107.93 C 101.39 107.96 101.45 107.98 101.5 108.01 C 101.95 107.63 102.39 107.23 102.85 106.88 C 103.62 106.29 104.39 105.7 105.21 105.18 C 105.41 105.05 105.79 105.12 106.07 105.19 C 106.21 105.23 106.41 105.49 106.39 105.62 C 106.37 105.77 106.15 105.95 105.98 106.01 C 104.05 106.67 102.95 108.36 101.3 109.62 M 75.76 110.2 C 77.03 109.47 78.31 108.74 79.58 108 C 79.99 107.76 79.85 107.48 79.53 107.29 C 79.34 107.18 79.11 107.12 78.88 107.1 C 77.36 106.96 75.71 108.43 75.76 110.2 M 80.92 110.85 C 80.45 111.16 80.01 111.52 79.51 111.76 C 78.56 112.22 77.61 112.59 76.48 112.49 C 75.38 112.39 74.79 111.49 73.89 111.1 C 73.8 111.06 73.77 110.75 73.82 110.6 C 73.96 110.11 74.16 109.64 74.32 109.15 C 74.97 107.16 76.89 105.78 78.72 105.98 C 79.55 106.07 80.21 106.48 80.79 107.04 C 81.31 107.54 81.26 108.16 80.59 108.61 C 79.7 109.21 78.75 109.73 77.81 110.25 C 77.26 110.56 76.67 110.82 76.03 111.13 C 76.82 111.79 77.59 111.46 78.31 111.27 C 78.87 111.13 79.37 110.79 79.91 110.59 C 80.19 110.49 80.51 110.51 80.81 110.48 C 80.85 110.6 80.88 110.73 80.92 110.85 M 92.61 109.86 C 92.66 111.32 93.11 111.67 94.1 111.27 C 94.78 111 95.42 110.6 96.08 110.27 C 96.66 109.98 96.84 109.49 96.62 108.92 C 96.46 108.46 96.24 107.95 95.88 107.67 C 95.34 107.26 94.69 106.91 94.04 106.8 C 93.81 106.76 93.35 107.47 93.18 107.91 C 92.88 108.65 92.73 109.45 92.61 109.86 M 91.47 109.83 C 91.73 108.76 91.84 107.46 92.6 106.34 C 93.04 105.7 93.65 105.42 94.36 105.65 C 95.96 106.15 97.21 107.05 97.7 108.76 C 97.94 109.59 97.55 110.63 96.79 111.06 C 96.08 111.45 95.38 111.84 94.64 112.15 C 92.87 112.92 91.43 111.94 91.47 109.83 M 86.38 106.44 C 86.87 106.44 87.37 106.39 87.85 106.45 C 88.61 106.54 89.2 107.29 89.19 108.38 C 89.18 109.66 89.02 110.96 88.9 112.25 C 88.88 112.46 88.79 112.71 88.65 112.87 C 88.5 113.02 88.24 113.07 88.04 113.17 C 87.97 112.98 87.84 112.78 87.85 112.59 C 87.91 111.37 88 110.14 88.05 108.92 C 88.07 108.6 87.99 108.26 87.91 107.94 C 87.78 107.41 87.52 107.34 87.15 107.75 C 86.15 108.86 85.18 110 84.2 111.14 C 83.91 111.48 83.53 111.75 83.12 111.49 C 82.7 111.22 82.9 110.8 83.13 110.45 C 83.89 109.3 84.64 108.13 85.45 107 C 85.66 106.7 86.01 106.5 86.3 106.25 C 86.33 106.31 86.35 106.38 86.38 106.44"></path></symbol>
+    <symbol id="arr-r" viewBox="0 0 44 20"><path d="M2 10.5 C12 9.6 25 11 40 10 M31.5 3 C34.5 6 37.5 8.3 41 10 C37.5 11.8 34.6 14.4 32 17.5"></path></symbol>
+    <symbol id="arr-d" viewBox="0 0 20 28"><path d="M10 2 C9.4 9 10.6 16 10 25 M3 17.5 C5.6 20.4 8 23 10 26 C12 23 14.6 20.6 17.5 18"></path></symbol>
+    <symbol id="pin" viewBox="0 0 22 28"><path d="M11 26 C7 20 3 15.5 3 10.5 C3 5.8 6.6 2.5 11 2.5 C15.4 2.5 19 5.8 19 10.5 C19 15.5 15 20 11 26 Z M11 13.6 a3.1 3.1 0 1 0 0 -6.2 a3.1 3.1 0 0 0 0 6.2 Z"></path></symbol>
+    <symbol id="tick" viewBox="0 0 24 20"><path d="M3 11 C5.5 13 7.5 15.5 9 18 C12.5 11.5 16.5 6.5 21.5 2.5"></path></symbol>
+    <symbol id="dl" viewBox="0 0 20 22"><path d="M10 2 C9.6 6 10.4 10 10 14.5 M4.5 9.5 C6.5 11.5 8.5 13.3 10 15.5 C11.5 13.3 13.6 11.6 15.7 10 M2.5 16.5 C2.4 18 2.5 19.2 2.6 20 C7.5 20.4 12.5 19.8 17.4 20 C17.6 19 17.5 17.8 17.5 16.6"></path></symbol>
+    <symbol id="spark" viewBox="0 0 60 60"><path d="M26 8 C27 20 29 27 46 31 C29 35 27 43 26 54 C25 43 23 35 6 31 C23 27 25 20 26 8 Z M50 5 L50 17 M44 11 L56 11"></path></symbol>
+    <filter id="wob" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="7" result="n"></feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="3"></feDisplacementMap></filter>
+    <filter id="wob2" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".016" numOctaves="2" seed="3" result="n"></feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="7"></feDisplacementMap></filter>
+  </defs>
+</svg>
 
-<!-- плавающее меню: появляется на узких экранах, когда блок с котом ушёл из вида -->
+<!-- плавающее меню: появляется, когда первый экран ушёл из вида -->
 <nav class="float" id="float" aria-label="Быстрая навигация">
-  <a href="#afisha">Афиша</a>
-  <a href="#" data-todo="ссылка на меню">Меню</a>
-  <a href="#map">Где нас найти</a>
+  <a href="#events" data-e="float/0">События</a>
+  <a href="#tasting" data-e="float/1">Дегустация</a>
+  <a href="#menu" data-e="float/2">Меню</a>
+  <a href="#music" data-e="float/3">Музыка</a>
+  <a href="#find" data-e="float/4">Где мы</a>
+  <a class="go" data-link="telegram" href="https://t.me/mel0k_bar" target="_blank" rel="noopener" data-e="float/5">Бронь</a>
 </nav>
 
-<main class="hero" id="top">
+<!-- ═════════ 1. Первый экран ═════════ -->
+<header class="hero" id="top">
+  <picture class="hero-bg">
+    <source media="(max-width: 900px)" srcset="img/hero-m.webp">
+    <img src="img/hero.webp" width="2400" height="1600" alt="Зал бара «Мелок»: белый кирпич, красные стулья у стойки, цветы на столиках" fetchpriority="high">
+  </picture>
+  <div class="hero-blur"></div>
+  <div class="hero-shade"></div>
 
-  <aside class="map" id="map" aria-labelledby="map-h">
-    <h2 class="hand" id="map-h">Как нас найти</h2>
-    <svg viewBox="270 320 660 660" role="img" aria-label="Схема: бар Мелок, Кави Наджми, 8а, во внутреннем дворике; вход с улицы Кави Наджми между домами, рядом улицы Баумана и Островского">
-      <defs>
-        <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
-          <line x1="0" y1="0" x2="0" y2="9" stroke="#1b1716" stroke-width="1.2" opacity=".34"/>
+  <nav class="nav" aria-label="Разделы сайта">
+    <div class="nav-l"><a href="#menu" data-e="top/0">Меню</a><a href="#events" data-e="top/1">Мероприятия</a><a href="#tasting" data-e="top/2">Дегустация</a></div>
+    <a class="nav-logo" href="#top" data-e="top/3">Melok.bar</a>
+    <div class="nav-r"><a href="#music" data-e="top/4">Музыка</a><a href="#find" data-e="top/5">Контакты</a><a class="nav-book" data-link="telegram" href="https://t.me/mel0k_bar" target="_blank" rel="noopener" data-e="top/6">Бронь</a></div>
+  </nav>
+
+  <div class="hero-mid">
+    <div class="hero-main">
+      <div class="lockup">
+        <svg class="cat" viewBox="0 0 64.63 63.09" aria-hidden="true"><use href="#cat"></use></svg>
+        <h1><span class="vh" data-e="top/7">Мелок — винный бар и бистро в Казани</span><svg class="word" viewBox="0 0 53.77 12.5" aria-hidden="true"><use href="#word"></use></svg></h1>
+        <p class="hero-kind hand" data-e="top/8">винный бар и бистро</p>
+      </div>
+      <p class="hero-tag hand" data-e="top/9">Уютное место<br>в центре Казани</p>
+      <p class="hero-hours" data-e="top/10">с 12:00 — бистро · с 18:00 — вино</p>
+      <p class="hero-addr"><a href="#find" data-e="top/11"><svg class="ico" viewBox="0 0 22 28" aria-hidden="true"><use href="#pin"></use></svg>Кави Наджми, 8а — вход со двора</a></p>
+      <p class="hero-cta"><a class="seelink hand" href="#menu"><span data-e="top/12">Смотреть меню</span> <svg class="ico" viewBox="0 0 44 20" aria-hidden="true"><use href="#arr-r"></use></svg></a></p>
+    </div>
+
+    <!-- анонс: тексты таблички и то, куда она ведёт, меняются в админке; строка со временем скрыта, пока пустая -->
+    <a class="event solo" id="event" href="#music">
+      <svg class="event-frame" viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true"><path d="M7 9 C82 4 190 10 293 6 C297 62 291 138 295 193 C200 197 92 190 6 195 C2 132 9 62 7 9 Z" fill="rgba(8,12,16,.5)" stroke="#fff" stroke-width="2" vector-effect="non-scaling-stroke" filter="url(#wob)"></path></svg>
+      <span class="kicker" id="ev-kicker" data-e="top/13">афиша</span>
+      <span class="event-title hand" id="ev-title" data-e="top/14">Музыка в баре</span>
+      <span class="event-date hand" id="ev-date" data-e="top/15">каждую пятницу</span>
+      <span class="event-when hand" id="ev-when" data-edit="" hidden="" data-e="top/16"></span>
+      <span class="event-more"><span data-e="top/17">подробнее</span> <svg class="ico" viewBox="0 0 44 20" aria-hidden="true"><use href="#arr-r"></use></svg></span>
+    </a>
+  </div>
+
+  <div class="hero-foot">
+    <div class="foot-left">
+      <address class="foot-item foot-addr"><svg class="ico" viewBox="0 0 22 28" aria-hidden="true"><use href="#pin"></use></svg><span data-e="top/18">г. Казань<br>ул. Кави Наджми, 8а</span></address>
+      <div class="foot-item foot-book"><span class="dim" data-e="top/19">Бронь столов:</span><a data-link="phone" href="tel:+78432505655" data-e="top/20">+7 (843) 250-56-55</a></div>
+    </div>
+    <!-- указатель на секцию, которая стоит сразу под первым экраном: подписи и цвет берутся у неё (data-pk, data-pt, data-tone) -->
+    <a class="hero-tab" id="pointer" href="#events" data-tone="paper">
+      <span class="tab-text"><span class="kicker" id="pt-kicker" data-e="top/21">отметим ваш повод в «Мелке»</span><b id="pt-title" data-e="top/22">Мероприятия
+и корпоративы</b></span>
+      <span class="down"><svg class="ico" viewBox="0 0 20 28" aria-hidden="true"><use href="#arr-d"></use></svg></span>
+    </a>
+    <div class="foot-item foot-soc"><span class="dim" data-e="top/23">Мы в соцсетях:</span><span class="links"><a data-link="telegram" href="https://t.me/mel0k_bar" target="_blank" rel="noopener" data-e="top/24">Telegram</a><a data-link="gis" href="https://2gis.ru/kazan/search/%D0%9C%D0%B5%D0%BB%D0%BE%D0%BA%20%D0%9A%D0%B0%D0%B2%D0%B8%20%D0%9D%D0%B0%D0%B4%D0%B6%D0%BC%D0%B8%208%D0%B0" target="_blank" rel="noopener" data-e="top/25">2GIS</a></span></div>
+  </div>
+</header>
+
+<main>
+
+<!-- ═════════ Мероприятия ═════════ -->
+<section class="sec events" id="events" data-tone="paper" data-name="Мероприятия" data-pk="отметим ваш повод в «Мелке»" data-pt="Мероприятия
+и корпоративы" aria-labelledby="events-h">
+  <div class="wrap">
+    <div>
+      <p class="kicker" data-r="" data-e="events/0">мероприятия и корпоративы</p>
+      <h2 class="h2 hand" id="events-h" data-r="" style="--d:.05s" data-e="events/1">Соберите своих&nbsp;— остальное за&nbsp;нами</h2>
+      <p class="lead" data-r="" style="--d:.1s" data-e="events/2">День рождения, корпоратив, презентация или ужин для команды. Светлый зал с белым кирпичом и длинным общим столом, кухня бистро и вино, которое мы подберём под ваших гостей и ваш повод.</p>
+      <ul class="points" data-r="" style="--d:.15s">
+        <li><svg class="ico" viewBox="0 0 24 20" aria-hidden="true"><use href="#tick"></use></svg><span data-e="events/3">Двор на Кави Наджми — в двух шагах от Баумана</span></li>
+        <li><svg class="ico" viewBox="0 0 24 20" aria-hidden="true"><use href="#tick"></use></svg><span data-e="events/4">Своя кухня: от закусок к бокалу до горячего и десертов</span></li>
+        <li><svg class="ico" viewBox="0 0 24 20" aria-hidden="true"><use href="#tick"></use></svg><span data-e="events/5">Музыка — с хорошим вкусом, как и вино</span></li>
+      </ul>
+      <div class="cta-row" data-r="" style="--d:.2s">
+        <a class="btn solid" data-link="telegram" href="https://t.me/mel0k_bar" target="_blank" rel="noopener"><span data-e="events/6">Обсудить мероприятие</span> <svg class="ico" viewBox="0 0 44 20" aria-hidden="true"><use href="#arr-r"></use></svg></a>
+        <a class="btn line" data-link="presentation" href="files/melok-presentation.pdf" download=""><span data-e="events/7">Скачать презентацию</span> <svg class="ico dl" viewBox="0 0 20 22" aria-hidden="true"><use href="#dl"></use></svg></a>
+        <span class="or"><span data-e="events/8">или позвоните:</span> <a data-link="phone" href="tel:+78432505655" data-e="events/9">+7 (843) 250-56-55</a></span>
+      </div>
+    </div>
+    <div class="collage" data-r="" style="--d:.1s">
+      <figure class="p1"><img class="ph" src="img/events-2.webp" width="1000" height="1333" loading="lazy" decoding="async" alt="Длинный общий стол в зале «Мелка», за ним — красные стулья у барной стойки"></figure>
+      <figure class="p2"><img class="ph" src="img/events-1.webp" width="1080" height="1440" loading="lazy" decoding="async" alt="Бокалы-креманки с игристым и блюдо клубники на праздничном столе"></figure>
+      <svg class="spark ico" viewBox="0 0 60 60" aria-hidden="true"><use href="#spark"></use></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ Слепая дегустация ═════════ -->
+<section class="sec tasting" id="tasting" data-tone="night" data-name="Слепая дегустация" data-pk="бутылки спрятаны, этикеток не видно" data-pt="Слепая
+дегустация" aria-labelledby="tasting-h">
+  <div class="wrap">
+    <figure class="ph-a" data-r=""><img class="ph" src="img/tasting-1.webp" width="1000" height="1500" loading="lazy" decoding="async" alt="Рука вращает бокал красного вина над столом"></figure>
+    <div class="mid">
+      <p class="kicker" data-r="" data-e="tasting/0">дегустации</p>
+      <h2 class="h2 hand" id="tasting-h" data-r="" style="--d:.05s" data-e="tasting/1">Слепая дегустация</h2>
+      <p class="lead" data-r="" style="--d:.1s" data-e="tasting/2">Бутылки спрятаны, этикеток не видно. Остаются бокал, нос и интуиция: пробуем, спорим и угадываем, что налито. В конце открываем карты.</p>
+      <div class="sheet" data-r="" style="--d:.15s" aria-hidden="true">
+        <p class="sheet-h" data-e="tasting/3">дегустационный лист</p>
+        <div class="sheet-row"><span data-e="tasting/4">бокал № 1</span><span class="dots"></span><i style="--w:118px"></i></div>
+        <div class="sheet-row"><span data-e="tasting/5">сорт</span><span class="dots"></span><i style="--w:92px"></i></div>
+        <div class="sheet-row"><span data-e="tasting/6">страна</span><span class="dots"></span><i style="--w:134px"></i></div>
+        <div class="sheet-row"><span data-e="tasting/7">год</span><span class="dots"></span><i style="--w:54px"></i></div>
+        <span class="guess hand" data-e="tasting/8">угадаете?</span>
+      </div>
+      <div class="cta-row" data-r="" style="--d:.2s">
+        <a class="btn light" data-link="telegram" href="https://t.me/mel0k_bar" target="_blank" rel="noopener"><span data-e="tasting/9">Узнать дату и записаться</span> <svg class="ico" viewBox="0 0 44 20" aria-hidden="true"><use href="#arr-r"></use></svg></a>
+      </div>
+    </div>
+    <figure class="ph-b" data-r="" style="--d:.12s"><img class="ph" src="img/tasting-2.webp" width="1000" height="1500" loading="lazy" decoding="async" alt="Бокал красного вина и закуски на столе, вид сверху"></figure>
+  </div>
+</section>
+
+<!-- ═════════ Меню ═════════ -->
+<section class="sec menu" id="menu" data-tone="paper" data-name="Меню" data-pk="с 12:00 — бистро · с 18:00 — вино" data-pt="Меню" aria-labelledby="menu-h">
+  <div class="wrap">
+    <div class="menu-head">
+      <h2 class="menu-title hand" id="menu-h" data-r="" data-e="menu/0">Меню</h2>
+      <div class="switch" role="tablist" aria-label="Какое меню показать" data-r="" style="--d:.05s">
+        <button type="button" role="tab" id="tab-main" aria-controls="m-main" aria-selected="true" data-e="menu/1">Основное</button>
+        <button type="button" role="tab" id="tab-lunch" aria-controls="m-lunch" aria-selected="false" data-e="menu/2">Ланчи 12–18</button>
+      </div>
+      <button class="zoom" id="menu-zoom" type="button" aria-pressed="false" aria-label="Крупнее текст меню" title="Крупнее текст" data-e="menu/3">Аа</button>
+    </div>
+
+    <div class="mcols" id="m-main" role="tabpanel" aria-labelledby="tab-main" data-unit="">
+      <div class="mcol" data-r="">
+        <div class="mgroup">
+          <h3 class="mlabel" data-e="~">Антипасти</h3>
+          <ul class="mlist">
+            <li><span data-e="~">Оливки</span><b data-e="~">280</b></li>
+            <li><span data-e="~">Патиссоны</span><b data-e="~">180</b></li>
+            <li><span data-e="~">Томаты вяленые</span><b data-e="~">290</b></li>
+            <li><span data-e="~">Корнишоны со сметанно-медовым соусом</span><b data-e="~">290</b></li>
+            <li><span data-e="~">Картошка фри с крафтовым соусом в ассортименте</span><b data-e="~">420</b></li>
+            <li><span data-e="~">Фиш фри с манговым соусом</span><b data-e="~">510</b></li>
+            <li><span data-e="~">Чипсы из свёклы и картофеля с соусом</span><b data-e="~">420</b></li>
+            <li><span data-e="~">Кукуруза фри с медово-сметанным соусом</span><b data-e="~">380</b></li>
+            <li><span data-e="~">Крекер с паприкой и прошутто с соусом:<span class="msub">медово-сметанный<br>с белыми грибами<br>с соусом из камамбера</span></span><b data-e="~">420</b></li>
+            <li><span data-e="~">Сыр с голубой плесенью с грушевым вареньем</span><b data-e="~">360</b></li>
+            <li><span data-e="~">Козий твёрдый сыр с ежевичным вареньем</span><b data-e="~">360</b></li>
+            <li><span data-e="~">Грюйер с абрикосовым вареньем</span><b data-e="~">360</b></li>
+            <li><span data-e="~">Прошутто</span><b data-e="~">380</b></li>
+            <li><span data-e="~">Казылык с козьим сыром</span><b data-e="~">420</b></li>
+            <li><span data-e="~">Тарелка к вину: всё, что вы любите</span><b data-e="~">790</b></li>
+          </ul>
+        </div>
+        <div class="mgroup">
+          <h3 class="mlabel" data-e="~">Сэндвичи</h3>
+          <ul class="mlist">
+            <li><span data-e="~">Бутерброд из рубленых томатов и шпрот</span><b data-e="~">300</b></li>
+            <li><span data-e="~">Бутерброд с песто и моцареллой</span><b data-e="~">280</b></li>
+            <li><span data-e="~">Бутерброд с прошутто</span><b data-e="~">300</b></li>
+            <li><span data-e="~">Сет из трёх бутербродов</span><b data-e="~">780</b></li>
+            <li><span data-e="~">Сэндвич на бриоши с ростбифом</span><b data-e="~">690</b></li>
+            <li><span data-e="~">Сэндвич на бриоши с запечёнными овощами и моцареллой</span><b data-e="~">640</b></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mcol" data-r="" style="--d:.08s">
+        <div class="mgroup">
+          <h3 class="mlabel" data-e="~">Салаты</h3>
+          <ul class="mlist">
+            <li><span data-e="~">Салат с печёными овощами и сыром</span><b data-e="~">490</b></li>
+            <li><span data-e="~">Мягкий сыр с запечёнными перцами</span><b data-e="~">430</b></li>
+            <li><span data-e="~">Закуска с ростбифом, печёным перцем и луковым соусом</span><b data-e="~">640</b></li>
+          </ul>
+        </div>
+        <div class="mgroup">
+          <h3 class="mlabel" data-e="~">Горячее</h3>
+          <ul class="mlist">
+            <li><span data-e="~">Куриный суп с кукурузой и кокосовыми сливками</span><b data-e="~"></b></li>
+            <li><span data-e="~">Шницель из куриной грудки с салатом романо и соусом Цезарь</span><b data-e="~">530</b></li>
+            <li><span data-e="~">Конькильони с форелью, сливочным соусом и красной икрой</span><b data-e="~">640</b></li>
+            <li><span data-e="~">Паста казаречче с печёным перцем, моцареллой и луково-перечным соусом</span><b data-e="~">520</b></li>
+            <li><span data-e="~">Утиная ножка, запечённая с апельсином, с сезонными овощами</span><b data-e="~">620</b></li>
+            <li><span data-e="~">Рваная говядина в винном соусе с картофельным пюре и огурчиками</span><b data-e="~">680</b></li>
+            <li><span data-e="~">Стейк из форели со спаржей и сливочным соусом</span><b data-e="~">780</b></li>
+            <li><span data-e="~">Стейк Вегас с печёным молодым картофелем</span><b data-e="~">890</b></li>
+          </ul>
+        </div>
+        <div class="mgroup">
+          <h3 class="mlabel" data-e="~">Десерты</h3>
+          <ul class="mlist">
+            <li><span data-e="~">Шоколадный мусс с морской солью и оливковым маслом</span><b data-e="~">390</b></li>
+            <li><span data-e="~">Крем-брюле со сливово-винным сорбетом</span><b data-e="~">430</b></li>
+            <li><span data-e="~">Брауни с мороженым</span><b data-e="~">360</b></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="mcols" id="m-lunch" role="tabpanel" aria-labelledby="tab-lunch" data-unit="" hidden="">
+      <div class="mcol" data-r="">
+        <div class="mgroup">
+          <h3 class="mlabel" data-e="~">Ланчи</h3>
+          <ul class="mlist">
+            <li><span data-e="~">Запеканка с черничным соусом</span><b data-e="~">380</b></li>
+            <li><span data-e="~">Шницель из куриной грудки с коул слоу и заправкой из зелёного айоли</span><b data-e="~">480</b></li>
+            <li><span data-e="~">Картофельное пюре с фрикадельками, клюквенным джемом и соусом бешамель</span><b data-e="~">530</b></li>
+            <li><span data-e="~">Паста казаречче с пряной тыквой, моцареллой и пряным соусом на курином бульоне</span><b data-e="~">520</b></li>
+            <li><span data-e="~">Спагетти с мясными фрикадельками и томатным соусом</span><b data-e="~">470</b></li>
+            <li><span data-e="~">Луковый суп из трёх видов лука (репчатый, шалот, порей), обожжённый пармезан</span><b data-e="~">390</b></li>
+            <li><span data-e="~">Мясной наваристый суп с овощами</span><b data-e="~">390</b></li>
+            <li><span data-e="~">Салат из печёных овощей с мягким сыром</span><b data-e="~">290</b></li>
+            <li><span data-e="~">Брауни с мороженым</span><b data-e="~">350</b></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mcol" data-r="" style="--d:.08s">
+        <div class="mgroup">
+          <h3 class="mlabel" data-e="~">Комбо</h3>
+          <ul class="mlist">
+            <li><span data-e="~">Мясной наваристый суп с овощами и половинкой сэндвича с ростбифом</span><b data-e="~">720</b></li>
+            <li><span data-e="~">Луковый суп из трёх видов лука, обожжённый пармезан, и половинкой сэндвича с куриным шницелем</span><b data-e="~">690</b></li>
+          </ul>
+        </div>
+        <p class="mnote" data-e="~">* к ланчу — чай или кофе в подарок</p>
+      </div>
+    </div>
+
+    <div class="menu-foot">
+      <p data-e="menu/4">с 12:00 — бистро · с 18:00 — вино</p>
+      <svg class="cat" viewBox="0 0 64.63 63.09" aria-hidden="true"><use href="#cat"></use></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ Музыка ═════════ -->
+<section class="sec music" id="music" data-tone="blue" data-name="Музыка" data-pk="каждую пятницу" data-pt="Музыка в баре" aria-labelledby="music-h">
+  <div class="wrap">
+    <div>
+      <p class="kicker" data-r="" data-e="music/0">музыка в баре</p>
+      <h2 class="h2 hand" id="music-h" data-r="" style="--d:.05s" data-e="music/1">Каждую пятницу</h2>
+      <p class="lead" data-r="" style="--d:.1s" data-e="music/2">«Молодой винный бар с хорошим музыкальным вкусом» — так написано у нас на двери. По пятницам проверяем это на деле: в баре играет музыка, и вечер превращается в тусовку.</p>
+      <div class="cta-row" data-r="" style="--d:.15s">
+        <a class="btn white" data-link="telegram" href="https://t.me/mel0k_bar" target="_blank" rel="noopener"><span data-e="music/3">Забронировать стол</span> <svg class="ico" viewBox="0 0 44 20" aria-hidden="true"><use href="#arr-r"></use></svg></a>
+      </div>
+    </div>
+    <div class="discs" data-r="" style="--d:.1s">
+      <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
+        <defs><path id="ring-p" d="M100 100 m-91 0 a91 91 0 1 1 182 0 a91 91 0 1 1 -182 0"></path></defs>
+        <text><textPath href="#ring-p" textLength="566" lengthAdjust="spacing" data-e="music/4">каждую пятницу · музыка в баре · каждую пятницу · музыка в баре ·</textPath></text>
+      </svg>
+      <figure class="disc a"><img src="img/music-1.webp?v=2" width="900" height="900" loading="lazy" decoding="async" alt="Вечер в зале бара: диско-шар под потолком, колонки и диджейский пульт"></figure>
+      <figure class="disc b"><img src="img/music-2.webp" width="900" height="900" loading="lazy" decoding="async" alt="Диджей за пультом в зале бара, рядом гости за столом"></figure>
+    </div>
+    <div class="side" data-r="" style="--d:.18s">
+      <figure><img class="ph" src="img/music-3.webp" width="900" height="1200" loading="lazy" decoding="async" alt="Терраса бара вечером, вид сверху: гирлянды и гости за столиками"></figure>
+      <dl class="facts">
+        <div><dt data-e="music/5">когда</dt><dd data-e="music/6">каждую пятницу</dd></div>
+        <div><dt data-e="music/7">где</dt><dd data-e="music/8">Кави Наджми, 8а</dd></div>
+        <div><dt data-e="music/9">стол</dt><dd><a data-link="phone" href="tel:+78432505655" data-e="music/10">+7 (843) 250-56-55</a></dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ Как нас найти ═════════ -->
+<section class="find-outer" id="find" data-tone="night" data-name="Как нас найти" data-pk="Кави Наджми, 8а — вход со двора" data-pt="Как нас найти" aria-labelledby="find-h">
+  <div class="find" id="find-box">
+    <!-- фото входа; белый указатель нарисован поверх и масштабируется вместе с фото -->
+    <svg class="find-photo" viewBox="0 100 1280 860" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Вход в бар «Мелок» со двора: тёмно-серое здание, двустворчатая дверь, рядом на стене нарисован котёнок">
+      <image href="img/facade.webp" width="1280" height="960"></image>
+      <rect y="100" width="1280" height="860" fill="rgba(9,13,17,.3)"></rect>
+      <g class="here" filter="url(#wob2)">
+        <path pathLength="1" d="M592 258 C528 256 482 322 480 408 C478 498 524 562 594 560 C664 558 704 492 702 404 C700 318 652 258 574 266"></path>
+        <path pathLength="1" style="--d:.7s" d="M470 716 C472 674 500 634 542 602"></path>
+        <path pathLength="1" style="--d:1.1s" d="M504 604 L543 598 L537 636"></path>
+        <text x="545" y="800" font-size="66" text-anchor="middle" transform="rotate(-4 545 780)" data-e="find/0">МЫ ТУТ</text>
+      </g>
+    </svg>
+
+    <div class="card" data-r="">
+      <h2 class="hand" id="find-h" data-e="find/1">Как нас найти</h2>
+      <div class="map">
+        <svg viewBox="270 320 660 660" role="img" aria-label="Схема: бар Мелок, Кави Наджми, 8а, во внутреннем дворике; вход с улицы Кави Наджми между домами, рядом улицы Баумана и Островского">
+        <defs>
+        <pattern id="m-hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(40)">
+        <line x1="0" y1="0" x2="0" y2="9" stroke="currentColor" stroke-width="1.2" opacity=".34"></line>
         </pattern>
-        <radialGradient id="fade-g" cx="50%" cy="50%" r="62%">
-          <stop offset="58%" stop-color="#fff"/><stop offset="100%" stop-color="#000"/>
+        <radialGradient id="m-fade-g" cx="50%" cy="50%" r="62%">
+        <stop offset="58%" stop-color="#fff"></stop><stop offset="100%" stop-color="#000"></stop>
         </radialGradient>
-        <mask id="fade" maskUnits="userSpaceOnUse" x="270" y="320" width="660" height="660"><rect x="270" y="320" width="660" height="660" fill="url(#fade-g)"/></mask>
+        <mask id="m-fade" maskUnits="userSpaceOnUse" x="270" y="320" width="660" height="660"><rect x="270" y="320" width="660" height="660" fill="url(#m-fade-g)"></rect></mask>
         <!-- лёгкая «дрожь руки»: линии живые, но формы домов остаются точными -->
-        <filter id="hand" x="-3%" y="-3%" width="106%" height="106%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="5" result="n"/>
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="3.6"/>
+        <filter id="m-hand" x="-3%" y="-3%" width="106%" height="106%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="5" result="n"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="3.6"></feDisplacementMap>
         </filter>
-      </defs>
-      <g mask="url(#fade)"><g filter="url(#hand)" fill="none" stroke="#1b1716" stroke-linecap="round" stroke-linejoin="round">
+        </defs>
+        <g mask="url(#m-fade)"><g filter="url(#m-hand)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
         <!-- контуры зданий построены по данным OpenStreetMap -->
-        <path d="M-77.2 77 L4.7 140.7 L-7.8 159.5 L20.2 183 L35.1 164.4 L55.1 180 L219.5 -30.2 L274.2 -94.5 L205.2 -156.4 L96 -251.4 L-60.1 -53 L-114.6 16.3 L-129.7 36 Z M848.4 209.1 L867.5 187.1 L905.6 219.8 L881.2 247.8 L843.7 290.9 L798.3 251.8 L841.1 202.8 Z M200.4 899.1 L289.7 792.2 L281.5 778.9 L281.7 765.5 L293.2 757.4 L314 756.7 L323.1 767.2 L325.4 785.4 L484.3 916.5 L535.6 958.8 L479.1 1026.4 L442.8 996.4 L418.3 1025.7 L383.2 996.7 L411.6 962.7 L326 892.1 L298.8 924.7 L359.3 974.5 L331.8 1007.4 Z M349.6 701.2 L492.6 820.2 L528.1 778.1 L424.6 691.9 L464.8 644.3 L425.3 611.4 Z M586.8 909.8 L593.5 915.2 L671.9 978.2 L777.4 848.8 L755.7 831.5 L686.7 916.1 L629.4 870.1 L623.3 865.1 Z M1165.5 676.7 L1087.1 767.2 L1070.7 753.3 L1057.2 741.8 L1098.2 694.5 L1033.3 639.1 L1070.8 595.8 Z M1006.4 540.8 L961.8 502.7 L874.5 603.4 L919.1 641.6 L968.9 584 Z M1033.3 639.1 L968.9 584 L1006.4 540.8 L1070.8 595.8 Z M618.4 359 L684.8 278.2 L760.8 339.8 L694.5 420.6 Z M841.2 402 L930.4 478.7 L822 603 L796 580.6 L808.6 566.1 L857.1 510.5 L829.7 486.9 L795.1 526.5 L759.4 495.9 Z M760.8 339.8 L694.5 420.6 L679.4 436.5 L704.4 457.4 L752.9 400.1 L801 440.2 L834.4 400.8 Z M123.3 476.5 L267.1 591.6 L326.3 590 L434.7 450.7 L451.2 429.4 L413.4 397.6 L395.4 420 L370.8 451 L338.8 491.4 L308.9 529.2 L300.8 539.4 L286 538.1 L274.9 529.3 L227.6 491.4 L180.7 453.9 L157.1 435 L124 475.7 Z M353.9 -24 L274.2 -94.5 L219.5 -30.2 L301.9 38 L267.7 46.2 L233.5 54.6 L194.4 98.6 L161.1 72.2 L66.3 189.3 L122.5 231.9 L130.1 221.2 L145.9 226.4 L237.2 301.7 L285.8 346.4 L314.9 314.7 L345.2 279.2 L318.8 250 L422.3 113.1 L454.5 73.1 L399.6 23 Z M531.2 140 L454.5 73.1 L422.3 113.1 L476.4 156.2 L393.3 259 L416.1 281.2 Z M508.7 355.5 L493.1 375.6 L451.2 429.4 L413.4 397.6 L314.9 314.7 L345.2 279.2 L433.4 353.4 L444.9 339.9 L462.8 318.7 Z M515.9 497 L612.8 367.6 L663.9 405.4 L567 534.8 Z M931.9 778 L1003.4 831.8 L1027 849.6 L980 911.2 L884.8 839.5 Z M967 396.5 L999.6 360.6 L1128.7 218.5 L1173.3 258.5 L1043.3 401.7 L1098.5 451.2 L1066.9 486 Z M688.7 746.4 L704.2 759.1 L753.5 699.9 L788 729.8 L764.9 758.2 L760.4 763.8 L751 756.6 L701.3 816.1 L679.9 798.5 L651.1 833.1 L630.4 816.2 Z M196 1080.3 L276.4 976.3 L200.1 905 L136.1 992.2 L125.4 1005.5 L129.4 1012.2 L139.5 1017.7 Z M1052.6 944.2 L1024.8 979.4 L1099.3 1037.4 L1077 1065.6 L1099.4 1083.1 L1149.6 1019.6 L1112.4 990.6 L1080.3 965.6 Z M1070.7 753.3 L1003.4 831.8 L1027 849.6 L1092.5 771.2 L1087.1 767.2 Z M414.3 1027.3 L362.1 1087.2 L290 1025.1 L262.1 1057.1 L234.7 1033.5 L286.6 974.1 L359.9 1037.3 L388.2 1004.8 Z M658.3 129.4 L465.8 -33.9 L516.9 -93.4 L534.4 -78.5 L517.4 -58.7 L671.2 72.2 L682.6 58.7 L653.7 34.7 L750.9 -80.9 L799.5 -138.6 L805.6 -145.9 L850.3 -108.9 L864.5 -97.1 L709.6 87.1 L743.9 117.2 L841.1 202.8 L798.3 251.8 L705.7 170.9 Z M755.7 831.5 L765.5 819.4 L795.1 782.7 L816.5 800 L777.4 848.8 Z M734.5 794.9 L760.4 763.8 L764.9 758.2 L795.1 782.7 L765.5 819.4 Z M885.1 872.6 L751 1034.8 L835.4 1103.6 L969.5 941.3 Z M531.2 140 L609.6 203 L612.6 222.1 L508.7 355.5 L462.8 318.7 L416.1 281.2 Z M1099.6 116.6 L1062.3 159.4 L1085.2 179.1 L969.2 312.1 L964.5 308 L950.8 323.7 L999.6 360.6 L967 396.5 L843.7 290.9 L881.2 247.8 L917.4 278.9 L1075.8 97.3 Z" stroke-width="1.7" opacity=".55"/>
-        <path d="M445.6 580.7 L528.6 651.2 L568.7 604.6 L536 576.3 L485.6 534.2 Z M536 576.3 L567 534.8 L515.9 497 L485.6 534.2 Z" fill="url(#hatch)" stroke-width="2.3"/>
+        <path d="M-77.2 77 L4.7 140.7 L-7.8 159.5 L20.2 183 L35.1 164.4 L55.1 180 L219.5 -30.2 L274.2 -94.5 L205.2 -156.4 L96 -251.4 L-60.1 -53 L-114.6 16.3 L-129.7 36 Z M848.4 209.1 L867.5 187.1 L905.6 219.8 L881.2 247.8 L843.7 290.9 L798.3 251.8 L841.1 202.8 Z M200.4 899.1 L289.7 792.2 L281.5 778.9 L281.7 765.5 L293.2 757.4 L314 756.7 L323.1 767.2 L325.4 785.4 L484.3 916.5 L535.6 958.8 L479.1 1026.4 L442.8 996.4 L418.3 1025.7 L383.2 996.7 L411.6 962.7 L326 892.1 L298.8 924.7 L359.3 974.5 L331.8 1007.4 Z M349.6 701.2 L492.6 820.2 L528.1 778.1 L424.6 691.9 L464.8 644.3 L425.3 611.4 Z M586.8 909.8 L593.5 915.2 L671.9 978.2 L777.4 848.8 L755.7 831.5 L686.7 916.1 L629.4 870.1 L623.3 865.1 Z M1165.5 676.7 L1087.1 767.2 L1070.7 753.3 L1057.2 741.8 L1098.2 694.5 L1033.3 639.1 L1070.8 595.8 Z M1006.4 540.8 L961.8 502.7 L874.5 603.4 L919.1 641.6 L968.9 584 Z M1033.3 639.1 L968.9 584 L1006.4 540.8 L1070.8 595.8 Z M618.4 359 L684.8 278.2 L760.8 339.8 L694.5 420.6 Z M841.2 402 L930.4 478.7 L822 603 L796 580.6 L808.6 566.1 L857.1 510.5 L829.7 486.9 L795.1 526.5 L759.4 495.9 Z M760.8 339.8 L694.5 420.6 L679.4 436.5 L704.4 457.4 L752.9 400.1 L801 440.2 L834.4 400.8 Z M123.3 476.5 L267.1 591.6 L326.3 590 L434.7 450.7 L451.2 429.4 L413.4 397.6 L395.4 420 L370.8 451 L338.8 491.4 L308.9 529.2 L300.8 539.4 L286 538.1 L274.9 529.3 L227.6 491.4 L180.7 453.9 L157.1 435 L124 475.7 Z M353.9 -24 L274.2 -94.5 L219.5 -30.2 L301.9 38 L267.7 46.2 L233.5 54.6 L194.4 98.6 L161.1 72.2 L66.3 189.3 L122.5 231.9 L130.1 221.2 L145.9 226.4 L237.2 301.7 L285.8 346.4 L314.9 314.7 L345.2 279.2 L318.8 250 L422.3 113.1 L454.5 73.1 L399.6 23 Z M531.2 140 L454.5 73.1 L422.3 113.1 L476.4 156.2 L393.3 259 L416.1 281.2 Z M508.7 355.5 L493.1 375.6 L451.2 429.4 L413.4 397.6 L314.9 314.7 L345.2 279.2 L433.4 353.4 L444.9 339.9 L462.8 318.7 Z M515.9 497 L612.8 367.6 L663.9 405.4 L567 534.8 Z M931.9 778 L1003.4 831.8 L1027 849.6 L980 911.2 L884.8 839.5 Z M967 396.5 L999.6 360.6 L1128.7 218.5 L1173.3 258.5 L1043.3 401.7 L1098.5 451.2 L1066.9 486 Z M688.7 746.4 L704.2 759.1 L753.5 699.9 L788 729.8 L764.9 758.2 L760.4 763.8 L751 756.6 L701.3 816.1 L679.9 798.5 L651.1 833.1 L630.4 816.2 Z M196 1080.3 L276.4 976.3 L200.1 905 L136.1 992.2 L125.4 1005.5 L129.4 1012.2 L139.5 1017.7 Z M1052.6 944.2 L1024.8 979.4 L1099.3 1037.4 L1077 1065.6 L1099.4 1083.1 L1149.6 1019.6 L1112.4 990.6 L1080.3 965.6 Z M1070.7 753.3 L1003.4 831.8 L1027 849.6 L1092.5 771.2 L1087.1 767.2 Z M414.3 1027.3 L362.1 1087.2 L290 1025.1 L262.1 1057.1 L234.7 1033.5 L286.6 974.1 L359.9 1037.3 L388.2 1004.8 Z M658.3 129.4 L465.8 -33.9 L516.9 -93.4 L534.4 -78.5 L517.4 -58.7 L671.2 72.2 L682.6 58.7 L653.7 34.7 L750.9 -80.9 L799.5 -138.6 L805.6 -145.9 L850.3 -108.9 L864.5 -97.1 L709.6 87.1 L743.9 117.2 L841.1 202.8 L798.3 251.8 L705.7 170.9 Z M755.7 831.5 L765.5 819.4 L795.1 782.7 L816.5 800 L777.4 848.8 Z M734.5 794.9 L760.4 763.8 L764.9 758.2 L795.1 782.7 L765.5 819.4 Z M885.1 872.6 L751 1034.8 L835.4 1103.6 L969.5 941.3 Z M531.2 140 L609.6 203 L612.6 222.1 L508.7 355.5 L462.8 318.7 L416.1 281.2 Z M1099.6 116.6 L1062.3 159.4 L1085.2 179.1 L969.2 312.1 L964.5 308 L950.8 323.7 L999.6 360.6 L967 396.5 L843.7 290.9 L881.2 247.8 L917.4 278.9 L1075.8 97.3 Z" stroke-width="1.7" opacity=".55"></path>
+        <path d="M445.6 580.7 L528.6 651.2 L568.7 604.6 L536 576.3 L485.6 534.2 Z M536 576.3 L567 534.8 L515.9 497 L485.6 534.2 Z" fill="url(#m-hatch)" stroke-width="2.3"></path>
         <!-- Кави Наджми, 8а -->
-        <path d="M567 534.8 L536 576.3 L568.7 604.6 L626.6 651.7 L558.7 732.2 L583.7 752.9 L630 698 L656.6 720.2 L709.9 657 L613.4 574.4 Z" fill="#fff" stroke-width="5"/>
+        <path d="M567 534.8 L536 576.3 L568.7 604.6 L626.6 651.7 L558.7 732.2 L583.7 752.9 L630 698 L656.6 720.2 L709.9 657 L613.4 574.4 Z" fill="#fffefc" stroke-width="5"></path>
         <!-- дорожка с улицы во дворик -->
-        <path d="M394 590 C420 594 452 612 480 638 C502 658 522 684 546 682 C562 680 574 664 582 650" stroke-width="5.2" stroke-dasharray="13 10"/>
-      </g></g>
-      <!-- ул. Баумана — пешеходная, кусочек в углу -->
-      <path d="M800 312 L935 430" fill="none" stroke="#1b1716" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="4 13" filter="url(#hand)"/>
-      <path transform="translate(596 631) scale(1.45)" d="M0 -6 c-4 -7 -14 -3 -11 5 c2 5 7 8 11 11 c4 -3 9 -6 11 -11 c3 -8 -7 -12 -11 -5 z" fill="#1b1716" stroke="#fff" stroke-width="3" paint-order="stroke"/>
-      <g stroke="#fff" stroke-linejoin="round" paint-order="stroke" text-anchor="middle">
-        <text transform="translate(472 474) rotate(-52.6)" font-size="30" stroke-width="9">ул. Кави Наджми</text>
-        <text transform="translate(806 400) rotate(41)" font-size="30" stroke-width="9">ул. Баумана</text>
-        <text transform="translate(470 850) rotate(40.6)" font-size="30" stroke-width="9">ул. Островского</text>
-        <text transform="translate(604 602) rotate(40.7)" font-size="34" stroke-width="0">Мелок</text>
-        <text x="488" y="606" font-size="21" stroke-width="7">8</text>
-        <text x="668" y="667" font-size="20" stroke-width="0">8а</text>
-        <text transform="translate(500 722) rotate(40.7)" font-size="22" stroke-width="8">вход со двора</text>
-      </g>
-    </svg>
-    <p class="hand">Кави Наджми, 8а. С улицы сворачивайте во двор у дома 8 — мы внутри.</p>
-  </aside>
-
-  <section class="center">
-    <div class="stage">
-      <canvas id="cat" role="img" aria-label="Нарисованный котёнок встаёт и трётся о бутылку красного вина" title="Нажмите на кота"></canvas>
+        <path d="M394 590 C420 594 452 612 480 638 C502 658 522 684 546 682 C562 680 574 664 582 650" stroke-width="5.2" stroke-dasharray="13 10"></path>
+        </g></g>
+        <!-- ул. Баумана — пешеходная, кусочек в углу -->
+        <path d="M800 312 L935 430" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="4 13" filter="url(#m-hand)"></path>
+        <path transform="translate(596 631) scale(1.45)" d="M0 -6 c-4 -7 -14 -3 -11 5 c2 5 7 8 11 11 c4 -3 9 -6 11 -11 c3 -8 -7 -12 -11 -5 z" fill="#f0503f" stroke="#fffefc" stroke-width="3" paint-order="stroke"></path>
+        <g stroke="#fffefc" stroke-linejoin="round" paint-order="stroke" text-anchor="middle">
+        <text transform="translate(472 474) rotate(-52.6)" font-size="21" stroke-width="9" data-e="find/2">ул. Кави Наджми</text>
+        <text transform="translate(806 400) rotate(41)" font-size="21" stroke-width="9" data-e="find/3">ул. Баумана</text>
+        <text transform="translate(470 850) rotate(40.6)" font-size="21" stroke-width="9" data-e="find/4">ул. Островского</text>
+        <text transform="translate(604 602) rotate(40.7)" font-size="23.8" stroke-width="0" data-e="find/5">Мелок</text>
+        <text x="488" y="606" font-size="14.7" stroke-width="7" data-e="find/6">8</text>
+        <text x="668" y="667" font-size="14" stroke-width="0" data-e="find/7">8а</text>
+        <text transform="translate(500 722) rotate(40.7)" font-size="15.4" stroke-width="8" data-e="find/8">вход со двора</text>
+        </g>
+        </svg>
+      </div>
+      <p class="addr"><b data-e="find/9">Казань, ул. Кави Наджми, 8а.</b> <span data-e="find/10">С улицы сворачивайте во двор у дома 8 — мы внутри.</span></p>
+      <p class="now" id="now"><span class="dot"></span><span id="now-text" data-noedit="">с 12:00 — бистро · с 18:00 — вино</span></p>
+      <div class="hours" id="hours-card" data-noedit=""><div><span>вт, чт, вс</span><span>12:00 — 23:00</span></div><div><span>пт, сб</span><span>12:00 — 00:00</span></div><div class="off"><span>пн, ср</span><span>выходной</span></div></div>
+      <div class="cta-row">
+        <a class="btn solid" data-link="ymaps" href="https://yandex.ru/maps/org/melok/201889181731/" target="_blank" rel="noopener" data-e="find/11">Яндекс Карты</a>
+        <a class="btn" data-link="gis" href="https://2gis.ru/kazan/search/%D0%9C%D0%B5%D0%BB%D0%BE%D0%BA%20%D0%9A%D0%B0%D0%B2%D0%B8%20%D0%9D%D0%B0%D0%B4%D0%B6%D0%BC%D0%B8%208%D0%B0" target="_blank" rel="noopener" data-e="find/12">2ГИС</a>
+      </div>
     </div>
-    <h1 class="hand">Мелок</h1>
-    <p class="cap kind">винный бар</p>
-    <p class="lead hand">Во дворе на Кави Наджми, 8а — в двух шагах от Баумана</p>
-    <div class="actions" id="menu">
-      <a class="btn only-m" href="#afisha">Афиша</a>
-      <a class="btn fill" href="#" data-todo="ссылка на меню">Меню</a>
-      <a class="btn only-m" href="#map">Где нас найти</a>
-    </div>
-  </section>
+  </div>
+</section>
 
-  <!-- афиша: одно ближайшее событие; позже его будет отдавать админка, см. MELOK_EVENT внизу -->
-  <aside class="poster" id="afisha" aria-labelledby="afisha-h">
-   <svg class="paper" viewBox="0 0 300 400" preserveAspectRatio="none" aria-hidden="true">
-     <defs>
-       <pattern id="ph" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)">
-         <line x1="0" y1="0" x2="0" y2="5" stroke="#1b1716" stroke-width="1.1" opacity=".55"/>
-       </pattern>
-     </defs>
-     <g filter="url(#hand)" fill="none" stroke="#1b1716" stroke-linecap="round" stroke-linejoin="round">
-       <!-- лист: края чуть волнистые, правый нижний угол загнут -->
-       <path d="M7 9 C70 4 150 11 222 6 C250 4 276 8 294 7 C298 90 290 190 295 290 C296 310 295 328 294 342 C284 362 270 380 254 395 C190 399 120 391 60 396 C40 397 20 395 6 396 C9 300 2 200 6 110 C7 70 5 36 7 9 Z" fill="#fff" stroke-width="2.6" vector-effect="non-scaling-stroke"/>
-       <!-- загнутый уголок: треугольник, отогнутый на лист, со штриховкой-тенью -->
-       <path d="M294 342 C284 362 270 380 254 395 C254 380 256 366 260 352 C272 350 284 347 294 342 Z" fill="#fff" stroke-width="2.4" vector-effect="non-scaling-stroke"/>
-       <path d="M262 358 L286 349 M260 368 L280 356 M258 379 L272 366" stroke-width="1.2" opacity=".5" vector-effect="non-scaling-stroke"/>
-       <!-- пара морщинок -->
-       <path d="M14 366 C22 372 30 380 34 390" stroke-width="1.3" opacity=".45" vector-effect="non-scaling-stroke"/>
-       <!-- скотч: полоска с рваными концами, лежит вдоль верхнего края -->
-       <path d="M101 -9 L107 -3 L102 3 L108 9 L103 15 L108 21 L196 24 L191 18 L197 12 L192 6 L198 0 L193 -6 Z" fill="#fff" fill-opacity=".82" stroke-width="2" vector-effect="non-scaling-stroke"/>
-       <path d="M118 2 L128 14 M140 -2 L154 16 M166 0 L178 16" stroke-width="1.2" opacity=".45" vector-effect="non-scaling-stroke"/>
-     </g>
-   </svg>
-   <div class="sheet">
-    <p class="cap">афиша</p>
-    <svg class="glass" viewBox="0 0 60 84" aria-hidden="true">
-      <g fill="none" stroke="#1b1716" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M14 26 C15 42 22 50 30 50 C38 50 45 42 46 26 Z" fill="#a3142b" stroke="none"/>
-        <path d="M12 6 C10 34 18 50 30 50 C42 50 50 34 48 6 Z"/>
-        <path d="M30 50 V74 M17 77 H43"/>
-      </g>
-    </svg>
-    <p class="cap when" id="ev-when"></p>
-    <h2 class="hand" id="afisha-h"></h2>
-    <p class="hand note" id="ev-note"></p>
-   </div>
-  </aside>
-
-  <p class="legal">18+ · Чрезмерное употребление алкоголя вредит вашему здоровью</p>
 </main>
 
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-logo">
+      <svg class="cat" viewBox="0 0 64.63 63.09" aria-hidden="true"><use href="#cat"></use></svg>
+      <svg class="word" viewBox="0 0 53.77 12.5" role="img" aria-label="Мелок"><use href="#word"></use></svg>
+    </div>
+    <div>
+      <p class="kicker" data-e="foot/0">адрес</p>
+      <ul><li data-e="foot/1">Казань, ул. Кави Наджми, 8а</li><li data-e="foot/2">вход со двора</li></ul>
+    </div>
+    <div>
+      <p class="kicker" data-e="foot/3">часы работы</p>
+      <ul id="hours-foot" data-noedit=""><li>вт, чт, вс — 12:00–23:00</li><li>пт, сб — 12:00–00:00</li><li>пн, ср — выходной</li></ul>
+    </div>
+    <div>
+      <p class="kicker" data-e="foot/4">бронь и связь</p>
+      <ul>
+        <li><a data-link="phone" href="tel:+78432505655" data-e="foot/5">+7 (843) 250-56-55</a></li>
+        <li><a data-link="telegram" href="https://t.me/mel0k_bar" target="_blank" rel="noopener" data-e="foot/6">Telegram</a></li>
+        <li><a data-link="ymaps" href="https://yandex.ru/maps/org/melok/201889181731/" target="_blank" rel="noopener" data-e="foot/7">Яндекс Карты</a><span data-noedit="" aria-hidden="true"> · </span><a data-link="gis" href="https://2gis.ru/kazan/search/%D0%9C%D0%B5%D0%BB%D0%BE%D0%BA%20%D0%9A%D0%B0%D0%B2%D0%B8%20%D0%9D%D0%B0%D0%B4%D0%B6%D0%BC%D0%B8%208%D0%B0" target="_blank" rel="noopener" data-e="foot/8">2ГИС</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="legal"><span data-e="foot/9">© Мелок, винный бар и бистро</span><span data-e="foot/10">18+ · Чрезмерное употребление алкоголя вредит вашему здоровью</span></p>
+</footer>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BarOrPub","name":"Мелок","description":"Винный бар и бистро во дворе на Кави Наджми в Казани","telephone":"+78432505655","address":{"@type":"PostalAddress","streetAddress":"ул. Кави Наджми, 8а","addressLocality":"Казань","addressCountry":"RU"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Tuesday","Thursday","Sunday"],"opens":"12:00","closes":"23:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Friday","Saturday"],"opens":"12:00","closes":"23:59"}]}
+</script>
+
 <script>
-  // Афиша — одно ближайшее событие. Сейчас оно задано здесь; когда появится админка, она будет отдавать такой же объект.
-  // Пустой объект или null — плакат покажет «скоро новые анонсы».
-  window.MELOK_EVENT = {
-    when: 'пятница · 19:00',
-    what: 'Слепая дегустация',
-    note: 'Шесть вин без этикеток. Пробуем, спорим, угадываем сорт и страну.'
-  };
+  // Всё, что меняет админка, лежит прямо в разметке: тексты — в самих элементах, порядок — в порядке секций,
+  // часы работы — в data-hours у <body>, подписи указателя — в data-pk и data-pt у секций. Отдельной базы нет.
   (function () {
-    const e = window.MELOK_EVENT || {}, set = (id, v) => { const el = document.getElementById(id); if (v) el.textContent = v; else el.remove(); };
-    set('ev-when', e.what ? e.when : '');
-    set('afisha-h', e.what || 'Скоро новые анонсы');
-    set('ev-note', e.what ? e.note : 'А пока — заходите на бокал.');
+    const root = document.documentElement, $ = id => document.getElementById(id);
+    const edit = window.name === 'melok-edit';                            // страница открыта внутри редактора (admin/)
+    const still = edit || /[?&]static\b/.test(location.search);           // без анимаций появления
+
+    // указатель внизу первого экрана ведёт на секцию, которая стоит сразу под ним, и берёт у неё подписи и цвет
+    function pointer() {
+      const first = document.querySelector('main > section'), tab = $('pointer');
+      if (!first || !tab) return;
+      tab.setAttribute('href', '#' + first.id); tab.dataset.tone = first.dataset.tone || 'paper';
+      $('pt-kicker').textContent = first.dataset.pk || ''; $('pt-title').textContent = first.dataset.pt || '';
+    }
+
+    // анонс: строка со временем скрыта, пока она пустая
+    function plate() {
+      const w = $('ev-when'), has = !!w.textContent.trim();
+      w.hidden = !has && !edit; $('event').classList.toggle('solo', !has);
+    }
+
+    // часы работы: минуты от полуночи, 0 — воскресенье, null — выходной
+    const hm = v => String(Math.floor(v / 60) % 24).padStart(2, '0') + ':' + String(v % 60).padStart(2, '0');
+    function hours() { try { return JSON.parse(document.body.dataset.hours); } catch (err) { return null; } }
+    function groups(H) {                                                  // дни с одинаковыми часами — одной строкой
+      const names = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'], map = new Map();
+      [1, 2, 3, 4, 5, 6, 0].forEach(d => { const k = JSON.stringify(H[d] || null); if (!map.has(k)) map.set(k, []); map.get(k).push(d); });
+      return [...map].map(([k, days]) => ({ days, label: days.length === 7 ? 'каждый день' : days.map(d => names[d]).join(', '), time: JSON.parse(k) }))
+        .sort((x, y) => !x.time - !y.time);                               // выходные — в конце
+    }
+    function renderHours() {
+      const H = hours(), card = $('hours-card'), foot = $('hours-foot'); if (!H) return;
+      const g = groups(H);
+      if (card) card.innerHTML = g.map(x => x.time ? `<div><span>${x.label}</span><span>${hm(x.time[0])} — ${hm(x.time[1])}</span></div>` : `<div class="off"><span>${x.label}</span><span>выходной</span></div>`).join('');
+      if (foot) foot.innerHTML = g.map(x => `<li>${x.label} — ${x.time ? hm(x.time[0]) + '–' + hm(x.time[1]) : 'выходной'}</li>`).join('');
+    }
+    // открыто ли сейчас (в Казани московское время)
+    function status() {
+      const H = hours(), box = $('now'), out = $('now-text'); if (!H || !box) return;
+      const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Moscow' }));
+      const d = now.getDay(), m = now.getHours() * 60 + now.getMinutes();
+      const days = ['в воскресенье', 'в понедельник', 'во вторник', 'в среду', 'в четверг', 'в пятницу', 'в субботу'];
+      const y = H[(d + 6) % 7], t = H[d];
+      let open = null, text = '';
+      if (y && y[1] > 1440 && m < y[1] - 1440) open = y[1];
+      else if (t && m >= t[0] && m < t[1]) open = t[1];
+      if (open) text = 'Сейчас открыто · до ' + hm(open);
+      else if (t && m < t[0]) text = 'Откроемся сегодня в ' + hm(t[0]);
+      else for (let i = 1; i <= 7; i++) { const n = H[(d + i) % 7]; if (n) { text = (t ? 'Сегодня уже закрыты' : 'Сегодня выходной') + ' · ждём ' + (i === 1 ? 'завтра' : days[(d + i) % 7]) + ' с ' + hm(n[0]); break; } }
+      box.classList.toggle('open', !!open); if (text) out.textContent = text;
+    }
+
+    window.MELOK = { pointer, plate, renderHours, status, groups, hm };  // этими же функциями пользуется редактор
+    pointer(); plate(); renderHours(); status();
+
+    // переключатель меню: основное / ланчи
+    const tabs = [$('tab-main'), $('tab-lunch')], panels = [$('m-main'), $('m-lunch')];
+    tabs.forEach((t, i) => t.addEventListener('click', () => tabs.forEach((x, k) => { x.setAttribute('aria-selected', k === i); panels[k].hidden = k !== i; })));
+    // «Аа» — крупный текст меню на телефоне
+    const zoom = $('menu-zoom'), menu = $('menu');
+    zoom.addEventListener('click', () => zoom.setAttribute('aria-pressed', menu.classList.toggle('big')));
+
+    // плавающее меню и появление блоков при прокрутке
+    if (!('IntersectionObserver' in window)) return;
+    const nav = $('float'), hero = $('top');
+    new IntersectionObserver(([en]) => nav.classList.toggle('on', !en.isIntersecting), { rootMargin: '-80px 0px 0px 0px' }).observe(hero);
+    const items = [...document.querySelectorAll('[data-r]'), $('find-box')];
+    if (still || matchMedia('(prefers-reduced-motion: reduce)').matches) { root.classList.add('js'); items.forEach(el => el.classList.add('in')); return; }
+    root.classList.add('js');
+    const io = new IntersectionObserver(list => list.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: .08 });
+    items.forEach(el => io.observe(el));
   })();
 </script>
-<script>
-  // плавающее меню показывается, когда блок с котом и кнопками полностью ушёл за край экрана
-  (function () {
-    const nav = document.getElementById('float'), hero = document.querySelector('.center');
-    if (!nav || !hero || !('IntersectionObserver' in window)) return;
-    new IntersectionObserver(([e]) => nav.classList.toggle('on', !e.isIntersecting)).observe(hero);
-  })();
-</script>
-<script src="cat.js?v=8"></script>
-</body>
-</html>
+</body></html>

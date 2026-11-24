@@ -1,5 +1,12 @@
-Шрифты в этой папке распространяются по лицензии SIL Open Font License 1.1
-(https://openfontlicense.org), которая разрешает размещать их на своём сайте.
+Шрифты в этой папке — свободные, их можно размещать на своём сайте.
 
-Caveat      — Copyright 2014 The Caveat Project Authors (https://github.com/googlefonts/caveat)
-Golos Text  — Copyright 2019 The Golos Text Project Authors (https://github.com/googlefonts/golos-text)
+PT Mono (ptmono-regular.woff2, ptmono-bold.woff2)
+  Copyright © 2010–2011 ParaType Ltd. (http://www.paratype.com/public)
+  Лицензии: ParaType Free Font License и SIL Open Font License 1.1 (текст — в OFL-PTMono.txt).
+  Файлы не изменялись: шрифт только переведён из формата TTF в WOFF2.
+
+Shantell Sans (shantell-italic.woff2, shantell-bold.woff2)
+  Copyright 2022 The Shantell Sans Project Authors (https://github.com/arrowtype/shantell-sans)
+  Лицензия: SIL Open Font License 1.1 (текст — в OFL-ShantellSans.txt).
+  Из шрифта взяты два начертания (курсив и жирное) и оставлены только нужные сайту знаки:
+  латиница, кириллица, цифры и пунктуация.
